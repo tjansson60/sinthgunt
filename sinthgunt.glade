@@ -4,7 +4,7 @@
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
-    <property name="title" translatable="yes">Nobel Media Converter</property>
+	    <property name="title" translatable="yes">Sinthgunt Converter</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
     <property name="default_width">300</property>
     <signal name="destroy" handler="MainWindow_destroy"/>

@@ -1,4 +1,4 @@
-# $Id: README.txt 39 2009-03-03 21:33:57Z hartvig $
+# $Id$
 
 ###################
 # ABOUT Nobel Converter

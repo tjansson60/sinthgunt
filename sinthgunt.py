@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# $Id: nobel.py 40 2009-03-08 14:54:16Z hartvig $
+# $Id$
 
 import sys
 import os
@@ -13,11 +13,11 @@ import time
 logo_filename="logo.png"
 
 # Opens the log file and write the name and curent data and time
-logfile = open("nobel.log", 'a')
-logfile.writelines('****** TNC log file START - '+str(time.ctime())+' *******\n')
+logfile = open("sinthgunt.log", 'a')
+logfile.writelines('****** Sinthgunt log file START - '+str(time.ctime())+' *******\n')
 
 
-class nobel:
+class sinthgunt:
     """This is a program to ease the use of ffmpeg
     on Ubuntu based machines """
 
@@ -35,7 +35,7 @@ class nobel:
         """
 
         #Reads the config file 
-        conf_file_holder = open("nobel.conf","rd")
+        conf_file_holder = open("sinthgunt.conf","rd")
         # Creates a empty array for the options
         self.bm=[] 
         conf_file = [line[:-1] for line in conf_file_holder]
@@ -66,7 +66,7 @@ class nobel:
         the functions."""
 
         #Set the Glade file
-        self.gladefile = "nobel.glade"  
+        self.gladefile = "sinthgunt.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
 
         #Get the Main Window, and connect the "destroy" event
@@ -83,7 +83,7 @@ class nobel:
             #Loads the statusbar
             self.statusbar = self.wTree.get_widget("statusbar")
             context_id = self.statusbar.get_context_id("Activation")
-            self.statusbar.push(context_id,"Welcome to the Nobel converter!")
+            self.statusbar.push(context_id,"Welcome to the Sinthgunt converter!")
             
             # loads the progress bar
             self.progressbar = self.wTree.get_widget("progressbar")
@@ -127,7 +127,7 @@ class nobel:
         # Error handling
         if output.find("Could not")!=-1:
             logfile.writelines("\n ffmpeg error detected?....")
-            self.statusbar.push(context_id,'ffmpeg error detected. See nobel.log')
+            self.statusbar.push(context_id,'ffmpeg error detected. See sinthgunt.log')
 
         # get the number of frames converted
         for i in range(N):
@@ -304,7 +304,7 @@ class nobel:
 
     def stop(self,widget):
         """ Tried to kill the process before it is done."""
-        os.system('cat nobel.log')
+        os.system('cat sinthgunt.log')
         try:
             os.kill(self.process.pid,9)
             logfile.writelines('Conversion stopped\n')
@@ -317,7 +317,7 @@ class nobel:
         """ When the program is closed the stop function and the logfile is
         updated and program is terminated. """
         self.stop
-        logfile.writelines('****** TNC log file STOP - '+str(time.ctime())+' *******\n')
+        logfile.writelines('****** Sinthgunt log file STOP - '+str(time.ctime())+' *******\n')
         logfile.close
         gtk.main_quit()
 
@@ -383,7 +383,7 @@ class nobel:
 
     def aboutdialog(self,widget):
         """ Defines the about information about the program."""
-        dialogtext = "The Nobel Converter - a ffmpeg gui.\
+        dialogtext = "The Sinthgunt Converter - a ffmpeg gui.\
                         \nBy Thomas R. N. Jansson (tjansson@tjansson.dk) and\
                         \nKaare H. Jensen (hartvig@hartvig.de)\
                         \nSee LICENSE.TXT for License information"
@@ -402,5 +402,5 @@ class nobel:
 
 
 if __name__ == "__main__":
-    program = nobel()
+    program = sinthgunt()
     gtk.main()
