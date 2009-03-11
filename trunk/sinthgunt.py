@@ -1,10 +1,8 @@
 #!/usr/bin/python
 # $Id$
 
-import sys
 import os
 import pygtk; pygtk.require("2.0")
-import gtk
 import gtk.glade
 import subprocess
 import gobject
