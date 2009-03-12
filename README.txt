@@ -1,10 +1,10 @@
 # $Id$
 
 ###################
-# ABOUT Nobel Converter
+# ABOUT Sinthgunt Converter
 ###################
 
-The Nobel Converter(TNC) is a graphical front end to the notoriously complex 
+The Sinthgunt Converter(TNC) is a graphical front end to the notoriously complex 
 ffmpeg command line.
 
 ###################
@@ -41,7 +41,7 @@ maybe a future release of TNC will support Windows.
 Copyright 2009 Kåre Hartvig Jensen (kare1234@gmail.com) and 
 Thomas R. N. Jansson (tjansson@tjansson.dk). 
 
-The Nobel Converter is free software: you can redistribute it and/or modify
+The Sinthgung Converter is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
