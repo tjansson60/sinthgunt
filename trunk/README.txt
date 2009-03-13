@@ -1,10 +1,10 @@
 # $Id$
 
 ###################
-# ABOUT Sinthgunt Converter
+# ABOUT The Sinthgunt Converter
 ###################
 
-The Sinthgunt Converter(TNC) is a graphical front end to the notoriously complex 
+The Sinthgunt Converter is a graphical front end to the notoriously complex 
 ffmpeg command line.
 
 ###################
@@ -17,7 +17,7 @@ sudo apt-get install ffmpeg
 
 # Windows 
 Windows is not yet supported but ffmpeg, Python and GTK+ are available so 
-maybe a future release of TNC will support Windows. 
+maybe a future release of The Sinthgunt Converter will support Windows. 
 
 ###################
 # KNOWN ISSUS / TODO
@@ -41,18 +41,18 @@ maybe a future release of TNC will support Windows.
 Copyright 2009 Kåre Hartvig Jensen (kare1234@gmail.com) and 
 Thomas R. N. Jansson (tjansson@tjansson.dk). 
 
-The Sinthgung Converter is free software: you can redistribute it and/or modify
+The Sinthgunt Converter is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Nobel Converter is distributed in the hope that it will be useful,
+The Sinthgunt Converter is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with The Nobel Converter. If not, see <http://www.gnu.org/licenses/
+along with the Sinthgunt Converter. If not, see <http://www.gnu.org/licenses/
 
 ##################
 #  Related projects
