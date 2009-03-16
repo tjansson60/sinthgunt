@@ -4,7 +4,7 @@ from xml.dom import minidom
 from xml.etree import ElementTree as etree
 import os
 
-def main():
+def parseXML():
 	# load xml file
 	xml_file = os.path.abspath(__file__)
         xml_file = os.path.dirname(xml_file)
@@ -33,5 +33,5 @@ def main():
 
 if __name__ == "__main__":
 	# Someone is launching this directly
-	main()
+	parseXML()
 
