@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Sat Feb 28 00:35:40 2009 -->
+<!--Generated with glade3 3.4.5 on Mon Mar 16 21:17:05 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
-	    <property name="title" translatable="yes">Sinthgunt Converter</property>
+    <property name="title" translatable="yes">Sinthgunt Converter</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
     <property name="default_width">300</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
@@ -52,7 +52,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitem2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Actions</property>
+                <property name="label" translatable="yes">_Presets</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menu2">
@@ -103,62 +103,6 @@
             <property name="n_rows">3</property>
             <property name="n_columns">2</property>
             <child>
-              <widget class="GtkImage" id="thumbnail">
-                <property name="visible">True</property>
-                <property name="stock">gtk-missing-image</property>
-              </widget>
-              <packing>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelGuide">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="xpad">7</property>
-                <property name="ypad">4</property>
-                <property name="label" translatable="yes">Select the video file 
-you wish to convert
-from the File menu</property>
-                <property name="justify">GTK_JUSTIFY_FILL</property>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelOperation">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Conversion Type</property>
-              </widget>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkComboBox" id="comboboxOperation">
-                <property name="visible">True</property>
-                <property name="active">1</property>
-                <property name="has_frame">False</property>
-                <property name="items" translatable="yes"></property>
-              </widget>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelInput">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
-              </packing>
-            </child>
-            <child>
               <widget class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
                 <child>
@@ -188,6 +132,62 @@ from the File menu</property>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelInput">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="comboboxOperation">
+                <property name="visible">True</property>
+                <property name="active">1</property>
+                <property name="has_frame">False</property>
+                <property name="items" translatable="yes"></property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelOperation">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Conversion Type</property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelGuide">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="xpad">7</property>
+                <property name="ypad">4</property>
+                <property name="label" translatable="yes">Select the video file 
+you wish to convert
+from the File menu</property>
+                <property name="justify">GTK_JUSTIFY_FILL</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkImage" id="thumbnail">
+                <property name="visible">True</property>
+                <property name="stock">gtk-missing-image</property>
+              </widget>
+              <packing>
                 <property name="top_attach">2</property>
                 <property name="bottom_attach">3</property>
               </packing>

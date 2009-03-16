@@ -57,7 +57,30 @@ class sinthgunt:
             self.Operation.append_text(self.bm[i+2][0])	        
         self.Operation.set_active(0)
 
+        # Populates action menu (experimental, should be populated in the same way as the combobox but with submenus specified in the xml file)
+        actionmenu = self.wTree.get_widget("menu2")
+        self.presetmenu1header = gtk.Menu()
 
+        presetmenu1 = gtk.MenuItem("Presets")
+        presetmenu1.set_submenu(self.presetmenu1header)
+
+        item = gtk.RadioMenuItem(group=None,label='')        
+        for i in range(self.numbm-2):
+            item = gtk.RadioMenuItem(group=item,label=self.bm[i+2][0])
+            item.connect("activate", self.menuradiobuttonselect)
+            self.presetmenu1header.append(item)
+        self.operation_radiobutton = ''
+
+
+
+        
+ 
+#        self.ipod4gen.show()
+#        self.ipod5gen.show()
+        # show stuff in the menu
+        actionmenu.append(presetmenu1)        
+        self.presetmenu1header.show_all()
+        presetmenu1.show()
 
     def __init__(self):
         """ Reads the information from glade file and connects the buttons with
@@ -276,8 +299,12 @@ class sinthgunt:
             #        self.input = '/foo/bar'
 
             # start conversion
-            self.operation = self.wTree.get_widget("comboboxOperation")
-            operation = self.operation.get_active_text()
+            if self.operation_radiobutton == '':
+                self.operation = self.wTree.get_widget("comboboxOperation")
+                operation = self.operation.get_active_text()
+            else:
+                operation = self.operation_radiobutton
+
             for i in range(self.numbm-1):
                 if operation == self.bm[i+1][0]:
                     # generate command line in subprocess syntax
@@ -391,12 +418,23 @@ class sinthgunt:
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
     def no_file_selected_dialog(self,widget):
+        for item in self.ipodmenuheader:
+            print item.get_active()
         dialogtext = "You have to select a file before you can begin converting!"
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+    # menuradiobutton
+    def menuradiobuttonselect(self,widget):
+        counter=0
+        self.operation_radiobutton = ''
+        for item in self.presetmenu1header:
+            if item.get_active() == True:
+                self.operation_radiobutton = self.bm[counter+2][0]    
+            counter = counter + 1
+        print self.operation_radiobutton
 
 
 if __name__ == "__main__":
