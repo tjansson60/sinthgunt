@@ -16,20 +16,26 @@ def parseXML():
 
 	# Iterate through presets
 	for child in optionsXML.getiterator():
-		if child.tag == 'category':
-			row.append(child.text)
 		if child.tag == 'label':
 			row.append(child.text)
 		if child.tag == 'params':
 			row.append(child.text)
 		if child.tag == 'extension':
 			row.append(child.text)
+		if child.tag == 'category':
+			row.append(child.text)
 			presets.append(row)
 			row = []
+	# Sort by category
+	presets.sort(lambda x, y: cmp(x[3],y[3]))
+	for row in presets:
+		print row	
+	#print presets
 
+	
 	# Print some stuff
-	print presets[0][0]
-	print presets
+#	print presets[0][0]
+#	print presets
 
 if __name__ == "__main__":
 	# Someone is launching this directly
