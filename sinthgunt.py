@@ -7,6 +7,7 @@ import gtk.glade
 import subprocess
 import gobject
 import time
+from xml.etree import ElementTree as etree
 
 logo_filename="logo.png"
 
@@ -32,55 +33,40 @@ class sinthgunt:
         # bm[i][6] -- Output file postfix
         """
 
-        #Reads the config file 
-        conf_file_holder = open("sinthgunt.conf","rd")
-        # Creates a empty array for the options
-        self.bm=[] 
-        conf_file = [line[:-1] for line in conf_file_holder]
-        
-        #Searches through the configfile and splits the fields using ";"
-        for line in conf_file:
-            row = []	
-            fields = line.split(";")
-            for i in range(6):
-                row.append(fields[i])
-            self.bm.append(row)
-        conf_file_holder.close
-        
-        #Counts the total number of options
-        self.numbm=len(self.bm)
-
-        #Populates combobox
-        self.operation = self.wTree.get_widget("comboboxOperation")
-        operation = self.operation.get_active_text()
-        for i in range(self.numbm-2):
-            self.Operation.append_text(self.bm[i+2][0])	        
-        self.Operation.set_active(0)
-
-        # Populates action menu (experimental, should be populated in the same way as the combobox but with submenus specified in the xml file)
+        # Populates preset menu from XML file
+        # Load XML config file
+        self.parseXML()
+        # local variables
+        categorylist=self.categorylist
+        presetlist=self.presetlist
+        # connetc to menu
         actionmenu = self.wTree.get_widget("menu2")
-        self.presetmenu1header = gtk.Menu()
+      
+        Ncategory = len(categorylist)
+        self.Npreset = len(presetlist)
+        counter = 0
+        item = gtk.RadioMenuItem(group=None,label='')   # first, dummy item in group
+        self.presetmenu1headerholder = []
+        # Generate submues
+        for category in categorylist:
+            # add submenu for category            
+            presetmenu1header = gtk.Menu()
+            self.presetmenu1headerholder.append(presetmenu1header)
+            presetmenu1 = gtk.MenuItem(category)
+            presetmenu1.set_submenu(self.presetmenu1headerholder[counter])
+            # add all presets in the category to this submenu
+            for i in range(self.Npreset):
+                if presetlist[i][0] == categorylist[counter]:
+                    item = gtk.RadioMenuItem(group=item,label=presetlist[i][1])
+                    item.connect("activate", self.menuradiobuttonselect)
+                    self.presetmenu1headerholder[counter].append(item)
+            self.operation_radiobutton = ''
 
-        presetmenu1 = gtk.MenuItem("Presets")
-        presetmenu1.set_submenu(self.presetmenu1header)
-
-        item = gtk.RadioMenuItem(group=None,label='')        
-        for i in range(self.numbm-2):
-            item = gtk.RadioMenuItem(group=item,label=self.bm[i+2][0])
-            item.connect("activate", self.menuradiobuttonselect)
-            self.presetmenu1header.append(item)
-        self.operation_radiobutton = ''
-
-
-
-        
- 
-#        self.ipod4gen.show()
-#        self.ipod5gen.show()
-        # show stuff in the menu
-        actionmenu.append(presetmenu1)        
-        self.presetmenu1header.show_all()
-        presetmenu1.show()
+            # show stuff in the menu
+            actionmenu.append(presetmenu1)        
+            self.presetmenu1headerholder[counter].show_all()
+            presetmenu1.show()
+            counter = counter+1
 
     def __init__(self):
         """ Reads the information from glade file and connects the buttons with
@@ -292,38 +278,26 @@ class sinthgunt:
             #start watching output
             self.source_id = gobject.timeout_add(100, self.checkfile)
         
-            #if self.input == None:
-            #    try:
-            #        self.input = self.input_from_menu
-            #    except:
-            #        self.input = '/foo/bar'
+            # Get selected operation from menu
+            operation = self.operation_radiobutton
 
-            # start conversion
-            if self.operation_radiobutton == '':
-                self.operation = self.wTree.get_widget("comboboxOperation")
-                operation = self.operation.get_active_text()
-            else:
-                operation = self.operation_radiobutton
-
-            for i in range(self.numbm-1):
-                if operation == self.bm[i+1][0]:
+            for i in range(self.Npreset):
+                if operation == self.presetlist[i][1]:
                     # generate command line in subprocess syntax
-                    subcommand = [str(self.bm[i+1][1])]
-                    if self.bm[i+1][2]!='':
-                        subcommand.extend(self.bm[i+1][2].split(' '))            
+                    subcommand = ['/usr/bin/ffmpeg','-y','-i']
                     subcommand.extend([self.input])
-                    if self.bm[i+1][3]!='': 
-                        subcommand.extend(self.bm[i+1][3].split(' '))
-                    subcommand.extend([str(self.input+"."+self.bm[i+1][5])])
-                    if self.bm[i+1][4]!='': 
-                        subcommand.extend(self.bm[i+1][4].split(' '))
-                    # start converting
-	            logfile.writelines(subcommand)
-                    self.process = subprocess.Popen(args=subcommand, 
-                        stdout=subprocess.PIPE,
-                        stdin=subprocess.PIPE,
-                        stderr=subprocess.STDOUT,
-                        shell=False)
+                    subcommand.extend(self.presetlist[i][2].split(' '))            
+                    subcommand.extend([str(self.input+"."+self.presetlist[i][3])])
+                    # remove empty entries ('') from the array
+                    for i in range(20):
+                        try:
+                            subcommand.remove('')
+                        except:
+                            1+1 
+                    # Start converting
+                    self.process = subprocess.Popen(args=subcommand,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.STDOUT,shell=False)
+                    
+                    logfile.writelines(subcommand)
 
 
 
@@ -411,15 +385,16 @@ class sinthgunt:
         dialogtext = "The Sinthgunt Converter - a ffmpeg gui.\
                         \nBy Thomas R. N. Jansson (tjansson@tjansson.dk) and\
                         \nKaare H. Jensen (hartvig@hartvig.de)\
-                        \nSee LICENSE.TXT for License information"
+                        \nSee LICENSE.TXT for License information\
+                        \nSelect the video file you wish to convert from the File menu.\
+                        \nTheb, select the type of conversion you want to perform from the Presets menu.\
+                        \nTo start converting, press the Convert button in the main window."
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
     def no_file_selected_dialog(self,widget):
-        for item in self.ipodmenuheader:
-            print item.get_active()
         dialogtext = "You have to select a file before you can begin converting!"
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
@@ -428,15 +403,49 @@ class sinthgunt:
             message.destroy()
     # menuradiobutton
     def menuradiobuttonselect(self,widget):
-        counter=0
         self.operation_radiobutton = ''
-        for item in self.presetmenu1header:
-            if item.get_active() == True:
-                self.operation_radiobutton = self.bm[counter+2][0]    
-            counter = counter + 1
-        print self.operation_radiobutton
+        counter=0
+        for presetmenu1header in self.presetmenu1headerholder:
+            for item in presetmenu1header:
+                if item.get_active() == True:
+                    self.operation_radiobutton = self.presetlist[counter][1]
+                counter = counter + 1
+    
+    # XML PARSER FUNCTION
+    def parseXML(self):
+    	# load xml file
+        xml_file = os.path.abspath(__file__)
+        xml_file = os.path.dirname(xml_file)
+        xml_file = os.path.join(xml_file, "presets.xml")
+        optionsXML = etree.parse(xml_file)
+        presets=[]
+        row = [' ',' ',' ',' ']
+
+	    # Iterate through presets
+        for child in optionsXML.getiterator():
+            if child.tag == 'label':
+                row[1]=child.text
+            if child.tag == 'params':
+                row[2]=child.text
+            if child.tag == 'extension':
+                row[3]=child.text.strip(' ')
+            if child.tag == 'category':
+                row[0]=child.text
+                presets.append(row)
+                row = [' ',' ',' ',' ']
+    	# Sort by category
+    	presets.sort(lambda x, y: cmp(x[0],y[0]))
+    	# find category list
+    	categories=[presets[0][0]]
+    	for row in presets:
+        	if row[0]!=categories[-1]:
+            		categories.append(row[0])
+        
+        self.presetlist=presets
+        self.categorylist=categories
 
 
+    
 if __name__ == "__main__":
     program = sinthgunt()
     gtk.main()
