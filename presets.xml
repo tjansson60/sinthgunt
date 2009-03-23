@@ -416,19 +416,19 @@
   </flvwebWS>-->
     <flvweb50>
     <label>Flash: Video (flv) for Web use. 448x336, 50 kb/s</label>
-    <params>-vcodec flv -ar 22050 -r 15 -b 50k -s 448x336</params>
+    <params>-vcodec flv -ar 22050 -r 24 -b 50k -s 448x336 -acodec libmp3lame</params>
     <extension>flv</extension>
     <category>Websites</category>
   </flvweb50>
   <flvweb150>
     <label>Flash: Video (flv) for Web use. 448x336, 150 kb/s</label>
-    <params>-vcodec flv -ar 22050 -r 15 -b 150k -s 448x336</params>
+    <params>-vcodec flv -ar 22050 -r 24 -b 150k -s 448x336 -acodec libmp3lame</params>
     <extension>flv</extension>
     <category>Websites</category>
   </flvweb150>
   <flvweb350>
     <label>Flash: Video (flv) for Web use. 448x336, 350 kb/s</label>
-    <params>-vcodec flv -ar 22050 -r 15 -b 350k -s 448x336</params>
+    <params>-vcodec flv -ar 22050 -r 24 -b 350k -s 448x336 -acodec libmp3lame</params>
     <extension>flv</extension>
     <category>Websites</category>
   </flvweb350>
