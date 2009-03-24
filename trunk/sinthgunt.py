@@ -110,12 +110,13 @@ class sinthgunt:
                         "on_menuquit_activate"       : self.quit_program,
                         "on_menuopen_activate"       : self.menuopenfile,
                         "on_menuconvert_activate"    : self.activate,
-                        "on_menuabout_activate"      : self.aboutdialog }
+                        "on_menuabout_activate"      : self.aboutdialog,
+                        "on_menuffmpeginfo_activate" : self.ffmpeg_getinfo}
             
             #Do the magic connecting to the widgets
             self.wTree.signal_autoconnect(self.dic)        
             self.input = None
-
+            
 
     def checkfile(self):
         """ This function is executed many times to check on the progress of
@@ -444,7 +445,30 @@ class sinthgunt:
         self.presetlist=presets
         self.categorylist=categories
 
-
+# Get ffmpeg info function. For determining which version of ffmpeg the user has installed
+    def ffmpeg_getinfo(self,widget):
+        """ This function finds the information about the current selected
+        file. Displays number of frames, audio codec and video codec."""
+        command = ["ffmpeg","-version"]
+        output = ''
+        try:
+            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
+            output = str(process.stdout.read(10000))        
+        except:
+            None
+           
+        dialogtext=output
+        dialogtitle='ffmpeg info'
+        # check to see if ffmpeg is installed. Print error if it is not present
+        if output=='':
+            dialogtext='ffmpeg is not installed on this computer or something else went wrong. See README.txt for installation instructions.'
+        
+        message = gtk.MessageDialog(None,gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
+        message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
+        message.set_title('ffmpeg info')
+        resp = message.run()
+        if resp == gtk.RESPONSE_CLOSE:
+            message.destroy()
     
 if __name__ == "__main__":
     program = sinthgunt()
