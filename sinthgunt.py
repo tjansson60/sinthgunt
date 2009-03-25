@@ -68,6 +68,7 @@ class sinthgunt:
             self.presetmenu1headerholder[counter].show_all()
             presetmenu1.show()
             counter = counter+1
+            
 
     def __init__(self):
         """ Reads the information from glade file and connects the buttons with
@@ -153,6 +154,17 @@ class sinthgunt:
                            ' of '+str(self.file_frames)+' frames converted.')
                except:
                    pass
+
+        # Look for Classic errors. This should be done in a separate function sometime soon
+        # "Must supply at least one output file"
+        for i in range(N-1):
+            if i>=2 and output_split[i]=='Must=' and output_split[i+1]=='supply': # an error has occured
+                self.statusbar.push(context_id,'An error has occured. See the log file for details.')               
+                self.progressbar.set_fraction(0.0)
+                self.progressbar.set_text('')
+                return False 
+
+
 
         # if no output detected, stop watching the process and write to statusbar
         if output =='':     
