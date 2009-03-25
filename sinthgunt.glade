@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Mar 24 18:24:37 2009 -->
+<!--Generated with glade3 3.4.5 on Wed Mar 25 22:22:59 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
     <property name="title" translatable="yes">Sinthgunt Converter</property>
-    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="window_position">GTK_WIN_POS_MOUSE</property>
     <property name="default_width">300</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
     <child>
@@ -107,45 +107,71 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkTable" id="table1">
+          <widget class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
-            <property name="n_rows">3</property>
-            <property name="n_columns">2</property>
             <child>
-              <placeholder/>
+              <widget class="GtkToolButton" id="toolbaropen">
+                <property name="visible">True</property>
+                <property name="stock_id">gtk-open</property>
+                <signal name="clicked" handler="on_toolbaropen_clicked"/>
+              </widget>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox2">
+              <widget class="GtkToolButton" id="toolbarconvert">
                 <property name="visible">True</property>
-                <child>
-                  <widget class="GtkButton" id="button_activate">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="label" translatable="yes">Convert</property>
-                    <property name="response_id">0</property>
-                    <signal name="clicked" handler="on_button_activate_clicked"/>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="button_stop">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="label" translatable="yes">Stop</property>
-                    <property name="response_id">0</property>
-                    <signal name="clicked" handler="on_button_stop_clicked"/>
-                  </widget>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
+                <property name="stock_id">gtk-convert</property>
+                <signal name="clicked" handler="on_toolbarconvert_clicked"/>
+              </widget>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolButton" id="toolbarstop">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Abort</property>
+                <property name="stock_id">gtk-cancel</property>
+                <signal name="clicked" handler="on_toolbarstop_clicked"/>
+              </widget>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkTable" id="table1">
+            <property name="visible">True</property>
+            <property name="n_rows">2</property>
+            <property name="n_columns">2</property>
+            <child>
+              <widget class="GtkLabel" id="labelOperation">
+                <property name="visible">True</property>
               </widget>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkImage" id="thumbnail">
+                <property name="visible">True</property>
+                <property name="xpad">10</property>
+                <property name="ypad">10</property>
+                <property name="stock">gtk-missing-image</property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
               </packing>
             </child>
             <child>
@@ -158,15 +184,6 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="labelOperation">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-              </packing>
-            </child>
-            <child>
               <widget class="GtkLabel" id="labelGuide">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
@@ -176,19 +193,9 @@
                 <property name="justify">GTK_JUSTIFY_FILL</property>
               </widget>
             </child>
-            <child>
-              <widget class="GtkImage" id="thumbnail">
-                <property name="visible">True</property>
-                <property name="stock">gtk-missing-image</property>
-              </widget>
-              <packing>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
-            </child>
           </widget>
           <packing>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -196,7 +203,7 @@
             <property name="visible">True</property>
           </widget>
           <packing>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -208,7 +215,7 @@
           </widget>
           <packing>
             <property name="expand">False</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </widget>
