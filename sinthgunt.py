@@ -59,6 +59,7 @@ class sinthgunt:
                 if presetlist[i][0] == categorylist[counter]:
                     item = gtk.RadioMenuItem(group=item,label=presetlist[i][1])
                     item.connect("activate", self.menuradiobuttonselect)
+                    item.set_active(1)
                     self.presetmenu1headerholder[counter].append(item)
             self.operation_radiobutton = ''
 
@@ -105,10 +106,13 @@ class sinthgunt:
             #Create a dictionary of handles and functions
             self.dic = {#"on_chooserInput_file_set" : self.setinput,
                         "on_button_activate_clicked" : self.activate,
+                        "on_toolbarconvert_clicked"  : self.activate,
                         "on_button_stop_clicked"     : self.stop,
+                        "on_toolbarstop_clicked"     : self.stop,
                         "MainWindow_destroy"         : self.quit_program,
                         "on_menuquit_activate"       : self.quit_program,
                         "on_menuopen_activate"       : self.menuopenfile,
+                        "on_toolbaropen_clicked"     : self.menuopenfile,
                         "on_menuconvert_activate"    : self.activate,
                         "on_menuabout_activate"      : self.aboutdialog,
                         "on_menuffmpeginfo_activate" : self.ffmpeg_getinfo}
@@ -156,7 +160,7 @@ class sinthgunt:
             self.progressbar.set_fraction(0.99999)
             self.progressbar.set_text(str(str(self.file_frames)+\
                                           ' of '+str(self.file_frames)+' frames converted.'))
-            # this line would to the sames as return False: gobject.source_remove(self.source_id)          
+            # this line would do the sames as return False: gobject.source_remove(self.source_id)          
             return False    
         else:
             return True
@@ -272,7 +276,7 @@ class sinthgunt:
         if self.input == None:
             self.no_file_selected_dialog(widget)
         else:
-        
+            self.progressbar.set_fraction(0.01)
             context_id = self.statusbar.get_context_id("Activation")  
             self.statusbar.push(context_id,'Running...')
         
@@ -307,7 +311,12 @@ class sinthgunt:
         os.system('cat sinthgunt.log')
         try:
             os.kill(self.process.pid,9)
+            gobject.source_remove(self.source_id)
+            self.progressbar.set_fraction(0.0)
+            self.progressbar.set_text('')
             logfile.writelines('Conversion stopped\n')
+            context_id = self.statusbar.get_context_id("Activation")  
+            self.statusbar.push(context_id,'Conversion aborted!')
         except:
             pass
             
