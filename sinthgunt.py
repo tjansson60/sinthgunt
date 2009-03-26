@@ -59,7 +59,7 @@ class sinthgunt:
                 if presetlist[i][0] == categorylist[counter]:
                     item = gtk.RadioMenuItem(group=item,label=presetlist[i][1])
                     item.connect("activate", self.menuradiobuttonselect)
-                    item.set_active(1)
+                    #item.set_active(1)
                     self.presetmenu1headerholder[counter].append(item)
             self.operation_radiobutton = ''
 
@@ -68,6 +68,8 @@ class sinthgunt:
             self.presetmenu1headerholder[counter].show_all()
             presetmenu1.show()
             counter = counter+1
+        
+        
             
 
     def __init__(self):
@@ -267,8 +269,9 @@ class sinthgunt:
                                 'Audio bitrate: '+str(self.audio_codec[4])+' kb/s\n'\
                                 +'Video codec: '+ str(self.video_codec[0])\
                                 +'\nVideo resolution: '+ str(self.video_codec[2])\
+                                +'\nVideo bitrate: '+ str(self.video_codec[3])\
                                 +'\n'+'Number of frames: '+str(self.file_frames))
-        self.labelGuide.set_text(input_basename[:10]+' info:')
+        self.labelGuide.set_text(input_basename+' info:')
 
     
     
@@ -284,8 +287,10 @@ class sinthgunt:
     def activate(self,widget):
         """ This function starts the selected operation of the current selected
         file. """
-        
-        if self.input == None:
+        # Get selected operation from menu
+        operation = self.operation_radiobutton
+
+        if self.input == None or operation =='':
             self.no_file_selected_dialog(widget)
         else:
             self.progressbar.set_fraction(0.01)
@@ -295,8 +300,7 @@ class sinthgunt:
             #start watching output
             self.source_id = gobject.timeout_add(100, self.checkfile)
         
-            # Get selected operation from menu
-            operation = self.operation_radiobutton
+            
 
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
@@ -381,9 +385,20 @@ class sinthgunt:
             
                     # Find video codec            
                     if output_split[i]=='Video:':
-                        self.video_codec = [output_split[i+1].strip(','),
-                                output_split[i+2].strip(','),
-                                output_split[i+3].strip(',')]
+                       # self.video_codec = [output_split[i+1].strip(','),
+                        #        output_split[i+2].strip(','),
+                         #       output_split[i+3].strip(',')]
+                        self.video_codec[0] = output_split[i+1].strip(',')
+                        self.video_codec[1] = output_split[i+2].strip(',')
+                        self.video_codec[2] = output_split[i+3].strip(',')
+
+
+
+                    # Find video bitrate            
+                    if output_split[i]=='bitrate:':
+                        self.video_codec[3] = output_split[i+1].strip(',')+' kb/s'
+
+
                         #self.video_codec = self.video_codec.strip(',')
                     # Find frames pr. second in the file 
                     if i>=2 and output_split[i]=='tb(r)\n':
@@ -416,13 +431,16 @@ class sinthgunt:
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+
+    # NO FILE SELECTED DIALOG
     def no_file_selected_dialog(self,widget):
-        dialogtext = "You have to select a file before you can begin converting!"
+        dialogtext = "You have to select a file and/or a preset before you can begin converting!"
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+
     # menuradiobutton
     def menuradiobuttonselect(self,widget):
         self.operation_radiobutton = ''
