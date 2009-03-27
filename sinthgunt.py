@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # $Id$
 
+# Description     
+"""This is a program to ease the use of ffmpeg on Ubuntu based machines """
+
 import os
 import pygtk; pygtk.require("2.0")
 import gtk.glade
@@ -9,17 +12,16 @@ import gobject
 import time
 from xml.etree import ElementTree as etree
 
-logo_filename="logo.png"
 
 # Opens the log file and write the name and curent data and time
 logfile = open("sinthgunt.log", 'a')
 logfile.writelines('****** Sinthgunt log file START - '+
         str(time.ctime())+' *******\n')
+logo_filename="logo.png"
+
 
 
 class sinthgunt:
-    """This is a program to ease the use of ffmpeg
-    on Ubuntu based machines """
 
     def load_conf_file(self):
         """ This function reads the configuration file and populates the
@@ -69,62 +71,8 @@ class sinthgunt:
             self.presetmenu1headerholder[counter].show_all()
             presetmenu1.show()
             counter = counter+1
-        
-        
-            
+           
 
-    def __init__(self):
-        """ Reads the information from glade file and connects the buttons with
-        the functions."""
-
-        #Set the Glade file
-        self.gladefile = "sinthgunt.glade"  
-        self.wTree = gtk.glade.XML(self.gladefile) 
-
-        #Get the Main Window, and connect the "destroy" event
-        self.window = self.wTree.get_widget("MainWindow")
-
-        if (self.window):
-            # connect to label
-            self.labelGuide = self.wTree.get_widget("labelGuide")
-            self.labelInput = self.wTree.get_widget("labelInput")
-            
-            #Loads the operation combobox
-            self.Operation = self.wTree.get_widget("comboboxOperation")
-
-            #Loads the statusbar
-            self.statusbar = self.wTree.get_widget("statusbar")
-            context_id = self.statusbar.get_context_id("Activation")
-            self.statusbar.push(context_id,"Welcome to the Sinthgunt converter!")
-            
-            # loads the progress bar
-            self.progressbar = self.wTree.get_widget("progressbar")
-            
-            #Loads the configuration file
-            self.load_conf_file()
-            
-            #Sets the default logo
-            self.thumbnail = self.wTree.get_widget("thumbnail")
-            self.thumbnail.set_from_file(logo_filename)
-
-            #Create a dictionary of handles and functions
-            self.dic = {#"on_chooserInput_file_set" : self.setinput,
-                        "on_button_activate_clicked" : self.activate,
-                        "on_toolbarconvert_clicked"  : self.activate,
-                        "on_button_stop_clicked"     : self.stop,
-                        "on_toolbarstop_clicked"     : self.stop,
-                        "MainWindow_destroy"         : self.quit_program,
-                        "on_menuquit_activate"       : self.quit_program,
-                        "on_menuopen_activate"       : self.menuopenfile,
-                        "on_toolbaropen_clicked"     : self.menuopenfile,
-                        "on_menuconvert_activate"    : self.activate,
-                        "on_menuabout_activate"      : self.aboutdialog,
-                        "on_menuffmpeginfo_activate" : self.ffmpeg_getinfo}
-            
-            #Do the magic connecting to the widgets
-            self.wTree.signal_autoconnect(self.dic)        
-            self.input = None
-            
 
     def checkfile(self):
         """ This function is executed many times to check on the progress of
@@ -184,7 +132,8 @@ class sinthgunt:
     
     def menuopenfile(self,widget):
         """ Defines the filters used when selecting new file."""
-
+        
+        # What does fc stand for?
         fc = gtk.FileChooserDialog(title = "Select video file...",
                 action = gtk.FILE_CHOOSER_ACTION_OPEN,
                 buttons = (gtk.STOCK_CANCEL,
@@ -290,6 +239,7 @@ class sinthgunt:
     def activate(self,widget):
         """ This function starts the selected operation of the current selected
         file. """
+
         # Get selected operation from menu
         operation = self.operation_radiobutton
 
@@ -303,8 +253,6 @@ class sinthgunt:
             #start watching output
             self.source_id = gobject.timeout_add(100, self.checkfile)
         
-            
-
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
                     # generate command line in subprocess syntax
@@ -329,6 +277,7 @@ class sinthgunt:
 
     def stop(self,widget):
         """ Tried to kill the process before it is done."""
+
         os.system('cat sinthgunt.log')
         try:
             os.kill(self.process.pid,9)
@@ -346,6 +295,7 @@ class sinthgunt:
     def quit_program(self,widget):
         """ When the program is closed the stop function and the logfile is
         updated and program is terminated. """
+
         self.stop
         logfile.writelines('****** Sinthgunt log file STOP - '+str(time.ctime())+' *******\n')
         logfile.close
@@ -356,6 +306,7 @@ class sinthgunt:
     def file_getinfo(self):
         """ This function finds the information about the current selected
         file. Displays number of frames, audio codec and video codec."""
+
         self.audio_codec = ['','','','','']
         self.video_codec = ['','','','','']
         self.file_frames = 0
@@ -397,12 +348,9 @@ class sinthgunt:
                         self.video_codec[1] = output_split[i+2].strip(',')
                         self.video_codec[2] = output_split[i+3].strip(',')
 
-
-
                     # Find video bitrate            
                     if output_split[i]=='bitrate:':
                         self.video_codec[3] = output_split[i+1].strip(',')+' kb/s'
-
 
                         #self.video_codec = self.video_codec.strip(',')
                     # Find frames pr. second in the file 
@@ -424,6 +372,7 @@ class sinthgunt:
 
     def aboutdialog(self,widget):
         """ Defines the about information about the program."""
+
         dialogtext = "The Sinthgunt Converter - a ffmpeg gui.\
                         \nBy Thomas R. N. Jansson (tjansson@tjansson.dk) and\
                         \nKaare H. Jensen (hartvig@hartvig.de)\
@@ -438,8 +387,10 @@ class sinthgunt:
             message.destroy()
 
 
-    # NO FILE SELECTED DIALOG
     def no_file_selected_dialog(self,widget):
+        """ If no file have been selected to send to ffmpeg this warning will
+        be displayes."""
+
         dialogtext = "You have to select a file and/or a preset before you \
         \ncan begin converting!"
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
@@ -450,8 +401,9 @@ class sinthgunt:
             message.destroy()
 
 
-    # menuradiobutton
     def menuradiobuttonselect(self,widget):
+        """ This function lacks a proper description."""
+
         self.operation_radiobutton = ''
         counter=0
         for presetmenu1header in self.presetmenu1headerholder:
@@ -460,12 +412,12 @@ class sinthgunt:
                     self.operation_radiobutton = self.presetlist[counter][1]
                 counter = counter + 1
 
-
-    # XML PARSER FUNCTION
     def parseXML(self):
-    	# load xml file
+        """ Parses the XML file to gather the different conversion presets into
+        categories which will be inserted into the gui."""
+
         xml_file = os.path.abspath(__file__)
-        xml_file = os.path.dirname(xml_file)
+        xml_file = os.path.dirname(xml_file) # load xml file
         xml_file = os.path.join(xml_file, "presets.xml")
         optionsXML = etree.parse(xml_file)
         presets=[]
@@ -496,11 +448,13 @@ class sinthgunt:
 
 
 
-# Get ffmpeg info function. For determining which version of ffmpeg the user
-# has installed
     def ffmpeg_getinfo(self,widget):
         """ This function finds the information about the current selected
-        file. Displays number of frames, audio codec and video codec."""
+        file. Displays number of frames, audio codec and video codec.
+
+        Get ffmpeg info function. For determining which version of ffmpeg the
+        user has installed.
+        """
         command = ["ffmpeg","-version"]
         output = ''
 
@@ -525,8 +479,69 @@ class sinthgunt:
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+    
 
 
+#####################
+## The init function
+#####################
+    
+    def __init__(self):
+        """ Reads the information from glade file and connects the buttons with
+        the functions."""
+
+        #Set the Glade file
+        self.gladefile = "sinthgunt.glade"  
+        self.wTree = gtk.glade.XML(self.gladefile) 
+
+        #Get the Main Window, and connect the "destroy" event
+        self.window = self.wTree.get_widget("MainWindow")
+
+        if (self.window):
+            # connect to label
+            self.labelGuide = self.wTree.get_widget("labelGuide")
+            self.labelInput = self.wTree.get_widget("labelInput")
+            
+            #Loads the operation combobox
+            self.Operation = self.wTree.get_widget("comboboxOperation")
+
+            #Loads the statusbar
+            self.statusbar = self.wTree.get_widget("statusbar")
+            context_id = self.statusbar.get_context_id("Activation")
+            self.statusbar.push(context_id,"Welcome to the Sinthgunt converter!")
+            
+            # loads the progress bar
+            self.progressbar = self.wTree.get_widget("progressbar")
+            
+            #Loads the configuration file
+            self.load_conf_file()
+            
+            #Sets the default logo
+            self.thumbnail = self.wTree.get_widget("thumbnail")
+            self.thumbnail.set_from_file(logo_filename)
+
+            #Create a dictionary of handles and functions
+            self.dic = {#"on_chooserInput_file_set" : self.setinput,
+                        "on_button_activate_clicked" : self.activate,
+                        "on_toolbarconvert_clicked"  : self.activate,
+                        "on_button_stop_clicked"     : self.stop,
+                        "on_toolbarstop_clicked"     : self.stop,
+                        "MainWindow_destroy"         : self.quit_program,
+                        "on_menuquit_activate"       : self.quit_program,
+                        "on_menuopen_activate"       : self.menuopenfile,
+                        "on_toolbaropen_clicked"     : self.menuopenfile,
+                        "on_menuconvert_activate"    : self.activate,
+                        "on_menuabout_activate"      : self.aboutdialog,
+                        "on_menuffmpeginfo_activate" : self.ffmpeg_getinfo}
+            
+            #Do the magic connecting to the widgets
+            self.wTree.signal_autoconnect(self.dic)        
+            self.input = None
+
+
+##########################
+## The main loop
+##########################
 
 if __name__ == "__main__":
     program = sinthgunt()
