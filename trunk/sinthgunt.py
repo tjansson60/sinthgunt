@@ -13,7 +13,8 @@ logo_filename="logo.png"
 
 # Opens the log file and write the name and curent data and time
 logfile = open("sinthgunt.log", 'a')
-logfile.writelines('****** Sinthgunt log file START - '+str(time.ctime())+' *******\n')
+logfile.writelines('****** Sinthgunt log file START - '+
+        str(time.ctime())+' *******\n')
 
 
 class sinthgunt:
@@ -39,15 +40,15 @@ class sinthgunt:
         # local variables
         categorylist=self.categorylist
         presetlist=self.presetlist
-        # connetc to menu
+        # connect to menu
         actionmenu = self.wTree.get_widget("menu2")
       
         Ncategory = len(categorylist)
         self.Npreset = len(presetlist)
         counter = 0
-        item = gtk.RadioMenuItem(group=None,label='')   # first, dummy item in group
+        item = gtk.RadioMenuItem(group=None,label='') #first, dummy item in group
         self.presetmenu1headerholder = []
-        # Generate submues
+        # Generate submenues
         for category in categorylist:
             # add submenu for category            
             presetmenu1header = gtk.Menu()
@@ -263,7 +264,7 @@ class sinthgunt:
 		self.thumbnail.set_from_file(self.thumbnail_filename)
         
         # get media file info
-        pest = self.file_getinfo()
+        mediaFileInformation = self.file_getinfo()
         
         # fill label with file info
         self.labelInput.set_text('')
@@ -318,7 +319,9 @@ class sinthgunt:
                         except:
                             1+1 
                     # Start converting
-                    self.process = subprocess.Popen(args=subcommand,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.STDOUT,shell=False)
+                    self.process = subprocess.Popen(args=subcommand,
+                            stdout=subprocess.PIPE,stdin=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,shell=False)
                     
                     logfile.writelines(subcommand)
 
@@ -434,14 +437,18 @@ class sinthgunt:
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
 
+
     # NO FILE SELECTED DIALOG
     def no_file_selected_dialog(self,widget):
-        dialogtext = "You have to select a file and/or a preset before you can begin converting!"
-        message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
+        dialogtext = "You have to select a file and/or a preset before you \
+        \ncan begin converting!"
+        message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
+                gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+
 
     # menuradiobutton
     def menuradiobuttonselect(self,widget):
@@ -452,7 +459,8 @@ class sinthgunt:
                 if item.get_active() == True:
                     self.operation_radiobutton = self.presetlist[counter][1]
                 counter = counter + 1
-    
+
+
     # XML PARSER FUNCTION
     def parseXML(self):
     	# load xml file
@@ -486,14 +494,19 @@ class sinthgunt:
         self.presetlist=presets
         self.categorylist=categories
 
-# Get ffmpeg info function. For determining which version of ffmpeg the user has installed
+
+
+# Get ffmpeg info function. For determining which version of ffmpeg the user
+# has installed
     def ffmpeg_getinfo(self,widget):
         """ This function finds the information about the current selected
         file. Displays number of frames, audio codec and video codec."""
         command = ["ffmpeg","-version"]
         output = ''
+
         try:
-            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
+            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
             output = str(process.stdout.read(10000))        
         except:
             None
@@ -502,15 +515,19 @@ class sinthgunt:
         dialogtitle='ffmpeg info'
         # check to see if ffmpeg is installed. Print error if it is not present
         if output=='':
-            dialogtext='ffmpeg is not installed on this computer or something else went wrong. See README.txt for installation instructions.'
+            dialogtext='ffmpeg is not installed on this computer or something \
+        else went wrong. See README.txt for installation instructions.'
         
-        message = gtk.MessageDialog(None,gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
+        message = gtk.MessageDialog(None,gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
+                gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
         message.set_title('ffmpeg info')
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
-    
+
+
+
 if __name__ == "__main__":
     program = sinthgunt()
     gtk.main()
