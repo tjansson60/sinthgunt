@@ -25,15 +25,7 @@ class sinthgunt:
 
     def load_conf_file(self):
         """ This function reads the configuration file and populates the
-        interface with the options. 
-        # bm[i][0] -- Operation description. This will appear as an entry in
-        # the GUI
-        # bm[i][1] -- Operation binary (eg. /usr/bin/ffmpeg or /usr/bin/cvlc)
-        # bm[i][2] -- Command options before input file name
-        # bm[i][4] -- Command options between input and output file names
-        # bm[i][5] -- Command options after output file name (buggy, doesn't work
-        # 	      with ffmpeg)
-        # bm[i][6] -- Output file postfix
+        interface with the options.
         """
 
         # Populates preset menu from XML file
@@ -188,17 +180,14 @@ class sinthgunt:
         input_basename = temp[N-1]
         # set thumbnail filename
         self.thumbnail_filename = "/tmp/"+str(input_basename)+".jpg"
-            
-        # ffmpeg tumbnail creator
-        subcommand_str = "ffmpeg -y -itsoffset -5 -i "+self.input+\
-                " -vcodec mjpeg -vframes 1 -an -f rawvideo -s 170x128 "+\
-                self.thumbnail_filename
-        subcommand = subcommand_str.split(' ')
-        thumb_process = subprocess.Popen(args=subcommand, 
-                        stdout=subprocess.PIPE,
-                        stdin=subprocess.PIPE,
-                        stderr=subprocess.STDOUT,
-                        shell=False)
+
+        subcommand = ['ffmpeg', '-y', '-itsoffset', '-5' ,'-i' ,self.input,\
+                "-vcodec","mjpeg","-vframes", "1", "-an", "-f", "rawvideo", "-s", "170x128",\
+                self.thumbnail_filename]
+    
+        thumb_process = subprocess.Popen(args=subcommand,
+                            stdout=subprocess.PIPE,stdin=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,shell=False)
 
         # wait for thumbnail generation to complete
         try:
@@ -258,14 +247,15 @@ class sinthgunt:
                     # generate command line in subprocess syntax
                     subcommand = ['/usr/bin/ffmpeg','-y','-i']
                     subcommand.extend([self.input])
-                    subcommand.extend(self.presetlist[i][2].split(' '))            
-                    subcommand.extend([str(self.input+"."+self.presetlist[i][3])])
+                    temp1=self.presetlist[i][2].split(' ')
                     # remove empty entries ('') from the array
-                    for i in range(20):
+                    for ii in range(20):
                         try:
-                            subcommand.remove('')
+                            temp1.remove('')
                         except:
-                            1+1 
+                            pass
+                    temp1.extend([str(self.input+"."+self.presetlist[i][3])])
+                    subcommand.extend(temp1)
                     # Start converting
                     self.process = subprocess.Popen(args=subcommand,
                             stdout=subprocess.PIPE,stdin=subprocess.PIPE,
