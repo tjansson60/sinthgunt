@@ -528,4 +528,22 @@
     <extension>mp4</extension>
     <category>PS3</category>
   </ps3720pfs>
+  <image1sec>
+    <label>JPEG, one image every 1 second.</label>
+    <params>-ss 5 -an -sameq -f image2 -r 1/1</params>
+    <extension>%03d.jpg</extension>
+    <category>Image</category>
+  </image1sec>
+  <image5sec>
+    <label>JPEG, one image every 5 seconds.</label>
+    <params>-ss 5 -an -sameq -f image2 -r 1/5</params>
+    <extension>%03d.jpg</extension>
+    <category>Image</category>
+  </image5sec>
+  <image10sec>
+    <label>JPEG, one image every 10 seconds.</label>
+    <params>-ss 5 -an -sameq -f image2 -r 1/10</params>
+    <extension>%03d.jpg</extension>
+    <category>Image</category>
+  </image10sec>
 </presets>
