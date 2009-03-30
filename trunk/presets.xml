@@ -529,21 +529,45 @@
     <category>PS3</category>
   </ps3720pfs>
   <image1sec>
-    <label>JPEG, one image every 1 second.</label>
+    <label>Extract JPEG images, one every 1 second</label>
     <params>-ss 5 -an -sameq -f image2 -r 1/1</params>
     <extension>%03d.jpg</extension>
     <category>Image</category>
   </image1sec>
   <image5sec>
-    <label>JPEG, one image every 5 seconds.</label>
+    <label>Extract JPEG images, one every 5 seconds</label>
     <params>-ss 5 -an -sameq -f image2 -r 1/5</params>
     <extension>%03d.jpg</extension>
     <category>Image</category>
   </image5sec>
   <image10sec>
-    <label>JPEG, one image every 10 seconds.</label>
+    <label>Extract JPEG images, one every 10 seconds</label>
     <params>-ss 5 -an -sameq -f image2 -r 1/10</params>
     <extension>%03d.jpg</extension>
     <category>Image</category>
   </image10sec>
+  <animgif>
+    <label>Convert to animated gif</label>
+    <params>-pix_fmt rgb24</params>
+    <extension>gif</extension>
+    <category>Image</category>
+  </animgif>
+  <animgif448x336>
+    <label>Convert to animated gif, 448x336</label>
+    <params>-s 448x336 -pix_fmt rgb24</params>
+    <extension>gif</extension>
+    <category>Image</category>
+  </animgif448x336>
+  <animgif300x200>
+    <label>Convert to animated gif, 300x200</label>
+    <params>-s 300x200 -pix_fmt rgb24</params>
+    <extension>gif</extension>
+    <category>Image</category>
+  </animgif300x200>
+  <animgif30x20>
+    <label>Convert to animated gif, 30x20</label>
+    <params>-s 30x20 -pix_fmt rgb24</params>
+    <extension>gif</extension>
+    <category>Image</category>
+  </animgif30x20>
 </presets>
