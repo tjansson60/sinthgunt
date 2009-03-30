@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Wed Mar 25 22:22:59 2009 -->
+<!--Generated with glade3 3.4.5 on Mon Mar 30 16:13:40 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
     <property name="title" translatable="yes">Sinthgunt Converter</property>
-    <property name="window_position">GTK_WIN_POS_MOUSE</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
     <property name="default_width">300</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
     <child>
@@ -114,6 +114,14 @@
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-open</property>
                 <signal name="clicked" handler="on_toolbaropen_clicked"/>
+              </widget>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkSeparatorToolItem" id="toolbutton1">
+                <property name="visible">True</property>
               </widget>
               <packing>
                 <property name="homogeneous">True</property>
