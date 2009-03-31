@@ -445,6 +445,7 @@ class sinthgunt:
         Get ffmpeg info function. For determining which version of ffmpeg the
         user has installed.
         """
+        self.ffmpeg_getcodecs()
         command = ["ffmpeg","-version"]
         output = ''
 
@@ -469,8 +470,26 @@ class sinthgunt:
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
-    
 
+    def ffmpeg_getcodecs(self):
+        """ This function determines which codecs the user has installed by looking at the output from "ffmpeg -formats"
+        """
+        command = ["ffmpeg","-formats"]
+        output = ''
+
+        try:
+            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
+            output = str(process.stdout.read(10000))        
+        except:
+            None
+        output_lines=output.split('\n')
+        codecs=[]
+        for line in output_lines:
+            print line
+            line_split=line.split(' ')
+            line_codec=line_split[0:7]
+            print line_codec
 
 #####################
 ## The init function
