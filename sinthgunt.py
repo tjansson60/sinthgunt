@@ -486,9 +486,13 @@ class sinthgunt:
         output_lines=output.split('\n')
         codecs=[]
         for line in output_lines:
-            print line
             line_split=line.split(' ')
             line_codec=line_split[0:7]
+            for i in range(20):
+                try:
+                    line_codec.remove('')
+                except:
+                    pass
             print line_codec
 
 #####################
