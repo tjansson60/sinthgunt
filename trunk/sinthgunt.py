@@ -484,7 +484,8 @@ class sinthgunt:
         except:
             None
         output_lines=output.split('\n')
-        codecs=[]
+        codecs_raw=[]
+        Ncodecs=0
         for line in output_lines:
             line_split=line.split(' ')
             line_codec=line_split[0:7]
@@ -493,8 +494,24 @@ class sinthgunt:
                     line_codec.remove('')
                 except:
                     pass
-            print line_codec
-
+            codecs_raw.append(line_codec)
+            Ncodecs=Ncodecs+1
+        # look for encoding 
+        codecs=[]
+        for i in range(Ncodecs):
+                try:
+                    # codec name, encode, decode
+                    row = ['','False','False']
+                    if codecs_raw[i][0].find('E')== 0 or codecs_raw[i][0].find('E')== 1:
+                        row[0]=codecs_raw[i][-1]  
+                        row[1]=True                                           
+                        print codecs_raw[i][0]+codecs_raw[i][-1]
+                        codecs.append(row)
+                except:     
+                    pass
+        print codecs
+        # look for dencoding
+            
 #####################
 ## The init function
 #####################
