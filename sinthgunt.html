@@ -53,6 +53,8 @@ file.</tt></dd></dl>
 <dl><dt><a name="sinthgunt-checkfile"><strong>checkfile</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;executed&nbsp;many&nbsp;times&nbsp;to&nbsp;check&nbsp;on&nbsp;the&nbsp;progress&nbsp;of<br>
 the&nbsp;conversion.</tt></dd></dl>
 
+<dl><dt><a name="sinthgunt-ffmpeg_getcodecs"><strong>ffmpeg_getcodecs</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;determines&nbsp;which&nbsp;codecs&nbsp;the&nbsp;user&nbsp;has&nbsp;installed&nbsp;by&nbsp;looking&nbsp;at&nbsp;the&nbsp;output&nbsp;from&nbsp;"ffmpeg&nbsp;-formats"</tt></dd></dl>
+
 <dl><dt><a name="sinthgunt-ffmpeg_getinfo"><strong>ffmpeg_getinfo</strong></a>(self, widget)</dt><dd><tt>This&nbsp;function&nbsp;finds&nbsp;the&nbsp;information&nbsp;about&nbsp;the&nbsp;current&nbsp;selected<br>
 file.&nbsp;Displays&nbsp;number&nbsp;of&nbsp;frames,&nbsp;audio&nbsp;codec&nbsp;and&nbsp;video&nbsp;codec.<br>
 &nbsp;<br>
@@ -62,15 +64,15 @@ user&nbsp;has&nbsp;installed.</tt></dd></dl>
 <dl><dt><a name="sinthgunt-file_getinfo"><strong>file_getinfo</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;finds&nbsp;the&nbsp;information&nbsp;about&nbsp;the&nbsp;current&nbsp;selected<br>
 file.&nbsp;Displays&nbsp;number&nbsp;of&nbsp;frames,&nbsp;audio&nbsp;codec&nbsp;and&nbsp;video&nbsp;codec.</tt></dd></dl>
 
-<dl><dt><a name="sinthgunt-load_conf_file"><strong>load_conf_file</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;reads&nbsp;the&nbsp;configuration&nbsp;file&nbsp;and&nbsp;populates&nbsp;the<br>
-interface&nbsp;with&nbsp;the&nbsp;options.</tt></dd></dl>
+<dl><dt><a name="sinthgunt-load_conf_file"><strong>load_conf_file</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;reads&nbsp;the&nbsp;configuration&nbsp;xml-file&nbsp;and&nbsp;populates&nbsp;the<br>
+Preset&nbsp;menu&nbsp;with&nbsp;the&nbsp;conversion&nbsp;options.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-menuopenfile"><strong>menuopenfile</strong></a>(self, widget)</dt><dd><tt>Defines&nbsp;the&nbsp;filters&nbsp;used&nbsp;when&nbsp;selecting&nbsp;new&nbsp;file.</tt></dd></dl>
 
-<dl><dt><a name="sinthgunt-menuradiobuttonselect"><strong>menuradiobuttonselect</strong></a>(self, widget)</dt><dd><tt>This&nbsp;function&nbsp;lacks&nbsp;a&nbsp;proper&nbsp;description.</tt></dd></dl>
+<dl><dt><a name="sinthgunt-menuradiobuttonselect"><strong>menuradiobuttonselect</strong></a>(self, widget)</dt><dd><tt>Function&nbsp;that&nbsp;detects&nbsp;which&nbsp;menu&nbsp;radio&nbsp;button&nbsp;has&nbsp;been&nbsp;selected.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-no_file_selected_dialog"><strong>no_file_selected_dialog</strong></a>(self, widget)</dt><dd><tt>If&nbsp;no&nbsp;file&nbsp;have&nbsp;been&nbsp;selected&nbsp;to&nbsp;send&nbsp;to&nbsp;ffmpeg&nbsp;this&nbsp;warning&nbsp;will<br>
-be&nbsp;displayes.</tt></dd></dl>
+be&nbsp;displayed.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-parseXML"><strong>parseXML</strong></a>(self)</dt><dd><tt>Parses&nbsp;the&nbsp;XML&nbsp;file&nbsp;to&nbsp;gather&nbsp;the&nbsp;different&nbsp;conversion&nbsp;presets&nbsp;into<br>
 categories&nbsp;which&nbsp;will&nbsp;be&nbsp;inserted&nbsp;into&nbsp;the&nbsp;gui.</tt></dd></dl>
@@ -87,6 +89,9 @@ it&nbsp;for&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;program.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-stop"><strong>stop</strong></a>(self, widget)</dt><dd><tt>Tried&nbsp;to&nbsp;kill&nbsp;the&nbsp;process&nbsp;before&nbsp;it&nbsp;is&nbsp;done.</tt></dd></dl>
 
+<dl><dt><a name="sinthgunt-unsupported_codec_dialog"><strong>unsupported_codec_dialog</strong></a>(self, widget)</dt><dd><tt>If&nbsp;an&nbsp;unsupported&nbsp;codec&nbsp;has&nbsp;been&nbsp;selected&nbsp;this&nbsp;warning&nbsp;will<br>
+be&nbsp;displayed.</tt></dd></dl>
+
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">
@@ -94,6 +99,6 @@ it&nbsp;for&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;program.</tt></dd></dl>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>logfile</strong> = &lt;open file 'sinthgunt.log', mode 'a' at 0x83eef98&gt;<br>
+<td width="100%"><strong>logfile</strong> = &lt;open file 'sinthgunt.log', mode 'a' at 0x9a254e8&gt;<br>
 <strong>logo_filename</strong> = 'logo.png'</td></tr></table>
 </body></html>
