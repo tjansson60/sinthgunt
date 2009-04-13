@@ -24,11 +24,11 @@ logo_filename="logo.png"
 class sinthgunt:
 
     def load_conf_file(self):
-        """ This function reads the configuration file and populates the
-        interface with the options.
+        """ This function reads the configuration xml-file and populates the
+        Preset menu with the conversion options.
         """
 
-        # Populates preset menu from XML file
+        # Populates Preset menu from XML file
         # Load XML config file
         self.parseXML()
         # local variables
@@ -36,7 +36,6 @@ class sinthgunt:
         presetlist=self.presetlist
         # connect to menu
         actionmenu = self.wTree.get_widget("menu2")
-      
         Ncategory = len(categorylist)
         self.Npreset = len(presetlist)
         counter = 0
@@ -54,6 +53,31 @@ class sinthgunt:
                 if presetlist[i][0] == categorylist[counter]:
                     item = gtk.RadioMenuItem(group=item,label=presetlist[i][1])
                     item.connect("activate", self.menuradiobuttonselect)
+
+                    # change color
+                    # if encoding true
+                    for requiredcodec in self.presetlist[i][4]:
+                            flag =0
+                            notfound = 1
+                            for codec in self.codecs:
+                                #print codec
+                                if requiredcodec==codec[0] and codec[1]==True and flag==0:                           
+                                    #label =  item.get_children()[0]
+                                    #label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#009900')) # will work
+                                    notfound = 0
+                                if requiredcodec==codec[0] and codec[1]==False:
+                                    label =  item.get_children()[0]
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000')) # will not work
+                                    notfound = 0
+                                    flag=1
+                            # if codec was not found
+                            if notfound==1:
+                                    label =  item.get_children()[0]
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#0000FF')) # might work
+                    # if encoding false
+                    #label =  item.get_children()[0]
+                    #label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000'))
+
                     #item.set_active(1)
                     self.presetmenu1headerholder[counter].append(item)
             self.operation_radiobutton = ''
@@ -411,20 +435,34 @@ class sinthgunt:
         xml_file = os.path.join(xml_file, "presets.xml")
         optionsXML = etree.parse(xml_file)
         presets=[]
-        row = [' ',' ',' ',' ']
+        row = [' ',' ',' ',' ',[]]
 
 	    # Iterate through presets
+        flag=1
         for child in optionsXML.getiterator():
             if child.tag == 'label':
                 row[1]=child.text
+                flag = flag+1
             if child.tag == 'params':
                 row[2]=child.text
+                flag = flag+1
             if child.tag == 'extension':
                 row[3]=child.text.strip(' ')
+                flag = flag+1
             if child.tag == 'category':
                 row[0]=child.text
+                flag = flag+1
+            if child.tag == 'codecs':
+                row[4]=child.text.split(',')
+                flag = flag+1
                 presets.append(row)
-                row = [' ',' ',' ',' ']
+                row = [' ',' ',' ',' ',[]]
+                flag = 0
+            #if flag==4 or flag ==5:
+             #   presets.append(row)
+              #  row = [' ',' ',' ',' ',[]]
+               # flag = 0
+            
     	# Sort by category
     	presets.sort(lambda x, y: cmp(x[0],y[0]))
     	# find category list
@@ -435,7 +473,9 @@ class sinthgunt:
         
         self.presetlist=presets
         self.categorylist=categories
-
+        print self.presetlist    
+        # Get codecs and check if encoding and/or decoding is avaliable
+        self.ffmpeg_getcodecs()
 
 
     def ffmpeg_getinfo(self,widget):
@@ -497,21 +537,30 @@ class sinthgunt:
             codecs_raw.append(line_codec)
             Ncodecs=Ncodecs+1
         # look for encoding 
-        codecs=[]
+        self.codecs=[]
         for i in range(Ncodecs):
+                flag = 0
                 try:
-                    # codec name, encode, decode
-                    row = ['','False','False']
+                    # row: codec name, encode, decode
+                    row = ['',False,False]
+                    # Check to see if we can encode
                     if codecs_raw[i][0].find('E')== 0 or codecs_raw[i][0].find('E')== 1:
                         row[0]=codecs_raw[i][-1]  
-                        row[1]=True                                           
-                        print codecs_raw[i][0]+codecs_raw[i][-1]
-                        codecs.append(row)
+                        row[1]=True
+                        flag = 1
+                    # Check to see if we can decode
+                    if codecs_raw[i][0].find('D')== 0 or codecs_raw[i][0].find('D')== 1:
+                        row[0]=codecs_raw[i][-1]
+                        row[2]=True
+                        flag =1
+                    # Only add codec if we can either encode or decode
+                    if flag==1:
+                        self.codecs.append(row)                       
                 except:     
                     pass
-        print codecs
-        # look for dencoding
-            
+        # Print to console for debugging        
+        # print self.codecs
+        
 #####################
 ## The init function
 #####################
