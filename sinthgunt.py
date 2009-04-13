@@ -39,8 +39,13 @@ class sinthgunt:
         Ncategory = len(categorylist)
         self.Npreset = len(presetlist)
         counter = 0
-        item = gtk.RadioMenuItem(group=None,label='') #first, dummy item in group
+        counter2 = 0
+        # Create first, dummy item in group. All later items are attached to this group
+        item = gtk.RadioMenuItem(group=None,label='') 
+        item.connect("activate", self.menuradiobuttonselect)
+        # Initialise presetmenuheaderholder, a holder for the submenues
         self.presetmenu1headerholder = []
+        self.preset_enabled = []
         # Generate submenues
         for category in categorylist:
             # add submenu for category            
@@ -51,19 +56,21 @@ class sinthgunt:
             # add all presets in the category to this submenu
             for i in range(self.Npreset):
                 if presetlist[i][0] == categorylist[counter]:
+                    self.preset_enabled.append('')
+                    # Create radio button for the preset
                     item = gtk.RadioMenuItem(group=item,label=presetlist[i][1])
+                    # What to do when the radiobutton is clicked
                     item.connect("activate", self.menuradiobuttonselect)
-
-                    # change color
-                    # if encoding true
+                    # Check to see if the codecs required by the preset are supported by the users version of ffmpeg
                     for requiredcodec in self.presetlist[i][4]:
                             flag =0
                             notfound = 1
                             for codec in self.codecs:
                                 # if encoding true
-                                if requiredcodec==codec[0] and codec[1]==True and flag==0:    
-                                    item.connect("activate", self.menuradiobuttonselect)                       
+                                if requiredcodec==codec[0] and codec[1]==True and flag==0: # will (probably) work
+                                    #item.connect("activate", self.menuradiobuttonselect)                       
                                     notfound = 0
+                                    self.preset_enabled[counter2]=True
                                 # if encoding false
                                 if requiredcodec==codec[0] and codec[1]==False:
                                     label =  item.get_children()[0]
@@ -71,24 +78,27 @@ class sinthgunt:
                                     notfound = 0
                                     flag=1
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')
-                                    #item.set_inconsistent(True)
-                                    item.connect("activate", self.unsupported_codec_dialog)
+                                    #item.connect("activate", self.menuradiobuttonselect)
+                                    self.preset_enabled[counter2]=False
                             # if codec was not found
                             if notfound==1:
                                     label =  item.get_children()[0]
                                     label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # might work
-                                    item.set_tooltip_text('Your version of ffmpeg does not support this preset.')        
-                                    #item.set_inconsistent(True)
-                                    item.connect("activate", self.unsupported_codec_dialog)
+                                    item.set_tooltip_text('Your version of ffmpeg does not support this preset.')    
+                                    #item.connect("activate", self.menuradiobuttonselect)
+                                    self.preset_enabled[counter2]=False
+                    counter2 = counter2+1
+                    # add item to the headerholder
                     self.presetmenu1headerholder[counter].append(item)
-            self.operation_radiobutton = ''
+                self.operation_radiobutton = ''
 
             # show stuff in the menu
             actionmenu.append(presetmenu1)        
             self.presetmenu1headerholder[counter].show_all()
             presetmenu1.show()
             counter = counter+1
-           
+            
+        print self.preset_enabled
 
 
     def checkfile(self):
@@ -429,9 +439,9 @@ after pressing the convert button"
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
-        self.menuradiobuttonselect
+
     def menuradiobuttonselect(self,widget):
-        """ This function lacks a proper description."""
+        """ Function that detects which menu radio button has been selected."""
 
         self.operation_radiobutton = ''
         counter=0
@@ -439,7 +449,12 @@ after pressing the convert button"
             for item in presetmenu1header:
                 if item.get_active() == True:
                     self.operation_radiobutton = self.presetlist[counter][1]
+                    # if preset is not supported, display unsupported_codec_dialog                    
+                    if self.preset_enabled[counter]==False:
+                        self.unsupported_codec_dialog(widget)
+                        item.set_active(True)
                 counter = counter + 1
+                
 
     def parseXML(self):
         """ Parses the XML file to gather the different conversion presets into
@@ -489,6 +504,7 @@ after pressing the convert button"
         self.presetlist=presets
         self.categorylist=categories
         print self.presetlist    
+        print self.categorylist
         # Get codecs and check if encoding and/or decoding is avaliable
         self.ffmpeg_getcodecs()
 
