@@ -78,7 +78,7 @@ class sinthgunt:
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')
                                     self.preset_enabled[counter2]=False
                             # if codec was not found
-                            if notfound==1:
+                            if notfound==1 and flag==0:
                                     label =  item.get_children()[0]
                                     label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # might work
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')    
@@ -86,7 +86,6 @@ class sinthgunt:
                     counter2 = counter2+1
                     # add item to the headerholder
                     self.presetmenu1headerholder[counter].append(item)
-                self.operation_radiobutton = ''
 
             # show stuff in the menu
             actionmenu.append(presetmenu1)        
@@ -94,9 +93,6 @@ class sinthgunt:
             presetmenu1.show()
             counter = counter+1
             
-        print self.preset_enabled
-
-
     def checkfile(self):
         """ This function is executed many times to check on the progress of
         the conversion. """
@@ -499,8 +495,6 @@ after pressing the convert button"
         
         self.presetlist=presets
         self.categorylist=categories
-        print self.presetlist    
-        print self.categorylist
         # Get codecs and check if encoding and/or decoding is avaliable
         self.ffmpeg_getcodecs()
 
