@@ -73,7 +73,7 @@ class sinthgunt:
                             # if codec was not found
                             if notfound==1:
                                     label =  item.get_children()[0]
-                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#0000FF')) # might work
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000')) # might work
                     # if encoding false
                     #label =  item.get_children()[0]
                     #label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000'))
