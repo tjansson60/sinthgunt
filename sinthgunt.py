@@ -42,7 +42,6 @@ class sinthgunt:
         counter2 = 0
         # Create first, dummy item in group. All later items are attached to this group
         item = gtk.RadioMenuItem(group=None,label='') 
-        item.connect("activate", self.menuradiobuttonselect)
         # Initialise presetmenuheaderholder, a holder for the submenues
         self.presetmenu1headerholder = []
         self.preset_enabled = []
@@ -67,8 +66,7 @@ class sinthgunt:
                             notfound = 1
                             for codec in self.codecs:
                                 # if encoding true
-                                if requiredcodec==codec[0] and codec[1]==True and flag==0: # will (probably) work
-                                    #item.connect("activate", self.menuradiobuttonselect)                       
+                                if requiredcodec==codec[0] and codec[1]==True and flag==0: # will (probably) work                    
                                     notfound = 0
                                     self.preset_enabled[counter2]=True
                                 # if encoding false
@@ -78,14 +76,12 @@ class sinthgunt:
                                     notfound = 0
                                     flag=1
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')
-                                    #item.connect("activate", self.menuradiobuttonselect)
                                     self.preset_enabled[counter2]=False
                             # if codec was not found
                             if notfound==1:
                                     label =  item.get_children()[0]
                                     label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # might work
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')    
-                                    #item.connect("activate", self.menuradiobuttonselect)
                                     self.preset_enabled[counter2]=False
                     counter2 = counter2+1
                     # add item to the headerholder
