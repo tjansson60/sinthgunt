@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Mon Mar 30 16:13:40 2009 -->
+<!--Generated with glade3 3.4.5 on Mon Apr 13 22:41:47 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
     <property name="title" translatable="yes">Sinthgunt Converter</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
     <property name="default_width">300</property>
+    <property name="icon">icon.png</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
     <child>
       <widget class="GtkVBox" id="vbox1">
@@ -160,12 +161,22 @@
             <property name="n_rows">2</property>
             <property name="n_columns">2</property>
             <child>
-              <widget class="GtkLabel" id="labelOperation">
+              <widget class="GtkLabel" id="labelGuide">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="xpad">7</property>
+                <property name="ypad">4</property>
+                <property name="justify">GTK_JUSTIFY_FILL</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelInput">
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
               </packing>
             </child>
             <child>
@@ -183,23 +194,13 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="labelInput">
+              <widget class="GtkLabel" id="labelOperation">
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
               </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelGuide">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="xpad">7</property>
-                <property name="ypad">4</property>
-                <property name="justify">GTK_JUSTIFY_FILL</property>
-              </widget>
             </child>
           </widget>
           <packing>
