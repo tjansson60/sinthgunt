@@ -60,25 +60,26 @@ class sinthgunt:
                             flag =0
                             notfound = 1
                             for codec in self.codecs:
-                                #print codec
-                                if requiredcodec==codec[0] and codec[1]==True and flag==0:                           
-                                    #label =  item.get_children()[0]
-                                    #label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#009900')) # will work
+                                # if encoding true
+                                if requiredcodec==codec[0] and codec[1]==True and flag==0:    
+                                    item.connect("activate", self.menuradiobuttonselect)                       
                                     notfound = 0
+                                # if encoding false
                                 if requiredcodec==codec[0] and codec[1]==False:
                                     label =  item.get_children()[0]
-                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000')) # will not work
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # will not work
                                     notfound = 0
                                     flag=1
+                                    item.set_tooltip_text('Your version of ffmpeg does not support this preset.')
+                                    #item.set_inconsistent(True)
+                                    item.connect("activate", self.unsupported_codec_dialog)
                             # if codec was not found
                             if notfound==1:
                                     label =  item.get_children()[0]
-                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000')) # might work
-                    # if encoding false
-                    #label =  item.get_children()[0]
-                    #label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#FF0000'))
-
-                    #item.set_active(1)
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # might work
+                                    item.set_tooltip_text('Your version of ffmpeg does not support this preset.')        
+                                    #item.set_inconsistent(True)
+                                    item.connect("activate", self.unsupported_codec_dialog)
                     self.presetmenu1headerholder[counter].append(item)
             self.operation_radiobutton = ''
 
@@ -403,7 +404,7 @@ class sinthgunt:
 
     def no_file_selected_dialog(self,widget):
         """ If no file have been selected to send to ffmpeg this warning will
-        be displayes."""
+        be displayed."""
 
         dialogtext = "You have to select a file and/or a preset before you \
         \ncan begin converting!"
@@ -413,8 +414,22 @@ class sinthgunt:
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+    
+    def unsupported_codec_dialog(self,widget):
+        """ If an unsupported codec has been selected this warning will
+        be displayed."""
 
-
+        dialogtext = "You have selected a preset which is (probably) not supported by your version of ffmpeg. \
+To upgrade ffmpeg, please check your distribution documentation. \
+\n If you want, you may disregard this warning and check the log file (sinthgunt.log) \
+after pressing the convert button"
+        message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
+                gtk.BUTTONS_NONE, dialogtext)
+        message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
+        resp = message.run()
+        if resp == gtk.RESPONSE_CLOSE:
+            message.destroy()
+        self.menuradiobuttonselect
     def menuradiobuttonselect(self,widget):
         """ This function lacks a proper description."""
 
