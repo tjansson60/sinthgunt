@@ -7,7 +7,7 @@
 The Sinthgunt Converter is a graphical front end to the notoriously complex 
 ffmpeg command line.
 
-Download: http://code.google.com/p/sinthgunt/
+Download and installation guide: http://code.google.com/p/sinthgunt/
 SVN Stats: http://www.hartvig.de/sinthgunt
 
 ###################
@@ -65,3 +65,4 @@ http://code.google.com/p/pyffmpeg/
 http://code.google.com/p/wffmpeg/
 http://code.google.com/p/jffmpeggui/
 http://code.google.com/p/medpiper/
+http://pspvc.sourceforge.net/
