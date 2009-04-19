@@ -398,7 +398,7 @@ class sinthgunt:
                         \nTheb, select the type of conversion you want to perform from the Presets menu.\
                         \nTo start converting, press the Convert button in the main window."
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
+        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
@@ -412,7 +412,7 @@ class sinthgunt:
         \ncan begin converting!"
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
                 gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
+        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
@@ -427,7 +427,7 @@ To upgrade ffmpeg, please check your distribution documentation. \
 after pressing the convert button"
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
                 gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
+        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
