@@ -526,7 +526,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         
         message = gtk.MessageDialog(None,gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
                 gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_CLOSE)
+        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         message.set_title('ffmpeg info')
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
