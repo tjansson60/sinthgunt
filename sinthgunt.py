@@ -450,7 +450,9 @@ after pressing the convert button"
 
     def parseXML(self):
         """ Parses the XML file to gather the different conversion presets into
-        categories which will be inserted into the gui."""
+        categories which will be inserted into the gui. 
+(planned) In the future, this function should also test wether the preset will work with the version of ffmpeg avaliable to the user. The result should be included in the array presets e.g. by using row = [' ',' ',' ',' ',[],'encoding=True','decoding=False'] syntax. 
+This would significantly improve the clarity of the load_conf_file(self) function."""
 
         xml_file = os.path.abspath(__file__)
         xml_file = os.path.dirname(xml_file) # load xml file
@@ -459,42 +461,40 @@ after pressing the convert button"
         presets=[]
         row = [' ',' ',' ',' ',[]]
 
-	    # Iterate through presets
-        flag=1
+	    # Iterate through presets in xml file
         for child in optionsXML.getiterator():
-            if child.tag == 'label':
+            if child.tag == 'label': # preset name
                 row[1]=child.text
-                flag = flag+1
-            if child.tag == 'params':
+
+            if child.tag == 'params': # preset ffmpeg command line options
                 row[2]=child.text
-                flag = flag+1
-            if child.tag == 'extension':
+
+            if child.tag == 'extension': # output file extension
                 row[3]=child.text.strip(' ')
-                flag = flag+1
-            if child.tag == 'category':
+
+            if child.tag == 'category': # preset category
                 row[0]=child.text
-                flag = flag+1
-            if child.tag == 'codecs':
+
+            if child.tag == 'codecs': # encoding codecs required by preset
                 row[4]=child.text.split(',')
-                flag = flag+1
                 presets.append(row)
                 row = [' ',' ',' ',' ',[]]
-                flag = 0
-            #if flag==4 or flag ==5:
-             #   presets.append(row)
-              #  row = [' ',' ',' ',' ',[]]
-               # flag = 0
+                # (planned): Test if codec will work
+
             
-    	# Sort by category
+    	# Sort by category name
     	presets.sort(lambda x, y: cmp(x[0],y[0]))
+
     	# find category list
     	categories=[presets[0][0]]
     	for row in presets:
         	if row[0]!=categories[-1]:
             		categories.append(row[0])
-        
+
+        # make lists global        
         self.presetlist=presets
         self.categorylist=categories
+
         # Get codecs and check if encoding and/or decoding is avaliable
         self.ffmpeg_getcodecs()
 
