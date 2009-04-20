@@ -239,7 +239,7 @@ class sinthgunt:
                                 +'\nVideo resolution: '+ str(self.video_codec[2])\
                                 +'\nVideo bitrate: '+ str(self.video_codec[3])\
                                 +'\n'+'Number of frames: '+str(self.file_frames))
-        self.labelGuide.set_text(input_basename+' info:')
+        self.labelGuide.set_text('Input file: '+input_basename)
 
     
     
@@ -441,10 +441,12 @@ after pressing the convert button"
             for item in presetmenu1header:
                 if item.get_active() == True:
                     self.operation_radiobutton = self.presetlist[counter][1]
+                    self.labelOperation.set_text('Output to '+self.presetlist[counter][1])
                     # if preset is not supported, display unsupported_codec_dialog                    
                     if self.preset_enabled[counter]==False:
                         self.unsupported_codec_dialog(widget)
-                        item.set_active(True)
+                        self.labelOperation.set_text('Output to '+self.presetlist[counter][1]+'\n(Preset not supported by ffmpeg)')
+                        #item.set_active(True)
                 counter = counter + 1
                 
 
@@ -601,7 +603,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
             # connect to label
             self.labelGuide = self.wTree.get_widget("labelGuide")
             self.labelInput = self.wTree.get_widget("labelInput")
-            
+            self.labelOperation = self.wTree.get_widget("labelOperation")        
             #Loads the operation combobox
             self.Operation = self.wTree.get_widget("comboboxOperation")
 
