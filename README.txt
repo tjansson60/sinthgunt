@@ -57,6 +57,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with the Sinthgunt Converter. If not, see <http://www.gnu.org/licenses/
 
+* Parts of the file presets.xml are Copyright 2006-2009 Matthew Weatherford and are (re)used here under the GPL v3 license.
+
 ##################
 #  Related projects
 ##################
