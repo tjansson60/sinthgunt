@@ -1,7 +1,7 @@
 # $Id$
 
 ###################
-# ABOUT The Sinthgunt Converter
+# 1.0 ABOUT The Sinthgunt Converter
 ###################
 
 The Sinthgunt Converter is a graphical front end to the notoriously complex 
@@ -11,19 +11,35 @@ Download and installation guide: http://code.google.com/p/sinthgunt/
 SVN Stats: http://www.hartvig.de/sinthgunt
 
 ###################
-# INSTALLATION
+# 2.0 INSTALLATION
 ###################
 
-# Linux(Ubuntu 8.10)
-The only dependency in Ubuntu 8.10 is ffmpeg, which is installed by executing
-sudo apt-get install ffmpeg
+2.1 Linux(Ubuntu 8.10 or similar)
 
-# Windows 
+2.1.1 Requirements
+
+Sinthgunt requires that you are running Linux, and that you have a working installation of python, pygtk and ffmpeg. On Ubuntu all you have to do is install ffmpeg by issuing the command 
+
+    sudo apt-get install ffmpeg
+
+2.1.2 Installation
+Download the latest source snapshot by issuing the command
+    svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt-read-only
+Next, install sinthgunt by running the command
+
+    python setup.py install
+
+Now, run Sinthgunt by issuing the command
+    
+    sinthgunt.py
+
+2.2 Windows 
+
 Windows is not yet supported but ffmpeg, Python and GTK+ are available so 
 maybe a future release of The Sinthgunt Converter will support Windows. 
 
 ###################
-# KNOWN ISSUS / TODO
+# 3.0 KNOWN ISSUS / TODO
 ###################
 
 * The thumbnails are not generated for some files
@@ -38,7 +54,7 @@ maybe a future release of The Sinthgunt Converter will support Windows.
 * How about a direct "Download youtube movie and convert to mp3 function"?
 
 ###################
-#  LICENSE
+# 4.0 LICENSE
 ###################
 
 Copyright 2009 Kåre Hartvig Jensen (kare1234@gmail.com) and 
@@ -57,10 +73,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with the Sinthgunt Converter. If not, see <http://www.gnu.org/licenses/
 
-* Parts of the file presets.xml are Copyright 2006-2009 Matthew Weatherford and are (re)used here under the GPL v3 license.
+4.1
+
+Parts of the file presets.xml are Copyright 2006-2009 Matthew Weatherford and are (re)used here under the GPL v3 license.
 
 ##################
-#  Related projects
+# 5.0 Related projects
 ##################
 http://code.google.com/p/winff/
 http://code.google.com/p/pyffmpeg/
