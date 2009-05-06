@@ -13,13 +13,19 @@ import time
 from xml.etree import ElementTree as etree
 
 
+# Checks for absolute or relative path
+if os.path.exists("sinthgunt.glade"):
+    DATA_DIR=""
+else:
+    DATA_DIR="/usr/share/sinthgunt/"
+
+
 # Opens the log file and write the name and curent data and time
-logfile = open("sinthgunt.log", 'a')
+logfile_filename = os.path.expanduser("~/.sinthgunt.log")
+logfile = open(logfile_filename, 'a')
 logfile.writelines('****** Sinthgunt log file START - '+
         str(time.ctime())+' *******\n')
-logo_filename="logo.png"
-
-
+logo_filename=DATA_DIR+"logo.png"
 
 class sinthgunt:
 
@@ -458,7 +464,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
 
         xml_file = os.path.abspath(__file__)
         xml_file = os.path.dirname(xml_file) # load xml file
-        xml_file = os.path.join(xml_file, "presets.xml")
+        xml_file = os.path.join(xml_file, DATA_DIR+"presets.xml")
         optionsXML = etree.parse(xml_file)
         presets=[]
         row = [' ',' ',' ',' ',[]]
@@ -593,7 +599,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         the functions."""
 
         #Set the Glade file
-        self.gladefile = "sinthgunt.glade"  
+        self.gladefile = DATA_DIR+"sinthgunt.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
 
         #Get the Main Window, and connect the "destroy" event
