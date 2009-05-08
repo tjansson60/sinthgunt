@@ -14,10 +14,10 @@ from xml.etree import ElementTree as etree
 
 
 # Checks for absolute or relative path
-if os.path.exists("sinthgunt.glade"):
-    DATA_DIR=""
-else:
+if os.path.exists("/usr/bin/sinthgunt.py"):
     DATA_DIR="/usr/share/sinthgunt/"
+else:
+    DATA_DIR=""
 
 
 # Opens the log file and write the name and curent data and time
