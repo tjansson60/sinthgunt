@@ -339,6 +339,7 @@ class sinthgunt:
                 stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
 
         flag = 1
+        counter=0
         while flag == 1:   
             try:       
                 output = str(process.stdout.read(2000))        
@@ -391,7 +392,9 @@ class sinthgunt:
                                 output_split[i+5]]
                         flag = 0  
 
-
+            if counter >= 1000:
+                flag = 0
+            counter = counter+1
 
     def aboutdialog(self,widget):
         """ Defines the about information about the program."""
