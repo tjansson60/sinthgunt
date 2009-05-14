@@ -10,8 +10,15 @@ import gtk.glade
 import subprocess
 import gobject
 import time
+import sys
 from xml.etree import ElementTree as etree
 
+# Check to see if ffmpeg is installed
+if os.path.exists("/usr/bin/ffmpeg"):
+    print('ffmpeg found. Starting Sinthgunt...')# carry on
+else:
+    print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.')
+    sys.exit(0) 
 
 # Checks for absolute or relative path
 if os.path.exists("/usr/bin/sinthgunt.py"):
