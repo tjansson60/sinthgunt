@@ -406,11 +406,15 @@ class sinthgunt:
 
         dialogtext = "The Sinthgunt Converter - a ffmpeg gui.\
                         \nBy Thomas R. N. Jansson (tjansson@tjansson.dk) and\
-                        \nKaare H. Jensen (hartvig@hartvig.de)\
-                        \nSee LICENSE.TXT for License information\
-                        \nSelect the video file you wish to convert from the File menu.\
-                        \nTheb, select the type of conversion you want to perform from the Presets menu.\
-                        \nTo start converting, press the Convert button in the main window."
+                        \n Kaare H. Jensen (kare1234@gmail.com)\
+                        \n\nSee LICENSE.TXT for License information\
+                        \nSelect the video file you wish to convert\
+                        \nfrom the File menu. Then, select the type\
+                        \nof conversion you want to perform from the\
+                        \nPresets menu. To start converting, press the\
+                        \nConvert button in the main window.\
+                        \n\nPlease visit http://www.sinthgunt.org\
+                        \nfor more info."
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         resp = message.run()
