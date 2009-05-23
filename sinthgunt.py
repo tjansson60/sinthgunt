@@ -40,19 +40,19 @@ class sinthgunt:
         """ This function reads the configuration xml-file and populates the
         Preset menu with the conversion options.
         """
-
-        # Populates Preset menu from XML file
         # Load XML config file
         self.parseXML()
-        # local variables
-        categorylist=self.categorylist
-        presetlist=self.presetlist
-        # connect to menu
+        # Local variables
+        categorylist=self.categorylist  # List of categories
+        presetlist=self.presetlist      # List of presets in the categories
+        # Connect to menu
         actionmenu = self.wTree.get_widget("menu2")
-        Ncategory = len(categorylist)
-        self.Npreset = len(presetlist)
-        counter = 0
-        counter2 = 0
+        # Constants
+        Ncategory = len(categorylist) # Number of categories
+        self.Npreset = len(presetlist) # Number of presets
+        counter = 0     # Counter that keeps track of the categories in the categorylist
+        counter2 = 0    # Counter that keeps track of the codecs in the self.preset_enabled list
+
         # Create first, dummy item in group. All later items are attached to this group
         item = gtk.RadioMenuItem(group=None,label='') 
         # Initialise presetmenuheaderholder, a holder for the submenues
@@ -60,12 +60,12 @@ class sinthgunt:
         self.preset_enabled = []
         # Generate submenues
         for category in categorylist:
-            # add submenu for category            
+            # Add submenu for category            
             presetmenu1header = gtk.Menu()
             self.presetmenu1headerholder.append(presetmenu1header)
             presetmenu1 = gtk.MenuItem(category)
             presetmenu1.set_submenu(self.presetmenu1headerholder[counter])
-            # add all presets in the category to this submenu
+            # Add all presets in the category to this submenu
             for i in range(self.Npreset):
                 if presetlist[i][0] == categorylist[counter]:
                     self.preset_enabled.append('')
@@ -78,14 +78,14 @@ class sinthgunt:
                             flag =0
                             notfound = 1
                             for codec in self.codecs:
-                                # if encoding true
-                                if requiredcodec==codec[0] and codec[1]==True and flag==0: # will (probably) work                    
+                                # If encoding true
+                                if requiredcodec==codec[0] and codec[1]==True and flag==0: # preset will work                    
                                     notfound = 0
                                     self.preset_enabled[counter2]=True
                                 # if encoding false
                                 if requiredcodec==codec[0] and codec[1]==False:
                                     label =  item.get_children()[0]
-                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # will not work
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # preset will not work - grayed out
                                     notfound = 0
                                     flag=1
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')
@@ -93,7 +93,7 @@ class sinthgunt:
                             # if codec was not found
                             if notfound==1 and flag==0:
                                     label =  item.get_children()[0]
-                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # might work
+                                    label.modify_fg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#888888')) # preset might work - grayed out
                                     item.set_tooltip_text('Your version of ffmpeg does not support this preset.')    
                                     self.preset_enabled[counter2]=False
                     counter2 = counter2+1
@@ -306,9 +306,7 @@ class sinthgunt:
 
 
     def stop(self,widget):
-        """ Tried to kill the process before it is done."""
-
-        os.system('cat sinthgunt.log')
+        """ Tried to kill the conversion process before it is done."""
         try:
             os.kill(self.process.pid,9)
             gobject.source_remove(self.source_id)
