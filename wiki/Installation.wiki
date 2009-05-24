@@ -1,18 +1,39 @@
 #labels Featured,Phase-Deploy
-#Installation instructions for various Linux distributions
-
 = Introduction =
 This page describes how to install Sinthgunt on 
   * Ubuntu 8.10
   * Ubuntu 9.04
-  * Debian 4
-  * openSuse 11
-  * Mandriva 2009.1
-  * Fedora 10
-
-= Ubuntu 8.10 =
-To install Sinthgunt on Ubuntu 8.10
+  * (Planned) Debian 4
+  * (Planned) openSuse 11
+  * (Planned) Mandriva 2009.1
+  * (Planned) Fedora 10
+For instructions on how to install ffmpeg, please visit this [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg page].
+== Ubuntu 8.10 ==
+===Installation using a .deb package===
+Download that latest .deb package from this 
+[http://code.google.com/p/sinthgunt/source/browse/#svn/trunk/deb folder].
+Then, install Sinthgunt by issuing the command
+{{{
+sudo dpkg -i sinthgunt-*.deb
+}}}
+===Installation from source===
+To install Sinthgunt,
+  * Download the latest source snapshot by issuing the command
+{{{
+svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt-read-only
+}}}
+  * To install Sinthgunt, issue the command
+{{{
+sudo python setup.py install
+}}}
+===Running Sinthgunt===
+To run Sinthgunt, type
+{{{
+sinthgunt.py
+}}}
+in a console. Then, open a video file, select a preset and press convert.
 = Ubuntu 9.04 =
+See the instructions for Ubuntu 8.04.
 = Debian 4 =
 = openSuse 11 =
 = Mandriva 2009.1 =
