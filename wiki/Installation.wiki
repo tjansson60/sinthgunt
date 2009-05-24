@@ -1,0 +1,19 @@
+#labels Featured,Phase-Deploy
+#Installation instructions for various Linux distributions
+
+= Introduction =
+This page describes how to install Sinthgunt on 
+  * Ubuntu 8.10
+  * Ubuntu 9.04
+  * Debian 4
+  * openSuse 11
+  * Mandriva 2009.1
+  * Fedora 10
+
+= Ubuntu 8.10 =
+To install Sinthgunt on Ubuntu 8.10
+= Ubuntu 9.04 =
+= Debian 4 =
+= openSuse 11 =
+= Mandriva 2009.1 =
+= Fedora 10 =
