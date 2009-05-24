@@ -1,0 +1,8 @@
+#Installation instructions for ffmpeg
+
+= Installing ffmpeg on Ubuntu 8.10/9.04 =
+Sinthgunt requires that you are running Linux, and that you have a working installation of python, pygtk and ffmpeg. On Ubuntu all you have to do is install ffmpeg by issuing the command 
+{{{
+sudo apt-get install ffmpeg
+}}}
+To get a version of ffmpeg that might provide support for more presets, download the medibuntu package [http://packages.medibuntu.org/hardy/ffmpeg.html here]
