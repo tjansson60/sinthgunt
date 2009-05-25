@@ -1,4 +1,26 @@
 #Instructions for building the Sinthgunt debian package
 
 = Introduction =
-Here be dragons
+Sinthgunt uses [http://code.google.com/p/debianpackagemaker/ debianpackagemaker] to create deb packages.
+
+==Installing debianpackagemaker==
+   * Download [http://code.google.com/p/debianpackagemaker/ debianpackagemaker] from [http://code.google.com/p/debianpackagemaker/downloads/list]. Currently, I am using dpm_0.4~welemski1_ubuntu8.04_i386.deb (May, 2009).	 
+
+==Using debianpackagemaker==
+Launch debianpackagemaker from the terminal by typing
+{{{
+debianpackagemaker
+}}}
+Then, open the file sinthgunt_debianpackagemaker_config.txt.dpm (or another relevant dpm file). Once the file is loaded, you will be presented with three tabs in the main window
+   * Install Structure - this is where you specify which files go where on the end users computer.
+   * Package info - this is where you specify the package info - eg. version number and the name of the maintainer.
+   * Dependencies - this is where you specify the dependencies. So far, it only depends on ffmpeg.
+Once you have entered the nessecary information, press the *Create package* button and specify an output file name, eg. sinthgunt-1.0.1.deb
+
+==Screenshots==
+===Install structure===
+<img src="http://www.hartvig.de/files/sinthgunt/debianpackagemaker-installstructure.png">
+===Package info==
+<img src="http://www.hartvig.de/files/sinthgunt/debianpackagemaker-packageinfo.png">
+===Dependencies===
+<img src="http://www.hartvig.de/files/sinthgunt/debianpackagemaker-dependencies.png">
