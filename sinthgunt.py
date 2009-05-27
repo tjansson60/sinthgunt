@@ -23,9 +23,10 @@ else:
 # Checks for absolute or relative path
 DATA_DIR=""
 if os.path.exists("/usr/bin/sinthgunt.py"):
-    if os.path.exist("/usr/share/sinthgunt"): #Debian based systems (Ubuntu, Debian)
+    if os.path.exists("/usr/share/sinthgunt"): #Debian based systems (Ubuntu, Debian)
         DATA_DIR="/usr/share/sinthgunt/"
-    if os.path.exist("/usr/local/share/sinthgunt"): #Redhat based systems (Red Hat, openSuse)
+if os.path.exists("/usr/local/bin/sinthgunt.py"):
+    if os.path.exists("/usr/local/share/sinthgunt"): #Redhat based systems (Red Hat, openSuse)
         DATA_DIR="/usr/local/share/sinthgunt/"
 
 # Opens the log file and write the name and curent data and time
