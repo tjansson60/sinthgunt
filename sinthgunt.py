@@ -21,11 +21,12 @@ else:
     sys.exit(0) 
 
 # Checks for absolute or relative path
+DATA_DIR=""
 if os.path.exists("/usr/bin/sinthgunt.py"):
-    DATA_DIR="/usr/share/sinthgunt/"
-else:
-    DATA_DIR=""
-
+    if os.path.exist("/usr/share/sinthgunt"): #Debian based systems (Ubuntu, Debian)
+        DATA_DIR="/usr/share/sinthgunt/"
+    if os.path.exist("/usr/local/share/sinthgunt"): #Redhat based systems (Red Hat, openSuse)
+        DATA_DIR="/usr/local/share/sinthgunt/"
 
 # Opens the log file and write the name and curent data and time
 logfile_filename = os.path.expanduser("~/.sinthgunt.log")
