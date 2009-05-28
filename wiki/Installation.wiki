@@ -1,14 +1,15 @@
 #labels Featured,Phase-Deploy
 = Installing Sinthgunt =
 This page describes how to install Sinthgunt on 
-  * Ubuntu 8.10/9.04
+  * Ubuntu 8.10/9.04/Debian
   * openSuse 11
   * Fedora 10
-  * (Planned) Debian 4
   * (Planned) Mandriva 2009.1
 
 For instructions on how to install ffmpeg, please visit this [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg page].
-== Ubuntu 8.10/9.04 ==
+== Ubuntu 8.10/9.04/Debian ==
+<img src="http://www.geo.uio.no/it/unix/bilder/ubuntu.png">
+<img src="http://www.stat.berkeley.edu/~matsen/debian.png">
 ===Installation using a .deb package===
 Download that latest .deb package from [http://code.google.com/p/sinthgunt/source/browse/#svn/trunk/deb this folder].
 Then, install Sinthgunt by issuing the command
@@ -32,6 +33,7 @@ sinthgunt.py
 }}}
 in a console. Then, open a video file, select a preset and press convert.
 == openSuse 11 ==
+<img src="http://tuxtraining.com/wp-content/plugins/wp-post-icon/img/suse.png">
    * Add the Packman repository (eg. at [http://packman.jacobs-university.de/suse/11.0/ http://packman.jacobs-university.de/suse/11.0/]) to YaST.
    * Install some nessecary packages
 {{{
@@ -52,6 +54,7 @@ sinthgunt.py
 }}}
 in a console. Then, open a video file, select a preset and press convert.
 ==Fedora 10==
+<img src="http://tuxtraining.com/wp-content/plugins/wp-post-icon/img/fedora.png">
    * Add the rpmfusion repositories. Run as root
 {{{
 rpm -Uvh http://rpm.livna.org/livna-release.rpm  http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm  http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
@@ -73,5 +76,5 @@ To run Sinthgunt, type
 {{{
 sinthgunt.py
 }}}
-== Debian 4==
 == Mandriva 2009.1==
+<img src="http://www.dnabaser.com/baser-on-linux-mac/logos/mandriva.png">
