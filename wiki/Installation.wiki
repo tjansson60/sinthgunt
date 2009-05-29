@@ -6,10 +6,13 @@ This page describes how to install Sinthgunt on
   * Fedora 10
   * (Planned) Mandriva 2009.1
 
-For instructions on how to install ffmpeg, please visit this [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg page].
 == Ubuntu 8.10/9.04/Debian ==
 <img src="http://www.geo.uio.no/it/unix/bilder/ubuntu.png">
 <img src="http://www.stat.berkeley.edu/~matsen/debian.png">
+   * Install some nessecary packages
+{{{
+sudo apt-get install ffmpeg subversion
+}}}
 ===Installation using a .deb package===
 Download that latest .deb package from [http://code.google.com/p/sinthgunt/source/browse/#svn/trunk/deb this folder].
 Then, install Sinthgunt by issuing the command
@@ -76,5 +79,24 @@ To run Sinthgunt, type
 {{{
 sinthgunt.py
 }}}
+in a console. Then, open a video file, select a preset and press convert.
 == Mandriva 2009.1==
 <img src="http://www.dnabaser.com/baser-on-linux-mac/logos/mandriva.png">
+   * Install subversion and python-devel libs. Run as root
+{{{
+urpmi subversion python-devel
+}}}
+   * Download the latest source snapshot
+{{{
+svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
+}}}
+   * Install Sinthgunt by running (as root from the sinthgunt directory)
+{{{
+python setyp.py install
+}}}
+===Running Sinthgunt===
+To run Sinthgunt, type
+{{{
+sinthgunt.py
+}}}
+in a console. Then, open a video file, select a preset and press convert.
