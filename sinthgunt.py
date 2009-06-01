@@ -272,11 +272,9 @@ class sinthgunt:
         file. """
 
         # Get selected operation from menu
-        operation = self.operation_radiobutton
-
-        if self.input == None or operation =='':
-            self.no_file_selected_dialog(widget)
-        else:
+       
+        try:
+            operation = self.operation_radiobutton
             self.progressbar.set_fraction(0.01)
             context_id = self.statusbar.get_context_id("Activation")  
             self.statusbar.push(context_id,'Running...')
@@ -304,7 +302,8 @@ class sinthgunt:
                             stderr=subprocess.STDOUT,shell=False)
                     
                     logfile.writelines(subcommand)
-
+        except:
+            self.no_file_selected_dialog(widget)
 
 
     def stop(self,widget):
