@@ -14,7 +14,7 @@ This page describes how to install Sinthgunt on
 sudo apt-get install ffmpeg subversion
 }}}
 ===Installation using a .deb package===
-Download that latest .deb package from [http://code.google.com/p/sinthgunt/source/browse/#svn/trunk/deb this folder].
+Download that latest .deb package from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab].
 Then, install Sinthgunt by issuing the command
 {{{
 sudo dpkg -i sinthgunt-*.deb
