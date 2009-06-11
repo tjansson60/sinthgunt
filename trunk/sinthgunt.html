@@ -23,7 +23,8 @@
 <a href="os.html">os</a><br>
 </td><td width="25%" valign=top><a href="pygtk.html">pygtk</a><br>
 <a href="subprocess.html">subprocess</a><br>
-</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<a href="time.html">time</a><br>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
@@ -75,7 +76,9 @@ Preset&nbsp;menu&nbsp;with&nbsp;the&nbsp;conversion&nbsp;options.</tt></dd></dl>
 be&nbsp;displayed.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-parseXML"><strong>parseXML</strong></a>(self)</dt><dd><tt>Parses&nbsp;the&nbsp;XML&nbsp;file&nbsp;to&nbsp;gather&nbsp;the&nbsp;different&nbsp;conversion&nbsp;presets&nbsp;into<br>
-categories&nbsp;which&nbsp;will&nbsp;be&nbsp;inserted&nbsp;into&nbsp;the&nbsp;gui.</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;categories&nbsp;which&nbsp;will&nbsp;be&nbsp;inserted&nbsp;into&nbsp;the&nbsp;gui.&nbsp;<br>
+(planned)&nbsp;In&nbsp;the&nbsp;future,&nbsp;this&nbsp;function&nbsp;should&nbsp;also&nbsp;test&nbsp;wether&nbsp;the&nbsp;preset&nbsp;will&nbsp;work&nbsp;with&nbsp;the&nbsp;version&nbsp;of&nbsp;ffmpeg&nbsp;avaliable&nbsp;to&nbsp;the&nbsp;user.&nbsp;The&nbsp;result&nbsp;should&nbsp;be&nbsp;included&nbsp;in&nbsp;the&nbsp;array&nbsp;presets&nbsp;e.g.&nbsp;by&nbsp;using&nbsp;row&nbsp;=&nbsp;['&nbsp;','&nbsp;','&nbsp;','&nbsp;',[],'encoding=True','decoding=False']&nbsp;syntax.&nbsp;<br>
+This&nbsp;would&nbsp;significantly&nbsp;improve&nbsp;the&nbsp;clarity&nbsp;of&nbsp;the&nbsp;<a href="#sinthgunt-load_conf_file">load_conf_file</a>(self)&nbsp;function.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-quit_program"><strong>quit_program</strong></a>(self, widget)</dt><dd><tt>When&nbsp;the&nbsp;program&nbsp;is&nbsp;closed&nbsp;the&nbsp;stop&nbsp;function&nbsp;and&nbsp;the&nbsp;logfile&nbsp;is<br>
 updated&nbsp;and&nbsp;program&nbsp;is&nbsp;terminated.</tt></dd></dl>
@@ -87,7 +90,7 @@ and&nbsp;provides&nbsp;it&nbsp;to&nbsp;the&nbsp;screen.</tt></dd></dl>
 <dl><dt><a name="sinthgunt-setoutput"><strong>setoutput</strong></a>(self, widget)</dt><dd><tt>This&nbsp;functions&nbsp;gets&nbsp;the&nbsp;output&nbsp;filename&nbsp;from&nbsp;the&nbsp;GUI&nbsp;and&nbsp;provides<br>
 it&nbsp;for&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;program.</tt></dd></dl>
 
-<dl><dt><a name="sinthgunt-stop"><strong>stop</strong></a>(self, widget)</dt><dd><tt>Tried&nbsp;to&nbsp;kill&nbsp;the&nbsp;process&nbsp;before&nbsp;it&nbsp;is&nbsp;done.</tt></dd></dl>
+<dl><dt><a name="sinthgunt-stop"><strong>stop</strong></a>(self, widget)</dt><dd><tt>Tried&nbsp;to&nbsp;kill&nbsp;the&nbsp;conversion&nbsp;process&nbsp;before&nbsp;it&nbsp;is&nbsp;done.</tt></dd></dl>
 
 <dl><dt><a name="sinthgunt-unsupported_codec_dialog"><strong>unsupported_codec_dialog</strong></a>(self, widget)</dt><dd><tt>If&nbsp;an&nbsp;unsupported&nbsp;codec&nbsp;has&nbsp;been&nbsp;selected&nbsp;this&nbsp;warning&nbsp;will<br>
 be&nbsp;displayed.</tt></dd></dl>
@@ -99,6 +102,8 @@ be&nbsp;displayed.</tt></dd></dl>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>logfile</strong> = &lt;open file 'sinthgunt.log', mode 'a' at 0x9a254e8&gt;<br>
-<strong>logo_filename</strong> = 'logo.png'</td></tr></table>
+<td width="100%"><strong>DATA_DIR</strong> = '/usr/share/sinthgunt/'<br>
+<strong>logfile</strong> = &lt;open file '/home/hartvig/.sinthgunt.log', mode 'a' at 0x95f31d0&gt;<br>
+<strong>logfile_filename</strong> = '/home/hartvig/.sinthgunt.log'<br>
+<strong>logo_filename</strong> = '/usr/share/sinthgunt/logo.png'</td></tr></table>
 </body></html>

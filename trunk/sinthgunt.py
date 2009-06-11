@@ -115,22 +115,19 @@ class sinthgunt:
         context_id = self.statusbar.get_context_id("Activation")        
         output = ''
         try:
-            output = str(self.process.stdout.read(20))
+            output_raw = str(self.process.stdout.read(80))
+            output = output_raw.replace('\n','')
         except:
             pass
-        logfile.writelines(output)
+        logfile.writelines('Conversion status: '+output+'\n')
         output_split = output.split(' ')
         N=len(output_split)
         
-        # Error handling
-        if output.find("Could not")!=-1:
-            logfile.writelines("\n ffmpeg error detected?....")
-            self.statusbar.push(context_id,'ffmpeg error detected. See sinthgunt.log')
-
         # get the number of frames converted
         for i in range(N):
             if i>=2 and output_split[i]=='fps=':
                file_frames_completed = output_split[i-1]              
+               logfile.writelines('Frames completed: '+file_frames_completed+'\n')
                # update progressbar
                try:
                    self.progressbar.set_fraction(float(\
@@ -234,7 +231,7 @@ class sinthgunt:
         # wait for thumbnail generation to complete
         try:
             output = str(self.thumb_process.stdout.read(100))
-            logfile.writelines(output)
+            logfile.writelines('Thumbnail process status: '+output+'\n')
         except:
             pass
         thumb_process.wait()
@@ -280,7 +277,7 @@ class sinthgunt:
             self.statusbar.push(context_id,'Running...')
         
             #start watching output
-            self.source_id = gobject.timeout_add(100, self.checkfile)
+            self.source_id = gobject.timeout_add(2000, self.checkfile)
         
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
@@ -301,7 +298,7 @@ class sinthgunt:
                             stdout=subprocess.PIPE,stdin=subprocess.PIPE,
                             stderr=subprocess.STDOUT,shell=False)
                     
-                    logfile.writelines(subcommand)
+                    logfile.writelines('Conversion command: '+str(subcommand)+'\n')
         except:
             self.no_file_selected_dialog(widget)
 
@@ -313,7 +310,7 @@ class sinthgunt:
             gobject.source_remove(self.source_id)
             self.progressbar.set_fraction(0.0)
             self.progressbar.set_text('')
-            logfile.writelines('Conversion stopped\n')
+            logfile.writelines('Conversion aborted by user\n')
             context_id = self.statusbar.get_context_id("Activation")  
             self.statusbar.push(context_id,'Conversion aborted!')
         except:
@@ -336,8 +333,8 @@ class sinthgunt:
         """ This function finds the information about the current selected
         file. Displays number of frames, audio codec and video codec."""
 
-        self.audio_codec = ['','','','','']
-        self.video_codec = ['','','','','']
+        self.audio_codec = ['N/A','N/A','N/A','N/A','N/A']
+        self.video_codec = ['N/A','N/A','N/A','N/A','N/A']
         self.file_frames = 0
         command = ["ffmpeg","-i",self.input]
 
@@ -348,12 +345,12 @@ class sinthgunt:
         counter=0
         while flag == 1:   
             try:       
-                output = str(process.stdout.read(2000))        
+                output = str(process.stdout.read(10000))        
             except:
                 break
 
             if output != '\n' and output != '':
-                logfile.writelines(output)
+                logfile.writelines('Get file info status: '+output+'\n')
                 output_split = output.split(' ')
                 N=len(output_split)
                 for i in range(N):
@@ -401,6 +398,9 @@ class sinthgunt:
             if counter >= 1000:
                 flag = 0
             counter = counter+1
+        logfile.writelines('Audio codec: '+str(self.audio_codec)+'\n')
+        logfile.writelines('Video codec: '+str(self.video_codec)+'\n')
+        logfile.writelines('Number of frames: '+str(self.file_frames)+'\n')
 
     def aboutdialog(self,widget):
         """ Defines the about information about the program."""
@@ -562,7 +562,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         try:
             process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
-            output = str(process.stdout.read(10000))        
+            output = str(process.stdout.read(20000))        
         except:
             None
         output_lines=output.split('\n')
