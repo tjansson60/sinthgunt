@@ -565,6 +565,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
             output = str(process.stdout.read(20000))        
         except:
             None
+        logfile.writelines('ffmpeg_getcodecs output: '+str(output))
         output_lines=output.split('\n')
         codecs_raw=[]
         Ncodecs=0
@@ -578,6 +579,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
                     pass
             codecs_raw.append(line_codec)
             Ncodecs=Ncodecs+1
+        logfile.writelines('ffmpeg_getcodecs codecs_raw: '+str(codecs_raw))
         # look for encoding 
         self.codecs=[]
         for i in range(Ncodecs):
@@ -600,6 +602,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
                         self.codecs.append(row)                       
                 except:     
                     pass
+        logfile.writelines('ffmpeg_getcodecs self.codecs: '+str(self.codecs))
         # Print to console for debugging        
         # print self.codecs
         
