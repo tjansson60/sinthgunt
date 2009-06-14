@@ -277,7 +277,7 @@ class sinthgunt:
             self.statusbar.push(context_id,'Running...')
         
             #start watching output
-            self.source_id = gobject.timeout_add(2000, self.checkfile)
+            self.source_id = gobject.timeout_add(500, self.checkfile)
         
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
@@ -602,6 +602,9 @@ This would significantly improve the clarity of the load_conf_file(self) functio
                         self.codecs.append(row)                       
                 except:     
                     pass
+        # Debugging codec row
+        row = ['debugcodec',True,True]
+        self.codecs.append(row)  
         logfile.writelines('ffmpeg_getcodecs self.codecs: '+str(self.codecs))
         # Print to console for debugging        
         # print self.codecs

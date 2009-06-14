@@ -229,14 +229,14 @@
     <params>-target ntsc-dv -aspect 4:3 -f dv</params>
     <extension>dv</extension>
     <category>DV</category>
-    <codecs> </codecs>
+    <codecs>dvvideo</codecs>
   </dvntsc>
   <dvpal>
     <label>Raw DV for PAL Fullscreen</label>
     <params>-target pal-dv -aspect 4:3 -f dv</params>
     <extension>dv</extension>
     <category>DV</category>
-    <codecs> </codecs>
+    <codecs>dvvideo</codecs>
   </dvpal>
   <e200FS>
     <label>RB Sandisk Sansa e200 Fullscreen</label>
@@ -642,4 +642,18 @@
     <category>Image</category>
     <codecs>image2</codecs>
   </animgif30x20>
+  <debugenabledpreset>
+    <label>This preset should be enabled</label>
+    <params></params>
+    <extension>debug</extension>
+    <category>Debugging</category>
+    <codecs>debugcodec</codecs>
+  </debugenabledpreset>
+  <debugdisabledpreset>
+    <label>This preset should be disabled</label>
+    <params></params>
+    <extension>debug</extension>
+    <category>Debugging</category>
+    <codecs>here,be,dragons</codecs>
+  </debugdisabledpreset>
 </presets>
