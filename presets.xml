@@ -642,6 +642,13 @@
     <category>Image</category>
     <codecs>image2</codecs>
   </animgif30x20>
+ <android1>
+    <label>Google Android compatible video</label>
+    <params>-s 480x320 -vcodec mpeg4 -acodec libfaac -ac 1 -ar 16000 -r 13 -ab 32000 -aspect 3:2</params>
+    <extension>mp4</extension>
+    <category>Google Android</category>
+    <codecs>mpeg4,libfaac</codecs>
+  </android1>
   <debugenabledpreset>
     <label>This preset should be enabled</label>
     <params></params>
@@ -656,4 +663,6 @@
     <category>Debugging</category>
     <codecs>here,be,dragons</codecs>
   </debugdisabledpreset>
+
+
 </presets>
