@@ -128,7 +128,12 @@ class sinthgunt:
             if i>=2 and output_split[i]=='fps=':
                file_frames_completed = output_split[i-1]              
                logfile.writelines('Frames completed: '+file_frames_completed+'\n')
-               # update progressbar
+               # update progressbar and statusbar
+               try:
+                   context_id = self.statusbar.get_context_id("Activation")  
+                   self.statusbar.push(context_id,'Frames converted: '+str(file_frames_completed))
+               except:
+                   pass
                try:
                    self.progressbar.set_fraction(float(\
                            file_frames_completed)/float(self.file_frames))
@@ -152,8 +157,8 @@ class sinthgunt:
         if output =='':     
             self.statusbar.push(context_id,'Conversion completed!')
             self.progressbar.set_fraction(0.99999)
-            self.progressbar.set_text(str(str(self.file_frames)+\
-                                          ' of '+str(self.file_frames)+' frames converted.'))
+            #self.progressbar.set_text(str(str(self.file_frames)+\
+            #                              ' of '+str(self.file_frames)+' frames converted.'))
             # this line would do the sames as return False: gobject.source_remove(self.source_id)          
             return False    
         else:
