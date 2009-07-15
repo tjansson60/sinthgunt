@@ -24,3 +24,18 @@ Once you have entered the nessecary information, press the *Create package* butt
 <img src="http://www.hartvig.de/files/sinthgunt/debianpackagemaker-packageinfo.png">
 ===Dependencies===
 <img src="http://www.hartvig.de/files/sinthgunt/debianpackagemaker-dependencies.png">
+
+= Automatic uploads to the Downloads page =
+Get the google upload script
+{{{
+wget http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
+}}}
+
+The upload the latest deb package and tarball by issuing the commands:
+{{{
+# Deb package
+python googlecode_upload.py -s 'Sinthgunt 1.0.4 Debian package' -p 'sinthgunt' -l 'Featured,Type-Package,OpSys-Linux' deb/sinthgunt-1.0.4.deb 
+
+# Tarball
+python googlecode_upload.py -s 'Sinthgunt 1.0.4 tarball' -p 'sinthgunt' -l 'Type-Archive,OpSys-Linux' tarballs/sinthgunt-1.0.4.tar.gz
+}}} 
