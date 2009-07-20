@@ -17,8 +17,7 @@ from xml.etree import ElementTree as etree
 if os.path.exists("/usr/bin/ffmpeg"):
     print('ffmpeg found. Starting Sinthgunt...')# carry on
 else:
-    print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.')
-    sys.exit(0) 
+    print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.') # Display error message, then carry on
 
 # Checks for absolute or relative path
 DATA_DIR=""
