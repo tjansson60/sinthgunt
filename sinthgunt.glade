@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Jul 21 12:11:32 2009 -->
+<!--Generated with glade3 3.4.5 on Tue Jul 21 21:56:11 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
@@ -165,17 +165,6 @@
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-convert</property>
                 <signal name="clicked" handler="on_toolbarconvert_clicked"/>
-              </widget>
-              <packing>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkToolButton" id="toolbardownload">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Download</property>
-                <property name="icon_name">stock_down</property>
-                <signal name="clicked" handler="on_toolbardownload_clicked"/>
               </widget>
               <packing>
                 <property name="homogeneous">True</property>
