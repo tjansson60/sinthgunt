@@ -617,11 +617,13 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         row = ['debugcodec',True,True]
         self.codecs.append(row)  
         logfile.writelines('ffmpeg_getcodecs self.codecs: '+str(self.codecs))
-        # Print to console for debugging        
-        # print self.codecs
+ 
 
-    #def no_file_selected_dialog(self,widget):
-     #   
+#####################
+## YouTube functions
+#####################
+
+
     def menuopenyoutube(self,widget):  
         """ Dialog that allows the user to enter a YouTube url. Once the user presses the 'ok' button, the download will begin"""
         #base this on a message dialog  
@@ -650,14 +652,15 @@ This would significantly improve the clarity of the load_conf_file(self) functio
 
     def download(self,url,output):
         """Copy the contents of a file from a given URL to a local file."""    
-#        webFile = urllib.urlretrieve(url,output+".flv")
+        output=self.youtube_title
         self.dst=os.getenv("HOME")+'/'+output+".flv"
         webFile=urllib.urlretrieve(url, self.dst,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
 
+
     def _reporthook(self,numblocks, blocksize, filesize, url=None):
-        #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
+        """Prints the download status to the status bar."""
         base = os.path.basename(url)
-        #XXX Should handle possible filesize=-1.
+        #Should handle possible filesize=-1.
         try:
             percent = min((numblocks*blocksize*100)/filesize, 100)
         except:
@@ -668,18 +671,20 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         self.statusbar.push(context_id,'Downloaded '+str(percent)+'% from '+self.youtubeurl)
         self.progressbar.set_fraction(float(percent)/100)
         if percent==100:
-            self.statusbar.push(context_id,'Downloaded completed')
-        # Update gui
+            self.statusbar.push(context_id,'Downloaded completed. '+self.youtube_title+'.flv can be found in your home folder.')
+        # Wait for gui to update
         while gtk.events_pending():
             gtk.main_iteration(False)
 
 
     def download_youtube(self):
-        #url = sys.argv[1]
+        """This function finds the flash video source and title from the youtube page entered by the user."""    
         url=self.youtubeurl
         page=urllib.urlopen(url)
         result = page.read()
-        #result=open("test.html").read()
+        youtubepage=result
+
+        #find flash video url
         startindex = result.index("var swfArgs")
         result = result[startindex:]
         endindex=result.index("};")
@@ -692,15 +697,26 @@ This would significantly improve the clarity of the load_conf_file(self) functio
                 get[v.strip()]=vnum.strip()
     
         dload = "http://www.youtube.com/get_video?video_id=%s&t=%s" % ( get['video_id'],get['t'])
-
+        
+        # Find flash video title
+        youtubepage_header=youtubepage[100:100+300]
+        # Look for <title>        
+        for i in range(len(youtubepage_header)-10):
+            if youtubepage_header[i]=='<' and youtubepage_header[i+1]=='t' and youtubepage_header[i+2]=='i':
+                title1=youtubepage_header[i+7:]
+        # Look for </title>
+        for i in range(len(title1)):
+            if title1[i]=='<' and title1[i+1]=='/' and title1[i+2]=='t':
+                title=title1[:i]
+        self.youtube_title=title
+               
+        # Start downloading
         try :
             self.download(dload,get['video_id'])
         except Exception,e:
             print "Error: ",e
 
-
-
-
+        
 
 #####################
 ## The init function

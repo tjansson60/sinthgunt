@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Jul 21 21:56:11 2009 -->
+<!--Generated with glade3 3.4.5 on Wed Jul 22 10:05:51 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
@@ -33,19 +33,29 @@
                           <widget class="GtkMenu" id="menu4">
                             <property name="visible">True</property>
                             <child>
-                              <widget class="GtkMenuItem" id="menuopen">
+                              <widget class="GtkImageMenuItem" id="menuopen">
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">_File</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_menuopen_activate"/>
+                                <child internal-child="image">
+                                  <widget class="GtkImage" id="menu-item-image1">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-open</property>
+                                  </widget>
+                                </child>
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkMenuItem" id="menuopenyoutube">
+                              <widget class="GtkImageMenuItem" id="menuopenyoutube">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">_Youtube link</property>
+                                <property name="label" translatable="yes">_YouTube video</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_menuopenyoutube_activate"/>
+                                <child internal-child="image">
+                                  <widget class="GtkImage" id="menu-item-image2">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-go-down</property>
+                                  </widget>
+                                </child>
                               </widget>
                             </child>
                           </widget>
@@ -144,8 +154,8 @@
             <child>
               <widget class="GtkToolButton" id="toolbaropenyoutube">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Open Youtube</property>
-                <property name="icon_name">stock_open</property>
+                <property name="label" translatable="yes">Open YouTube video</property>
+                <property name="icon_name">stock_down</property>
                 <signal name="clicked" handler="on_toolbaropenyoutube_clicked"/>
               </widget>
               <packing>
