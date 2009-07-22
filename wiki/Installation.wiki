@@ -23,7 +23,7 @@ sudo dpkg -i sinthgunt-*.deb
 }}}
 ===Installation from source===
 To install Sinthgunt,
-  * Download the latest source snapshot by issuing the command
+  * Download the latest tarball from the downloads tab - or - checkout the latest source snapshot by issuing the command
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 }}}
@@ -44,7 +44,7 @@ in a console. Then, open a video file, select a preset and press convert.
 {{{
 yast -i python-devel ffmpeg subversion
 }}}
-   * Download the latest source snapshot
+  * Download the latest tarball from the downloads tab - or - checkout the latest source snapshot by issuing the command
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 }}}
@@ -68,7 +68,7 @@ rpm -Uvh http://rpm.livna.org/livna-release.rpm  http://download1.rpmfusion.org/
 {{{
 yum install ffmpeg subversion python-devel
 }}}
-   * Download the latest source snapshot
+  * Download the latest tarball from the downloads tab - or - checkout the latest source snapshot by issuing the command
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 }}}
@@ -88,7 +88,7 @@ in a console. Then, open a video file, select a preset and press convert.
 {{{
 urpmi subversion python-devel
 }}}
-   * Download the latest source snapshot
+  * Download the latest tarball from the downloads tab - or - checkout the latest source snapshot by issuing the command
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 }}}
