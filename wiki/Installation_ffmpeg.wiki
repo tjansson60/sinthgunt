@@ -41,6 +41,6 @@ cd ffmpeg
 ./configure --enable-gpl --enable-nonfree --enable-pthreads --enable-libfaac --enable-libfaad --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab
 make
 sudo checkinstall --fstrans=no --install=yes --pkgname=ffmpeg --pkgversion "3:0.svn`date +%Y%m%d`-12ubuntu3" --default
-dpkg +i ffmpeg*.deb
+sudo cp /usr/local/bin/ff* /usr/bin/
 }}}
 That's it!
