@@ -1,0 +1,69 @@
+#This page describes the steps made when releasing a new version of sinthgunt.
+
+= Making a release =
+Making a sinthgunt release involves four steps.
+  # Create packages
+  # Upload packages
+  # Update the releases page
+  # Announce the release
+
+= Creating packages =
+   # Create a tarball using the script tarmaker.sh found in the trunk
+{{{
+sh tarmaker.sh
+}}}
+Rename the resulting file to
+{{{
+sinthgunt-x.y.z.tar.gz
+}}}
+where z (or y or x) is one larger than in the previous version.
+  # Create a .deb package using the guide on [http://code.google.com/p/sinthgunt/wiki/Howto_Build_deb_package this page]. Name the package 
+{{{
+sinthgunt-x.y.z.deb
+}}}
+  # (Planned) Create a .rpm package. Name the package 
+{{{
+sinthgunt-x.y.z.rpm
+}}}
+
+= Uploading packages =
+Get the google upload script
+{{{
+wget http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
+}}}
+Then upload the latest packages and tarball by issuing the commands:
+  # Tarball
+{{{
+python googlecode_upload.py -s 'Sinthgunt x.y.z tarball' -p 'sinthgunt' -l 'Featured,Type-Archive,OpSys-Linux' sinthgunt-x.y.z.tar.gz
+}}}
+  # deb package
+{{{
+python googlecode_upload.py -s 'Sinthgunt x.y.z Debian package' -p 'sinthgunt' -l 'Featured,Type-Package,OpSys-Linux' sinthgunt-x.z.y.deb 
+}}}
+  # (Planned) rpm package
+{{{
+python googlecode_upload.py -s 'Sinthgunt x.y.z rpm package' -p 'sinthgunt' -l 'Featured,Type-Package,OpSys-Linux' sinthgunt-x.z.y.rpm 
+}}}
+= Updating the release page =
+The [http://code.google.com/p/sinthgunt/wiki/Releases releases page] keeps track of the releases linking tarballs/deb/rpm packages to svn revisions. Keeping this page up to date is important since users will report bugs in package sinthgunt-x.y.z and without a complete list we will not know at which revision the error was introduced.
+
+= Announcing a release =
+Once the packages have been uploaded, the release should be announced. For small changes, sending an email to the mailing-list (sinthgunt@googlegroups.com) with a brief list of the changes is sufficient. Releases involving major changes should be announced at www.freshmeat.net and other relevant forums, blogs etc.
+----
+Hi,
+
+This post announces the release of version x.y.z of sinthgunt. This
+version adds support for the feature xxx and fixes the bugs yyy and zzz.
+
+Web site:
+www.sinthgunt.org
+
+Downloads page:
+http://code.google.com/p/sinthgunt/downloads/list
+
+Source tree:
+http://code.google.com/p/sinthgunt/source/browse/
+
+Thank you,
+- JD
+----
