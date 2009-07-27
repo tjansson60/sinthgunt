@@ -10,3 +10,4 @@
 
 = Other pages =
   * [http://freshmeat.net/projects/sinthgunt Freshmeat]
+  * [http://www.oschina.net/p/sinthgunt oschina.net]
