@@ -1,12 +1,10 @@
 #links to articles about sinthgunt on the web
 
 = Blog posts =
+   * [http://blog.22design.ru/2009/07/sinthgunt.html 22design.ru] (July 2009, in russian)
    * [http://zockertown.de/s9y/index.php?/permalink/sinthgunt-Project-Hosting-on-Google-Code.html zockertown.de/s9y/] (July 2009)
-
    * [http://hartvig.de/2009/introducing-sinthgunt/ hartvig.de] (June 2009)
-
    * [http://www.tjansson.dk/?p=852 tjansson.dk] (June 2009)
-
 
 = Other pages =
   * [http://freshmeat.net/projects/sinthgunt Freshmeat]
