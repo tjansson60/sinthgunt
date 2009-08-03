@@ -11,14 +11,14 @@ import subprocess
 import gobject
 import time
 import sys
-import urllib
 from xml.etree import ElementTree as etree
 
 # Check to see if ffmpeg is installed
 if os.path.exists("/usr/bin/ffmpeg"):
     print('ffmpeg found. Starting Sinthgunt...')# carry on
 else:
-    print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.') # Display error message, then carry on
+    print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.')
+    sys.exit(0) 
 
 # Checks for absolute or relative path
 DATA_DIR=""
@@ -128,12 +128,7 @@ class sinthgunt:
             if i>=2 and output_split[i]=='fps=':
                file_frames_completed = output_split[i-1]              
                logfile.writelines('Frames completed: '+file_frames_completed+'\n')
-               # update progressbar and statusbar
-               try:
-                   context_id = self.statusbar.get_context_id("Activation")  
-                   self.statusbar.push(context_id,'Frames converted: '+str(file_frames_completed))
-               except:
-                   pass
+               # update progressbar
                try:
                    self.progressbar.set_fraction(float(\
                            file_frames_completed)/float(self.file_frames))
@@ -157,8 +152,8 @@ class sinthgunt:
         if output =='':     
             self.statusbar.push(context_id,'Conversion completed!')
             self.progressbar.set_fraction(0.99999)
-            #self.progressbar.set_text(str(str(self.file_frames)+\
-            #                              ' of '+str(self.file_frames)+' frames converted.'))
+            self.progressbar.set_text(str(str(self.file_frames)+\
+                                          ' of '+str(self.file_frames)+' frames converted.'))
             # this line would do the sames as return False: gobject.source_remove(self.source_id)          
             return False    
         else:
@@ -215,14 +210,8 @@ class sinthgunt:
         """ This function generates the thumbnail and saves it to the /tmp
         folder. It also extracts the information about the movie from ffmpeg
         and provides it to the screen. """
-        try:
-            self.input = self.input_from_menu
-        except:
-            pass
-        try: 
-            self.input = self.dst
-        except:
-            pass
+
+        self.input = self.input_from_menu
         temp = self.input.split('/')
         N = len(temp)        
         
@@ -617,121 +606,9 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         row = ['debugcodec',True,True]
         self.codecs.append(row)  
         logfile.writelines('ffmpeg_getcodecs self.codecs: '+str(self.codecs))
- 
-
-#####################
-## YouTube functions
-#####################
-
-
-    def menuopenyoutube(self,widget):  
-        """ Dialog that allows the user to enter a YouTube url. 
-            Once the user presses the 'ok' button, the download will begin"""
-        #base this on a message dialog  
-        dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK,None)  
-        dialog.set_markup('Please enter YouTube URL or a direct link to a video file, eg.')  
-        #create the text input field  
-        entry = gtk.Entry()  
-        #allow the user to press enter to do ok  
-        #entry.connect("activate", dialog.response(response), dialog, gtk.RESPONSE_OK)  
-        #create a horizontal box to pack the entry and a label  
-        hbox = gtk.HBox()  
-        hbox.pack_start(gtk.Label("URL:"), False, 5, 5)  
-        hbox.pack_end(entry)  
-        #some secondary text  
-        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=MRn-Rmp6iwA</i>\n- or-\n<i>http://hartvig.de/files/dod/16cwillcttt_teaser.avi</i>")  
-        #add it and show it  
-        dialog.vbox.pack_end(hbox, True, True, 0)  
-        dialog.show_all()  
-        #go go go  
-        dialog.run()  
-        self.youtubeurl = entry.get_text()  
-        dialog.destroy()  
-        dialog.destroy()
-        # Look for direct link to media file
-        if self.youtubeurl[-4]=='.':
-            # find last '/'
-            for i in range(len(self.youtubeurl)):
-                if self.youtubeurl[-i]=='/':
-                    output=self.youtubeurl[-i+1:]
-                    break
-            print output
-            print self.youtubeurl
-            self.dst=os.getenv("HOME")+'/'+output
-            self.download(self.youtubeurl)
-            self.setinput(widget)
-        else:            
-            self.download_youtube()
-            self.setinput(widget)
-            
-
-    def download(self,url):
-        """Copy the contents of a file from a given URL to a local file."""    
-        webFile=urllib.urlretrieve(url, self.dst,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
-
-
-    def _reporthook(self,numblocks, blocksize, filesize, url=None):
-        """Prints the download status to the status bar."""
-        base = os.path.basename(url)
-        #Should handle possible filesize=-1.
-        try:
-            percent = min((numblocks*blocksize*100)/filesize, 100)
-        except:
-            percent = 100
-        if numblocks != 0:
-            sys.stdout.write("\b"*70)
-        context_id = self.statusbar.get_context_id("Activation")  
-        self.statusbar.push(context_id,'Downloaded '+str(percent)+'% from '+self.youtubeurl)
-        self.progressbar.set_fraction(float(percent)/100)
-        if percent==100:
-            self.statusbar.push(context_id,'Downloaded completed. Saved as '+self.dst)
-        # Wait for gui to update
-        while gtk.events_pending():
-            gtk.main_iteration(False)
-
-
-    def download_youtube(self):
-        """This function finds the flash video source and title from the youtube page entered by the user."""    
-        url=self.youtubeurl
-        page=urllib.urlopen(url)
-        result = page.read()
-        youtubepage=result
-
-        #find flash video url
-        startindex = result.index("var swfArgs")
-        result = result[startindex:]
-        endindex=result.index("};")
-        result=result[:endindex]
-        result =  result.split(",")
-        get={}
-        for line in result:
-            if "video_id" in line or "\"t\"" in line :
-                v,vnum = line.replace("\"","").split(":")
-                get[v.strip()]=vnum.strip()
-    
-        dload = "http://www.youtube.com/get_video?video_id=%s&t=%s" % ( get['video_id'],get['t'])
+        # Print to console for debugging        
+        # print self.codecs
         
-        # Find flash video title
-        youtubepage_header=youtubepage[100:100+300]
-        # Look for <title>        
-        for i in range(len(youtubepage_header)-10):
-            if youtubepage_header[i]=='<' and youtubepage_header[i+1]=='t' and youtubepage_header[i+2]=='i':
-                title1=youtubepage_header[i+7:]
-        # Look for </title>
-        for i in range(len(title1)):
-            if title1[i]=='<' and title1[i+1]=='/' and title1[i+2]=='t':
-                title=title1[:i]
-        self.youtube_title=title
-               
-        # Start downloading
-        try :
-            self.dst=os.getenv("HOME")+'/'+self.youtube_title+".flv"
-            self.download(dload)
-        except Exception,e:
-            print "Error: ",e
-        
-        
-
 #####################
 ## The init function
 #####################
@@ -779,9 +656,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
                         "MainWindow_destroy"         : self.quit_program,
                         "on_menuquit_activate"       : self.quit_program,
                         "on_menuopen_activate"       : self.menuopenfile,
-                        "on_menuopenyoutube_activate"       : self.menuopenyoutube,
                         "on_toolbaropen_clicked"     : self.menuopenfile,
-                        "on_toolbaropenyoutube_clicked"     : self.menuopenyoutube,
                         "on_menuconvert_activate"    : self.activate,
                         "on_menuabout_activate"      : self.aboutdialog,
                         "on_menuffmpeginfo_activate" : self.ffmpeg_getinfo}

@@ -649,13 +649,6 @@
     <category>Google Android</category>
     <codecs>mpeg4,libfaac</codecs>
   </android1>
- <android2>
-    <label>Google Android compatible video. Video bitrate: 480 kb/s</label>
-    <params>-s 480x320 -vcodec mpeg4 -b 480k -acodec libfaac -ac 1 -ar 16000 -r 13 -ab 32000 -aspect 3:2</params>
-    <extension>mp4</extension>
-    <category>Google Android</category>
-    <codecs>mpeg4,libfaac</codecs>
-  </android2>
   <debugenabledpreset>
     <label>This preset should be enabled</label>
     <params></params>
