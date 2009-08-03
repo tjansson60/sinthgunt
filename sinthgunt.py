@@ -625,11 +625,10 @@ This would significantly improve the clarity of the load_conf_file(self) functio
 
 
     def menuopenyoutube(self,widget):  
-        """ Dialog that allows the user to enter a YouTube url. 
-            Once the user presses the 'ok' button, the download will begin"""
+        """ Dialog that allows the user to enter a YouTube url. Once the user presses the 'ok' button, the download will begin"""
         #base this on a message dialog  
         dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK,None)  
-        dialog.set_markup('Please enter YouTube URL or a direct link to a video file, eg.')  
+        dialog.set_markup('Please enter YouTube URL, eg.')  
         #create the text input field  
         entry = gtk.Entry()  
         #allow the user to press enter to do ok  
@@ -639,7 +638,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         hbox.pack_start(gtk.Label("URL:"), False, 5, 5)  
         hbox.pack_end(entry)  
         #some secondary text  
-        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=MRn-Rmp6iwA</i>\n- or-\n<i>http://hartvig.de/files/dod/16cwillcttt_teaser.avi</i>")  
+        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=MRn-Rmp6iwA</i>")  
         #add it and show it  
         dialog.vbox.pack_end(hbox, True, True, 0)  
         dialog.show_all()  
@@ -647,26 +646,14 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         dialog.run()  
         self.youtubeurl = entry.get_text()  
         dialog.destroy()  
-        dialog.destroy()
-        # Look for direct link to media file
-        if self.youtubeurl[-4]=='.':
-            # find last '/'
-            for i in range(len(self.youtubeurl)):
-                if self.youtubeurl[-i]=='/':
-                    output=self.youtubeurl[-i+1:]
-                    break
-            print output
-            print self.youtubeurl
-            self.dst=os.getenv("HOME")+'/'+output
-            self.download(self.youtubeurl)
-            self.setinput(widget)
-        else:            
-            self.download_youtube()
-            self.setinput(widget)
-            
+        dialog.destroy()  
+        self.download_youtube()
+        self.setinput(widget)
 
-    def download(self,url):
+    def download(self,url,output):
         """Copy the contents of a file from a given URL to a local file."""    
+        output=self.youtube_title
+        self.dst=os.getenv("HOME")+'/'+output+".flv"
         webFile=urllib.urlretrieve(url, self.dst,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
 
 
@@ -684,7 +671,7 @@ This would significantly improve the clarity of the load_conf_file(self) functio
         self.statusbar.push(context_id,'Downloaded '+str(percent)+'% from '+self.youtubeurl)
         self.progressbar.set_fraction(float(percent)/100)
         if percent==100:
-            self.statusbar.push(context_id,'Downloaded completed. Saved as '+self.dst)
+            self.statusbar.push(context_id,'Downloaded completed. '+self.youtube_title+'.flv can be found in your home folder.')
         # Wait for gui to update
         while gtk.events_pending():
             gtk.main_iteration(False)
@@ -725,11 +712,10 @@ This would significantly improve the clarity of the load_conf_file(self) functio
                
         # Start downloading
         try :
-            self.dst=os.getenv("HOME")+'/'+self.youtube_title+".flv"
-            self.download(dload)
+            self.download(dload,get['video_id'])
         except Exception,e:
             print "Error: ",e
-        
+
         
 
 #####################
