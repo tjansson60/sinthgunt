@@ -1,9 +1,39 @@
 #!/usr/bin/python
 # $Id$
 
+####################
+# =========
+# sinthgunt
+# =========
+#
+# Copyright 2009 Kaare Hartvig Jensen (kare1234@gmail.com) and 
+# Thomas R. N. Jansson (tjansson@tjansson.dk). 
+#
+# The Sinthgunt Converter is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The Sinthgunt Converter is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with sinthgunt. If not, see http://www.gnu.org/licenses/
+#
 # Description     
-"""This is a program to ease the use of ffmpeg on Ubuntu based machines """
+# ===========
+"""Sinthgunt is an open source graphical user interface for ffmpeg, 
+a computer program that can convert digital audio and video into 
+numerous formats. Using pre-configured conversion settings, it makes
+ the task of converting between different media formates very easy.
+ """
+####################
 
+####################
+# Import Python Libraries
+####################
 import os
 import pygtk; pygtk.require("2.0")
 import gtk.glade
@@ -13,7 +43,9 @@ import time
 import sys
 import urllib
 from xml.etree import ElementTree as etree
-
+####################
+# System checks
+####################
 # Check to see if ffmpeg is installed
 if os.path.exists("/usr/bin/ffmpeg"):
     print('ffmpeg found. Starting Sinthgunt...')# carry on
@@ -37,11 +69,23 @@ logfile.writelines('****** Sinthgunt log file START - '+
 logo_filename=DATA_DIR+"logo.png"
 
 class sinthgunt:
-
+####################
+# FUNCTIONS START
+####################
     def load_conf_file(self):
+        ####################
+        # Description
+        # ===========
         """ This function reads the configuration xml-file and populates the
         Preset menu with the conversion options.
         """
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         # Load XML config file
         self.parseXML()
         # Local variables
@@ -108,10 +152,19 @@ class sinthgunt:
             presetmenu1.show()
             counter = counter+1
             
-    def checkfile(self):
+    def checkfile(self):     
+        ####################
+        # Description 
+        # ===========
         """ This function is executed many times to check on the progress of
         the conversion. """
-        
+        # Arguments
+        # =========
+        #
+        # Further details
+        # ===============
+        # 
+        ####################
         context_id = self.statusbar.get_context_id("Activation")        
         output = ''
         try:
@@ -167,8 +220,17 @@ class sinthgunt:
     
     
     def menuopenfile(self,widget):
-        """ Defines the filters used when selecting new file."""
-        
+        ####################
+        # Description 
+        # ===========
+        """ This function open a file selection dialog. """
+        # Arguments
+        # =========
+        #
+        # Further details
+        # ===============
+        # 
+        ####################
         # What does fc stand for?
         fc = gtk.FileChooserDialog(title = "Select video file...",
                 action = gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -212,9 +274,19 @@ class sinthgunt:
 
     
     def setinput(self, widget): 
-        """ This function generates the thumbnail and saves it to the /tmp
-        folder. It also extracts the information about the movie from ffmpeg
-        and provides it to the screen. """
+        ####################
+        # Description
+        # ===========
+        """This function generates a thumbnail and saves it to /tmp directory AND 
+        extracts information about the video/audio file.
+         """
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         try:
             self.input = self.input_from_menu
         except:
@@ -248,8 +320,8 @@ class sinthgunt:
         thumb_process.wait()
         
         # update thumbnail
-	if str(os.path.getsize(self.thumbnail_filename))!='0':
-		self.thumbnail.set_from_file(self.thumbnail_filename)
+        if str(os.path.getsize(self.thumbnail_filename))!='0':
+	        self.thumbnail.set_from_file(self.thumbnail_filename)
         
         # get media file info
         mediaFileInformation = self.file_getinfo()
@@ -264,20 +336,20 @@ class sinthgunt:
                                 +'\n'+'Number of frames: '+str(self.file_frames))
         self.labelGuide.set_text('Input file: '+input_basename)
 
-    
-    
-    def setoutput(self, widget):
-        """ This functions gets the output filename from the GUI and provides
-        it for the rest of the program. """
-        
-        self.outputtmp = self.wTree.get_widget("chooserOutput")
-        self.output = self.outputtmp.get_filename()
-        
-
-
     def activate(self,widget):
-        """ This function starts the selected operation of the current selected
-        file. """
+        ####################
+        # Description
+        # ===========
+        """This function starts the conversion process.
+         """
+        # Arguments
+        # =========
+        # self.input    Path to input file 
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
 
         # Get selected operation from menu
        
@@ -315,7 +387,18 @@ class sinthgunt:
 
 
     def stop(self,widget):
-        """ Tried to kill the conversion process before it is done."""
+        ####################
+        # Description
+        # ===========
+        """This function tries to stop the conversion process before it is done."""
+        # Arguments
+        # =========
+        # self.process.pid  process id of the ffmpeg process that we want to kill.
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         try:
             os.kill(self.process.pid,9)
             gobject.source_remove(self.source_id)
@@ -330,9 +413,18 @@ class sinthgunt:
    
 
     def quit_program(self,widget):
+        ####################
+        # Description
+        # ===========
         """ When the program is closed the stop function and the logfile is
         updated and program is terminated. """
-
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         self.stop
         logfile.writelines('****** Sinthgunt log file STOP - '+str(time.ctime())+' *******\n')
         logfile.close
@@ -341,9 +433,18 @@ class sinthgunt:
 
 
     def file_getinfo(self):
+        #################### 
+        # Description
+        # ===========
         """ This function finds the information about the current selected
         file. Displays number of frames, audio codec and video codec."""
-
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         self.audio_codec = ['N/A','N/A','N/A','N/A','N/A']
         self.video_codec = ['N/A','N/A','N/A','N/A','N/A']
         self.file_frames = 0
@@ -414,8 +515,17 @@ class sinthgunt:
         logfile.writelines('Number of frames: '+str(self.file_frames)+'\n')
 
     def aboutdialog(self,widget):
+        ####################
+        # Description
+        # ===========
         """ Defines the about information about the program."""
-
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
         dialogtext = "The Sinthgunt Converter - a ffmpeg gui.\
                         \nBy Thomas R. N. Jansson (tjansson@tjansson.dk) and\
                         \n Kaare H. Jensen (kare1234@gmail.com)\
@@ -435,8 +545,18 @@ class sinthgunt:
 
 
     def no_file_selected_dialog(self,widget):
+        ####################
+        # Description
+        # ===========
         """ If no file have been selected to send to ffmpeg this warning will
         be displayed."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
 
         dialogtext = "You have to select a file and/or a preset before you \
         \ncan begin converting!"
@@ -448,8 +568,18 @@ class sinthgunt:
             message.destroy()
     
     def unsupported_codec_dialog(self,widget):
+        ####################
+        # Description
+        # ===========
         """ If an unsupported codec has been selected this warning will
         be displayed."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
 
         dialogtext = "You have selected a preset which is (probably) not supported by your version of ffmpeg. \
 To upgrade ffmpeg, please check your distribution documentation. \
@@ -463,8 +593,17 @@ after pressing the convert button"
             message.destroy()
 
     def menuradiobuttonselect(self,widget):
+        ####################
+        # Description
+        # ===========
         """ Function that detects which menu radio button has been selected."""
-
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
         self.operation_radiobutton = ''
         counter=0
         for presetmenu1header in self.presetmenu1headerholder:
@@ -481,11 +620,24 @@ after pressing the convert button"
                 
 
     def parseXML(self):
+        ####################
+        # Description
+        # ===========
         """ Parses the XML file to gather the different conversion presets into
-        categories which will be inserted into the gui. 
-(planned) In the future, this function should also test wether the preset will work with the version of ffmpeg avaliable to the user. The result should be included in the array presets e.g. by using row = [' ',' ',' ',' ',[],'encoding=True','decoding=False'] syntax. 
-This would significantly improve the clarity of the load_conf_file(self) function."""
-
+        categories which will be inserted into the gui.
+         
+        (planned) In the future, this function should also test wether the preset 
+        will work with the version of ffmpeg avaliable to the user. The result should 
+        be included in the array presets e.g. by using row = [' ',' ',' ',' ',[],'encoding=True',
+        'decoding=False'] syntax. This would significantly improve the clarity of 
+        the load_conf_file(self) function."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         xml_file = os.path.abspath(__file__)
         xml_file = os.path.dirname(xml_file) # load xml file
         xml_file = os.path.join(xml_file, DATA_DIR+"presets.xml")
@@ -532,12 +684,22 @@ This would significantly improve the clarity of the load_conf_file(self) functio
 
 
     def ffmpeg_getinfo(self,widget):
+        ####################
+        # Description
+        # ===========
         """ This function finds the information about the current selected
         file. Displays number of frames, audio codec and video codec.
 
         Get ffmpeg info function. For determining which version of ffmpeg the
         user has installed.
         """
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         self.ffmpeg_getcodecs()
         command = ["ffmpeg","-version"]
         output = ''
@@ -565,8 +727,18 @@ This would significantly improve the clarity of the load_conf_file(self) functio
             message.destroy()
 
     def ffmpeg_getcodecs(self):
+        ####################
+        # Description
+        # ===========
         """ This function determines which codecs the user has installed by looking at the output from "ffmpeg -formats"
         """
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
         command = ["ffmpeg","-formats"]
         output = ''
 
@@ -622,11 +794,19 @@ This would significantly improve the clarity of the load_conf_file(self) functio
 #####################
 ## YouTube functions
 #####################
-
-
     def menuopenyoutube(self,widget):  
+        ####################
+        # Description
+        # ===========
         """ Dialog that allows the user to enter a YouTube url. 
             Once the user presses the 'ok' button, the download will begin"""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################      
         #base this on a message dialog  
         dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK,None)  
         dialog.set_markup('Please enter YouTube URL or a direct link to a video file, eg.')  
@@ -666,12 +846,34 @@ This would significantly improve the clarity of the load_conf_file(self) functio
             
 
     def download(self,url):
-        """Copy the contents of a file from a given URL to a local file."""    
+        ####################
+        # Description
+        # ===========
+        """Copy the contents of a file from a given URL to a local file.""" 
+        # Arguments
+        # =========
+        # url   http url of the remote file to download eg. http://www.example.org/movie.mpg
+        #
+        # Further Details
+        # ===============
+        #
+        ####################   
+        
         webFile=urllib.urlretrieve(url, self.dst,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
 
 
     def _reporthook(self,numblocks, blocksize, filesize, url=None):
+        ####################
+        # Description
+        # ===========
         """Prints the download status to the status bar."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################  
         base = os.path.basename(url)
         #Should handle possible filesize=-1.
         try:
@@ -691,7 +893,18 @@ This would significantly improve the clarity of the load_conf_file(self) functio
 
 
     def download_youtube(self):
-        """This function finds the flash video source and title from the youtube page entered by the user."""    
+        ####################
+        # Description
+        # ===========
+        """This function finds the flash video source and title from the youtube page entered by the user."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
+            
         url=self.youtubeurl
         page=urllib.urlopen(url)
         result = page.read()
