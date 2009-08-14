@@ -43,30 +43,48 @@ import time
 import sys
 import urllib
 from xml.etree import ElementTree as etree
-####################
-# System checks
-####################
-# Check to see if ffmpeg is installed
-if os.path.exists("/usr/bin/ffmpeg"):
-    print('ffmpeg found. Starting Sinthgunt...')# carry on
-else:
-    print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.') # Display error message, then carry on
 
-# Checks for absolute or relative path
-DATA_DIR=""
-if os.path.exists("/usr/bin/sinthgunt.py"):
-    if os.path.exists("/usr/share/sinthgunt"): #Debian based systems (Ubuntu, Debian)
-        DATA_DIR="/usr/share/sinthgunt/"
-if os.path.exists("/usr/local/bin/sinthgunt.py"):
-    if os.path.exists("/usr/local/share/sinthgunt"): #Redhat based systems (Red Hat, openSuse)
-        DATA_DIR="/usr/local/share/sinthgunt/"
 
-# Opens the log file and write the name and curent data and time
-logfile_filename = os.path.expanduser("~/.sinthgunt.log")
-logfile = open(logfile_filename, 'a')
-logfile.writelines('****** Sinthgunt log file START - '+
-        str(time.ctime())+' *******\n')
-logo_filename=DATA_DIR+"logo.png"
+
+def main():
+    ####################
+    # System checks
+    ####################
+    # Check to see if ffmpeg is installed
+    if os.path.exists("/usr/bin/ffmpeg"):
+        print('ffmpeg found. Starting Sinthgunt...')# carry on
+    else:
+        print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.') # Display error message, then carry on
+
+    # Removed DATA_DIR path determination. All proper distro's will accept installing into /usr/share
+    # Checks for absolute or relative path
+    #DATA_DIR=""
+    #if os.path.exists("/usr/bin/sinthgunt.py"):
+    #    if os.path.exists("/usr/share/sinthgunt"): #Debian based systems (Ubuntu, Debian)
+    #        DATA_DIR="/usr/share/sinthgunt/"
+    #if os.path.exists("/usr/local/bin/sinthgunt.py"):
+    #    if os.path.exists("/usr/local/share/sinthgunt"): #Redhat based systems (Red Hat, openSuse)
+    #        DATA_DIR="/usr/local/share/sinthgunt/"
+
+    # Define data directory
+    DATA_DIR="/usr/share/sinthgunt/"
+
+    # Opens the log file and write the name and curent data and time
+    logfile_filename = os.path.expanduser("~/.sinthgunt.log")
+    logfile = open(logfile_filename, 'a')
+    logfile.writelines('****** Sinthgunt log file START - '+
+            str(time.ctime())+' *******\n')
+    logo_filename=DATA_DIR+"logo.png"
+  
+    # Carry over variables to class
+    sinthgunt.logo_filename = logo_filename
+    sinthgunt.DATA_DIR      = DATA_DIR
+    sinthgunt.logfile       = logfile
+
+    # Run the main loop
+    program = sinthgunt()
+    gtk.main()
+
 
 class sinthgunt:
 ####################
@@ -172,7 +190,7 @@ class sinthgunt:
             output = output_raw.replace('\n','')
         except:
             pass
-        logfile.writelines('Conversion status: '+output+'\n')
+        self.logfile.writelines('Conversion status: '+output+'\n')
         output_split = output.split(' ')
         N=len(output_split)
         
@@ -180,7 +198,7 @@ class sinthgunt:
         for i in range(N):
             if i>=2 and output_split[i]=='fps=':
                file_frames_completed = output_split[i-1]              
-               logfile.writelines('Frames completed: '+file_frames_completed+'\n')
+               self.logfile.writelines('Frames completed: '+file_frames_completed+'\n')
                # update progressbar and statusbar
                try:
                    context_id = self.statusbar.get_context_id("Activation")  
@@ -314,7 +332,7 @@ class sinthgunt:
         # wait for thumbnail generation to complete
         try:
             output = str(self.thumb_process.stdout.read(100))
-            logfile.writelines('Thumbnail process status: '+output+'\n')
+            self.logfile.writelines('Thumbnail process status: '+output+'\n')
         except:
             pass
         thumb_process.wait()
@@ -381,7 +399,7 @@ class sinthgunt:
                             stdout=subprocess.PIPE,stdin=subprocess.PIPE,
                             stderr=subprocess.STDOUT,shell=False)
                     
-                    logfile.writelines('Conversion command: '+str(subcommand)+'\n')
+                    self.logfile.writelines('Conversion command: '+str(subcommand)+'\n')
         except:
             self.no_file_selected_dialog(widget)
 
@@ -404,7 +422,7 @@ class sinthgunt:
             gobject.source_remove(self.source_id)
             self.progressbar.set_fraction(0.0)
             self.progressbar.set_text('')
-            logfile.writelines('Conversion aborted by user\n')
+            self.logfile.writelines('Conversion aborted by user\n')
             context_id = self.statusbar.get_context_id("Activation")  
             self.statusbar.push(context_id,'Conversion aborted!')
         except:
@@ -426,8 +444,8 @@ class sinthgunt:
         #
         ####################
         self.stop
-        logfile.writelines('****** Sinthgunt log file STOP - '+str(time.ctime())+' *******\n')
-        logfile.close
+        self.logfile.writelines('****** Sinthgunt log file STOP - '+str(time.ctime())+' *******\n')
+        self.logfile.close
         gtk.main_quit()
 
 
@@ -462,7 +480,7 @@ class sinthgunt:
                 break
 
             if output != '\n' and output != '':
-                logfile.writelines('Get file info status: '+output+'\n')
+                self.logfile.writelines('Get file info status: '+output+'\n')
                 output_split = output.split(' ')
                 N=len(output_split)
                 for i in range(N):
@@ -510,9 +528,9 @@ class sinthgunt:
             if counter >= 1000:
                 flag = 0
             counter = counter+1
-        logfile.writelines('Audio codec: '+str(self.audio_codec)+'\n')
-        logfile.writelines('Video codec: '+str(self.video_codec)+'\n')
-        logfile.writelines('Number of frames: '+str(self.file_frames)+'\n')
+        self.logfile.writelines('Audio codec: '+str(self.audio_codec)+'\n')
+        self.logfile.writelines('Video codec: '+str(self.video_codec)+'\n')
+        self.logfile.writelines('Number of frames: '+str(self.file_frames)+'\n')
 
     def aboutdialog(self,widget):
         ####################
@@ -640,7 +658,7 @@ after pressing the convert button"
         ####################
         xml_file = os.path.abspath(__file__)
         xml_file = os.path.dirname(xml_file) # load xml file
-        xml_file = os.path.join(xml_file, DATA_DIR+"presets.xml")
+        xml_file = os.path.join(xml_file, self.DATA_DIR+"presets.xml")
         optionsXML = etree.parse(xml_file)
         presets=[]
         row = [' ',' ',' ',' ',[]]
@@ -748,7 +766,7 @@ after pressing the convert button"
             output = str(process.stdout.read(20000))        
         except:
             None
-        logfile.writelines('ffmpeg_getcodecs output: '+str(output))
+        self.logfile.writelines('ffmpeg_getcodecs output: '+str(output))
         output_lines=output.split('\n')
         codecs_raw=[]
         Ncodecs=0
@@ -762,7 +780,7 @@ after pressing the convert button"
                     pass
             codecs_raw.append(line_codec)
             Ncodecs=Ncodecs+1
-        logfile.writelines('ffmpeg_getcodecs codecs_raw: '+str(codecs_raw))
+        self.logfile.writelines('ffmpeg_getcodecs codecs_raw: '+str(codecs_raw))
         # look for encoding 
         self.codecs=[]
         for i in range(Ncodecs):
@@ -788,7 +806,7 @@ after pressing the convert button"
         # Debugging codec row
         row = ['debugcodec',True,True]
         self.codecs.append(row)  
-        logfile.writelines('ffmpeg_getcodecs self.codecs: '+str(self.codecs))
+        self.logfile.writelines('ffmpeg_getcodecs self.codecs: '+str(self.codecs))
  
 
 #####################
@@ -954,7 +972,7 @@ after pressing the convert button"
         the functions."""
 
         #Set the Glade file
-        self.gladefile = DATA_DIR+"sinthgunt.glade"  
+        self.gladefile = self.DATA_DIR+"sinthgunt.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
 
         #Get the Main Window, and connect the "destroy" event
@@ -981,7 +999,7 @@ after pressing the convert button"
             
             #Sets the default logo
             self.thumbnail = self.wTree.get_widget("thumbnail")
-            self.thumbnail.set_from_file(logo_filename)
+            self.thumbnail.set_from_file(self.logo_filename)
 
             #Create a dictionary of handles and functions
             self.dic = {#"on_chooserInput_file_set" : self.setinput,
@@ -1004,10 +1022,3 @@ after pressing the convert button"
             self.input = None
 
 
-##########################
-## The main loop
-##########################
-
-if __name__ == "__main__":
-    program = sinthgunt()
-    gtk.main()
