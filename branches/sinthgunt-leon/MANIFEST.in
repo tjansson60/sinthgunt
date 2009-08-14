@@ -1,4 +1,0 @@
-include LICENSE.txt README.txt sinthgunt sinthgunt.html
-recursive-include share *
-recursive-include Sinthgunt *
-
