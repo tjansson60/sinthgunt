@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Wed Jul 22 10:05:51 2009 -->
+<!--Generated with glade3 3.4.5 on Thu Aug 27 11:19:38 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
@@ -200,8 +200,58 @@
         <child>
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
-            <property name="n_rows">2</property>
+            <property name="n_rows">3</property>
             <property name="n_columns">2</property>
+            <child>
+              <widget class="GtkLabel" id="label1">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolbar" id="toolbar2">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkToolButton" id="playbutton_input">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Play input file</property>
+                    <property name="stock_id">gtk-media-play</property>
+                    <signal name="clicked" handler="on_playbutton_input_clicked"/>
+                  </widget>
+                  <packing>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkSeparatorToolItem" id="toolbutton1">
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkToolButton" id="playbutton_output">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Play output file</property>
+                    <property name="stock_id">gtk-media-play</property>
+                    <signal name="clicked" handler="on_playbutton_output_clicked"/>
+                  </widget>
+                  <packing>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
             <child>
               <widget class="GtkLabel" id="labelOperation">
                 <property name="visible">True</property>
