@@ -54,21 +54,11 @@ def main():
     if os.path.exists("/usr/bin/ffmpeg"):
         print('ffmpeg found. Starting Sinthgunt...')# carry on
     else:
-        print('It seems, that ffmpeg is not installed on this computer. \nSee http://sinthgunt.googlecode.com for installation instructions.') # Display error message, then carry on
-
-    # Removed DATA_DIR path determination. All proper distro's will accept installing into /usr/share
-    # Checks for absolute or relative path
-    #DATA_DIR=""
-    #if os.path.exists("/usr/bin/sinthgunt.py"):
-    #    if os.path.exists("/usr/share/sinthgunt"): #Debian based systems (Ubuntu, Debian)
-    #        DATA_DIR="/usr/share/sinthgunt/"
-    #if os.path.exists("/usr/local/bin/sinthgunt.py"):
-    #    if os.path.exists("/usr/local/share/sinthgunt"): #Redhat based systems (Red Hat, openSuse)
-    #        DATA_DIR="/usr/local/share/sinthgunt/"
+        print('It seems, that ffmpeg is not installed on this computer. \nSee http://www.sinthgunt.org for installation instructions.') # Display error message, then carry on
 
     # Define data directory
     DATA_DIR="/usr/share/sinthgunt/"
-
+    
     # Opens the log file and write the name and curent data and time
     logfile_filename = os.path.expanduser("~/.sinthgunt.log")
     logfile = open(logfile_filename, 'a')
@@ -393,6 +383,8 @@ class sinthgunt:
                         except:
                             pass
                     temp1.extend([str(self.input+"."+self.presetlist[i][3])])
+                    # path to output file
+                    self.output=str(self.input+"."+self.presetlist[i][3])
                     subcommand.extend(temp1)
                     # Start converting
                     self.process = subprocess.Popen(args=subcommand,
@@ -960,8 +952,74 @@ after pressing the convert button"
             self.download(dload)
         except Exception,e:
             print "Error: ",e
-        
-        
+#####################
+## mplayer functions
+#####################
+    def mplayer_check(self,widget):
+        ####################
+        # Description
+        # ===========
+        """Checks if the user has mplayer installed.""" 
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
+        return False 
+        if os.path.exist('/usr/bin/mplayer'):
+            return True
+        else:
+            return False
+       
+    def mplayer_play_input_file(self,widget):
+        ####################
+        # Description
+        # ===========
+        """Plays the input file using mplayer.""" 
+        # Arguments
+        # =========
+        # whattoplay    = self.input, path to input file
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
+        if self.mplayer_check:
+            whattoplay=' '
+            try:
+                whattoplay=self.input
+            except Exception, e:
+                raise e
+            command = ["mplayer","-vo","x11",whattoplay]
+            process = subprocess.Popen(args=command)
+        else:    
+            print 'Mplayer must be installed and found in /usr/bin for this function to work'
+   
+    def mplayer_play_output_file(self,widget):
+        ####################
+        # Description
+        # ===========
+        """Plays the input file using mplayer.""" 
+        # Arguments
+        # =========
+        # whattoplay    = self.output, path to output file
+        #
+        # Further Details
+        # ===============
+        #
+        ####################  
+        if self.mplayer_check:
+            whattoplay=' '
+            try:
+                whattoplay=self.output
+            except Exception, e:
+                raise e
+            command = ["mplayer","-vo","x11",whattoplay]
+            process = subprocess.Popen(args=command)
+        else:
+            print 'Mplayer must be installed and found in /usr/bin for this function to work'
 
 #####################
 ## The init function
@@ -1000,25 +1058,29 @@ after pressing the convert button"
             #Sets the default logo
             self.thumbnail = self.wTree.get_widget("thumbnail")
             self.thumbnail.set_from_file(self.logo_filename)
+            
+            # set empty input and output strings
+            #self.input = None
+            #self.output = None
+
 
             #Create a dictionary of handles and functions
             self.dic = {#"on_chooserInput_file_set" : self.setinput,
-                        "on_button_activate_clicked" : self.activate,
-                        "on_toolbarconvert_clicked"  : self.activate,
-                        "on_button_stop_clicked"     : self.stop,
-                        "on_toolbarstop_clicked"     : self.stop,
-                        "MainWindow_destroy"         : self.quit_program,
-                        "on_menuquit_activate"       : self.quit_program,
-                        "on_menuopen_activate"       : self.menuopenfile,
-                        "on_menuopenyoutube_activate"       : self.menuopenyoutube,
-                        "on_toolbaropen_clicked"     : self.menuopenfile,
-                        "on_toolbaropenyoutube_clicked"     : self.menuopenyoutube,
-                        "on_menuconvert_activate"    : self.activate,
-                        "on_menuabout_activate"      : self.aboutdialog,
-                        "on_menuffmpeginfo_activate" : self.ffmpeg_getinfo}
-            
+                        "on_button_activate_clicked"    : self.activate,
+                        "on_toolbarconvert_clicked"     : self.activate,
+                        "on_button_stop_clicked"        : self.stop,
+                        "on_toolbarstop_clicked"        : self.stop,
+                        "MainWindow_destroy"            : self.quit_program,
+                        "on_menuquit_activate"          : self.quit_program,
+                        "on_menuopen_activate"          : self.menuopenfile,
+                        "on_menuopenyoutube_activate"   : self.menuopenyoutube,
+                        "on_toolbaropen_clicked"        : self.menuopenfile,
+                        "on_toolbaropenyoutube_clicked" : self.menuopenyoutube,
+                        "on_menuconvert_activate"       : self.activate,
+                        "on_menuabout_activate"         : self.aboutdialog,
+                        "on_menuffmpeginfo_activate"    : self.ffmpeg_getinfo,
+                         "on_playbutton_input_clicked" : self.mplayer_play_input_file,
+                         "on_playbutton_output_clicked"  : self.mplayer_play_output_file}
             #Do the magic connecting to the widgets
             self.wTree.signal_autoconnect(self.dic)        
-            self.input = None
-
-
+            
