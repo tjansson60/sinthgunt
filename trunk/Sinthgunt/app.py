@@ -80,6 +80,22 @@ class sinthgunt:
 ####################
 # FUNCTIONS START
 ####################
+    def systemCheck(self):
+        ####################
+        # Description
+        # ===========
+        """ This function performs a system check when sinthgunt is started."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        # The function 
+        # - looks for ffmpeg in /usr/bin/
+        # - 
+        # - 
+        ####################
+
     def load_conf_file(self):
         ####################
         # Description
