@@ -372,6 +372,65 @@ class sinthgunt:
 
         # Return path to thumbnail        
         return thumbnailFileName
+     
+     
+    def generatePreview(self,widget):
+        ####################
+        # Description
+        # ===========
+        """This function creates a 10 sec preview of the output file. This enables the user to evaluate the quality of the converted
+        file.
+         """
+        # Arguments
+        # =========
+        # self.input    Path to input file 
+        #
+        # Further Details
+        # ===============
+        #
+        ####################
+
+        # Get selected operation from menu
+       
+        try:
+            operation = self.operation_radiobutton
+            self.progressbar.set_fraction(0.01)
+            context_id = self.statusbar.get_context_id("Activation")  
+            self.statusbar.push(context_id,'Creating preview...')
+        
+            #start watching output
+            self.source_id = gobject.timeout_add(500, self.checkfile)
+        
+            for i in range(self.Npreset):
+                if operation == self.presetlist[i][1]:
+                    # generate command line in subprocess syntax
+                    subcommand = ['/usr/bin/ffmpeg','-y','-i']
+                    subcommand.extend([self.input])
+                    subcommand.extend(['-t','5'])
+                    temp1=self.presetlist[i][2].split(' ')
+                    # remove empty entries ('') from the array
+                    for ii in range(20):
+                        try:
+                            temp1.remove('')
+                        except:
+                            pass
+                    temp1.extend([str(self.input+"_preview."+self.presetlist[i][3])])
+                    # path to output file
+                    self.output=str(self.input+"_preview."+self.presetlist[i][3])
+                    subcommand.extend(temp1)
+                    # Start converting
+                    self.process = subprocess.Popen(args=subcommand,
+                            stdout=subprocess.PIPE,stdin=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,shell=False)
+                    
+                    self.logfile.writelines('Conversion command: '+str(subcommand)+'\n')
+        except:
+            self.no_file_selected_dialog(widget)
+
+
+ 
+      
+      
        
     def activate(self,widget):
         ####################
@@ -1097,6 +1156,7 @@ after pressing the convert button"
             self.dic = {#"on_chooserInput_file_set" : self.setinput,
                         "on_button_activate_clicked"    : self.activate,
                         "on_toolbarconvert_clicked"     : self.activate,
+                        "on_toolbargeneratepreview_clicked" :    self.generatePreview,
                         "on_button_stop_clicked"        : self.stop,
                         "on_toolbarstop_clicked"        : self.stop,
                         "MainWindow_destroy"            : self.quit_program,
