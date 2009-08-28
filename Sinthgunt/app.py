@@ -56,9 +56,9 @@ def main():
     else:
         print('It seems, that ffmpeg is not installed on this computer. \nSee http://www.sinthgunt.org for installation instructions.') # Display error message, then carry on
 
-    # Define data directory
+    # Define data and temp directories
     DATA_DIR="/usr/share/sinthgunt/"
-    
+    TEMP_DIR="/tmp/"
     # Opens the log file and write the name and curent data and time
     logfile_filename = os.path.expanduser("~/.sinthgunt.log")
     logfile = open(logfile_filename, 'a')
@@ -70,6 +70,7 @@ def main():
     sinthgunt.logo_filename = logo_filename
     sinthgunt.DATA_DIR      = DATA_DIR
     sinthgunt.logfile       = logfile
+    sinthgunt.TEMP_DIR      = TEMP_DIR
 
     # Run the main loop
     program = sinthgunt()
@@ -311,29 +312,8 @@ class sinthgunt:
         # ===============
         #
         ####################
-        temp = self.input.split('/')
-        N = len(temp)        
-        
-        # get input basename
-        input_basename = temp[N-1]
-        # set thumbnail filename
-        self.thumbnail_filename = "/tmp/"+str(input_basename)+".jpg"
-
-        subcommand = ['ffmpeg', '-y', '-itsoffset', '-5' ,'-i' ,self.input,\
-                "-vcodec","mjpeg","-vframes", "1", "-an", "-f", "rawvideo", "-s", "170x128",\
-                self.thumbnail_filename]
-    
-        thumb_process = subprocess.Popen(args=subcommand,
-                            stdout=subprocess.PIPE,stdin=subprocess.PIPE,
-                            stderr=subprocess.STDOUT,shell=False)
-
-        # wait for thumbnail generation to complete
-        try:
-            output = str(self.thumb_process.stdout.read(100))
-            self.logfile.writelines('Thumbnail process status: '+output+'\n')
-        except:
-            pass
-        thumb_process.wait()
+        # generate thumbnail from input file
+        self.thumbnail_filename=self.generateThumbnail(self.input)
         
         # update thumbnail
         if str(os.path.getsize(self.thumbnail_filename))!='0':
@@ -350,8 +330,49 @@ class sinthgunt:
                                 +'\nVideo resolution: '+ str(self.video_codec[2])\
                                 +'\nVideo bitrate: '+ str(self.video_codec[3])\
                                 +'\n'+'Number of frames: '+str(self.file_frames))
-        self.labelGuide.set_text('Input file: '+input_basename)
+        self.labelGuide.set_text('Input file: '+self.input)
 
+    def generateThumbnail(self,videoFile):
+        ####################
+        # Description
+        # ===========
+        """This function generates a thumbnail of the input file and returns the path to the thumbnail.
+         """
+        # Arguments
+        # =========
+        # videofile - path to the video file we wish to generate a thumbnail for
+        #
+        # Further Details
+        # ===============
+        # This function uses ffmpeg to generate a thumbnail.
+        ####################
+
+        # get file base name
+        temp = videoFile.split('/')
+        N = len(temp)        
+        videoFileBaseName = temp[N-1]
+        # set thumbnail filename
+        thumbnailFileName = sinthgunt.TEMP_DIR+str(videoFileBaseName)+".jpg"
+
+        # ffmpeg command line
+        subcommand = ['ffmpeg', '-y', '-itsoffset', '-5' ,'-i' ,videoFile,\
+                "-vcodec","mjpeg","-vframes", "1", "-an", "-f", "rawvideo", "-s", "170x128",\
+                thumbnailFileName]
+    
+        thumbProcess = subprocess.Popen(args=subcommand,
+                            stdout=subprocess.PIPE,stdin=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,shell=False)
+
+        # Read output from thumbnail process and write it to the log file
+        output = str(thumbProcess.stdout.read(100))
+        self.logfile.writelines('Thumbnail process status: '+output+'\n')
+
+        # Wait for thumbnail process to complete
+        thumbProcess.wait()
+
+        # Return path to thumbnail        
+        return thumbnailFileName
+       
     def activate(self,widget):
         ####################
         # Description
