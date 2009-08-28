@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Thu Aug 27 11:19:38 2009 -->
+<!--Generated with glade3 3.4.5 on Fri Aug 28 22:15:17 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
@@ -37,6 +37,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">_File</property>
                                 <property name="use_underline">True</property>
+                                <signal name="activate" handler="on_menuopen_activate"/>
                                 <child internal-child="image">
                                   <widget class="GtkImage" id="menu-item-image1">
                                     <property name="visible">True</property>
@@ -50,6 +51,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">_YouTube video</property>
                                 <property name="use_underline">True</property>
+                                <signal name="activate" handler="on_menuopenyoutube_activate"/>
                                 <child internal-child="image">
                                   <widget class="GtkImage" id="menu-item-image2">
                                     <property name="visible">True</property>
@@ -203,12 +205,45 @@
             <property name="n_rows">3</property>
             <property name="n_columns">2</property>
             <child>
-              <widget class="GtkLabel" id="label1">
+              <widget class="GtkLabel" id="labelGuide">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="xpad">7</property>
+                <property name="ypad">4</property>
+                <property name="justify">GTK_JUSTIFY_FILL</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelInput">
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkImage" id="thumbnail">
+                <property name="visible">True</property>
+                <property name="xpad">10</property>
+                <property name="ypad">10</property>
+                <property name="stock">gtk-missing-image</property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelOperation">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
               </packing>
             </child>
             <child>
@@ -253,46 +288,13 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="labelOperation">
+              <widget class="GtkLabel" id="label1">
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
               </packing>
-            </child>
-            <child>
-              <widget class="GtkImage" id="thumbnail">
-                <property name="visible">True</property>
-                <property name="xpad">10</property>
-                <property name="ypad">10</property>
-                <property name="stock">gtk-missing-image</property>
-              </widget>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelInput">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelGuide">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="xpad">7</property>
-                <property name="ypad">4</property>
-                <property name="justify">GTK_JUSTIFY_FILL</property>
-              </widget>
             </child>
           </widget>
           <packing>
