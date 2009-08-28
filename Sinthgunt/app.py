@@ -289,7 +289,7 @@ class sinthgunt:
         fc.add_filter(filter)
         
         if fc.run() == gtk.RESPONSE_OK:
-            self.input_from_menu = fc.get_filename()
+            self.input = fc.get_filename()
             fc.destroy()
             test = self.setinput(widget)
         else:
@@ -311,14 +311,6 @@ class sinthgunt:
         # ===============
         #
         ####################
-        try:
-            self.input = self.input_from_menu
-        except:
-            pass
-        try: 
-            self.input = self.dst
-        except:
-            pass
         temp = self.input.split('/')
         N = len(temp)        
         
@@ -863,7 +855,7 @@ after pressing the convert button"
                     break
             print output
             print self.youtubeurl
-            self.dst=os.getenv("HOME")+'/'+output
+            self.input=os.getenv("HOME")+'/'+output
             self.download(self.youtubeurl)
             self.setinput(widget)
         else:            
@@ -885,7 +877,7 @@ after pressing the convert button"
         #
         ####################   
         
-        webFile=urllib.urlretrieve(url, self.dst,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
+        webFile=urllib.urlretrieve(url, self.input,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
 
 
     def _reporthook(self,numblocks, blocksize, filesize, url=None):
@@ -964,7 +956,7 @@ after pressing the convert button"
                
         # Start downloading
         try :
-            self.dst=os.getenv("HOME")+'/'+self.youtube_title+".flv"
+            self.input=os.getenv("HOME")+'/'+self.youtube_title+".flv"
             self.download(dload)
         except Exception,e:
             print "Error: ",e
