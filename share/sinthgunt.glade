@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Fri Aug 28 22:15:17 2009 -->
+<!--Generated with glade3 3.4.5 on Fri Aug 28 23:27:12 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
     <property name="title" translatable="yes">Sinthgunt Converter</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
-    <property name="default_width">500</property>
+    <property name="default_width">700</property>
     <property name="icon">icon.png</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
     <child>
@@ -183,6 +183,17 @@
               </packing>
             </child>
             <child>
+              <widget class="GtkToolButton" id="toolbargeneratepreview">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Generate preview</property>
+                <property name="stock_id">gtk-convert</property>
+                <signal name="clicked" handler="on_toolbargeneratepreview_clicked"/>
+              </widget>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkToolButton" id="toolbarstop">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Abort</property>
@@ -205,22 +216,58 @@
             <property name="n_rows">3</property>
             <property name="n_columns">2</property>
             <child>
-              <widget class="GtkLabel" id="labelGuide">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="xpad">7</property>
-                <property name="ypad">4</property>
-                <property name="justify">GTK_JUSTIFY_FILL</property>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="labelInput">
+              <widget class="GtkLabel" id="label1">
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolbar" id="toolbar2">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkToolButton" id="playbutton_input">
+                    <property name="visible">True</property>
+                    <property name="is_important">True</property>
+                    <property name="label" translatable="yes">Play input file</property>
+                    <property name="stock_id">gtk-media-play</property>
+                    <signal name="clicked" handler="on_playbutton_input_clicked"/>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkSeparatorToolItem" id="toolbutton1">
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkToolButton" id="playbutton_output">
+                    <property name="visible">True</property>
+                    <property name="is_important">True</property>
+                    <property name="label" translatable="yes">Play output/preview file</property>
+                    <property name="stock_id">gtk-media-play</property>
+                    <signal name="clicked" handler="on_playbutton_output_clicked"/>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="labelOperation">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
               </packing>
             </child>
             <child>
@@ -238,63 +285,23 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="labelOperation">
+              <widget class="GtkLabel" id="labelInput">
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkToolbar" id="toolbar2">
+              <widget class="GtkLabel" id="labelGuide">
                 <property name="visible">True</property>
-                <child>
-                  <widget class="GtkToolButton" id="playbutton_input">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Play input file</property>
-                    <property name="stock_id">gtk-media-play</property>
-                    <signal name="clicked" handler="on_playbutton_input_clicked"/>
-                  </widget>
-                  <packing>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkSeparatorToolItem" id="toolbutton1">
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkToolButton" id="playbutton_output">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Play output file</property>
-                    <property name="stock_id">gtk-media-play</property>
-                    <signal name="clicked" handler="on_playbutton_output_clicked"/>
-                  </widget>
-                  <packing>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="xpad">7</property>
+                <property name="ypad">4</property>
+                <property name="justify">GTK_JUSTIFY_FILL</property>
               </widget>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="label1">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
             </child>
           </widget>
           <packing>
