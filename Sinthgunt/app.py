@@ -1156,7 +1156,8 @@ after pressing the convert button"
             self.dic = {#"on_chooserInput_file_set" : self.setinput,
                         "on_button_activate_clicked"    : self.activate,
                         "on_toolbarconvert_clicked"     : self.activate,
-                        "on_toolbargeneratepreview_clicked" :    self.generatePreview,
+                        "on_menuConvertPreview_activate" :    self.generatePreview,
+                        "on_menuConvert_activate"       :    self.activate,
                         "on_button_stop_clicked"        : self.stop,
                         "on_toolbarstop_clicked"        : self.stop,
                         "MainWindow_destroy"            : self.quit_program,
@@ -1168,8 +1169,8 @@ after pressing the convert button"
                         "on_menuconvert_activate"       : self.activate,
                         "on_menuabout_activate"         : self.aboutdialog,
                         "on_menuffmpeginfo_activate"    : self.ffmpeg_getinfo,
-                         "on_playbutton_input_clicked" : self.mplayer_play_input_file,
-                         "on_playbutton_output_clicked"  : self.mplayer_play_output_file}
+                         "on_menuPlayInput_activate" : self.mplayer_play_input_file,
+                         "on_menuPlayOutput_activate"  : self.mplayer_play_output_file}
             #Do the magic connecting to the widgets
             self.wTree.signal_autoconnect(self.dic)        
             
