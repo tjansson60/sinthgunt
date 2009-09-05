@@ -636,12 +636,7 @@ class sinthgunt:
                         \nConvert button in the main window.\
                         \n\nPlease visit http://www.sinthgunt.org\
                         \nfor more info."
-        message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
-        resp = message.run()
-        if resp == gtk.RESPONSE_CLOSE:
-            message.destroy()
-
+        self.InformationDialog(widget,dialogtext)
 
     def no_file_selected_dialog(self,widget):
         ####################
@@ -656,16 +651,10 @@ class sinthgunt:
         # ===============
         #
         #################### 
-
         dialogtext = "You have to select a file and/or a preset before you \
         \ncan begin converting!"
-        message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
-                gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
-        resp = message.run()
-        if resp == gtk.RESPONSE_CLOSE:
-            message.destroy()
-    
+        self.ErrorDialog(widget,dialogtext)
+
     def unsupported_codec_dialog(self,widget):
         ####################
         # Description
@@ -679,17 +668,54 @@ class sinthgunt:
         # ===============
         #
         #################### 
-
         dialogtext = "You have selected a preset which is (probably) not supported by your version of ffmpeg. \
 To upgrade ffmpeg, please check your distribution documentation. \
 \n If you want, you may disregard this warning and check the log file (sinthgunt.log) \
 after pressing the convert button"
+        self.ErrorDialog(widget,dialogtext)
+    
+    def ErrorDialog(self,widget,dialogtext):
+        ####################
+        # Description
+        # ===========
+        """ If an error in the program has occured, this function opens an
+        error dialog informing the user of the problem at hand."""
+        # Arguments
+        # =========
+        # dialogtext - the error message to be presented to the user
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
         message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
                 gtk.BUTTONS_NONE, dialogtext)
         message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         resp = message.run()
         if resp == gtk.RESPONSE_CLOSE:
             message.destroy()
+
+    def InformationDialog(self,widget,dialogtext):
+        ####################
+        # Description
+        # ===========
+        """This function opens an information dialog."""
+        # Arguments
+        # =========
+        # dialogtext - the information message to be presented to the user
+        #
+        # Further Details
+        # ===============
+        #
+        #################### 
+        message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, dialogtext)
+        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
+        resp = message.run()
+        if resp == gtk.RESPONSE_CLOSE:
+            message.destroy()
+
+
+
 
     def menuradiobuttonselect(self,widget):
         ####################
@@ -802,29 +828,15 @@ after pressing the convert button"
         self.ffmpeg_getcodecs()
         command = ["ffmpeg","-version"]
         output = ''
-
         try:
             process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
             output = str(process.stdout.read(10000))        
         except:
             None
-           
         dialogtext=output
-        dialogtitle='ffmpeg info'
-        # check to see if ffmpeg is installed. Print error if it is not present
-        if output=='':
-            dialogtext='ffmpeg is not installed on this computer or something \
-        else went wrong. See README.txt for installation instructions.'
+        self.InformationDialog(widget,dialogtext)
         
-        message = gtk.MessageDialog(None,gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, 
-                gtk.BUTTONS_NONE, dialogtext)
-        message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
-        message.set_title('ffmpeg info')
-        resp = message.run()
-        if resp == gtk.RESPONSE_CLOSE:
-            message.destroy()
-
     def ffmpeg_getcodecs(self):
         ####################
         # Description
