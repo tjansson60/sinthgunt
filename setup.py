@@ -19,7 +19,9 @@ setup(name = 'sinthgunt',
     package_data = {'sinthgunt': files},
     scripts = ['sinthgunt'],
     data_files=[
-        ('share/sinthgunt',['share/sinthgunt.glade','share/presets.xml','share/logo.png','share/icon.png','README.txt','LICENSE.txt','sinthgunt.html'])
-    ]
+        ('share/sinthgunt',['share/sinthgunt.glade','share/presets.xml','share/logo.png','share/icon.png','README.txt','LICENSE.txt','sinthgunt.html']),
+        ('share/applications',['share/sinthgunt.desktop']),
+        ('share/pixmaps',['share/sinthgunt.png']),
+        ]
 )
 
