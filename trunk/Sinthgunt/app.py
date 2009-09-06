@@ -290,14 +290,12 @@ class sinthgunt:
         filter.add_pattern("*")
         fc.add_filter(filter)
         
-        if fc.run() == gtk.RESPONSE_OK:
-            self.input = fc.get_filename()
+        if fc.run() == gtk.RESPONSE_OK:      
+            self.input.extend([fc.get_filename()])
             fc.destroy()
             test = self.setinput(widget)
         else:
             fc.destroy()
-    
-
     
     def setinput(self, widget): 
         ####################
@@ -314,7 +312,7 @@ class sinthgunt:
         #
         ####################
         # generate thumbnail from input file
-        self.thumbnail_filename=self.generateThumbnail(self.input)
+        self.thumbnail_filename=self.generateThumbnail(self.input[-1])
         
         # update thumbnail
         if str(os.path.getsize(self.thumbnail_filename))!='0':
@@ -331,7 +329,51 @@ class sinthgunt:
                                 +'\nVideo resolution: '+ str(self.video_codec[2])\
                                 +'\nVideo bitrate: '+ str(self.video_codec[3])\
                                 +'\n'+'Number of frames: '+str(self.file_frames))
-        self.labelGuide.set_text('Input file: '+self.input)
+        self.ListOfInputFiles='\n'
+        for i in range(len(self.input)):
+            StringToAdd=str(i+1)+'. '+self.input[i]+'\n'
+            self.ListOfInputFiles=self.ListOfInputFiles+StringToAdd
+        self.labelGuide.set_text('Input file(s): '+self.ListOfInputFiles)
+
+    def RemoveInputFile(self,widget):
+        ####################
+        # Description
+        # ===========
+        """ Dialog that allows the user to remove a file from the list of
+            input tiles. 
+            Once the user presses the 'ok' button, the file is removed
+            from the list."""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        #
+        ####################      
+        #base this on a message dialog  
+        dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK,None)  
+        dialog.set_markup('Enter the number of the input file you wish to remove')  
+        #create the text input field  
+        entry = gtk.Entry()  
+        #allow the user to press enter to do ok  
+        #entry.connect("activate", dialog.response(response), dialog, gtk.RESPONSE_OK)  
+        #create a horizontal box to pack the entry and a label  
+        hbox = gtk.HBox()  
+        hbox.pack_start(gtk.Label("#"), False, 5, 5)  
+        hbox.pack_end(entry)  
+        #some secondary text  
+        dialog.format_secondary_markup(self.ListOfInputFiles)  
+        #add it and show it  
+        dialog.vbox.pack_end(hbox, True, True, 0)  
+        dialog.show_all()  
+        #go go go  
+        dialog.run()  
+        InputFileToRemove = int(entry.get_text())-1
+        dialog.destroy()  
+        dialog.destroy()
+        
+        del self.input[InputFileToRemove]
+        self.setinput(widget)
 
     def generateThumbnail(self,videoFile):
         ####################
@@ -401,12 +443,13 @@ class sinthgunt:
         
             #start watching output
             self.source_id = gobject.timeout_add(500, self.checkfile)
-        
+            #for now, operate on last input file
+            InputFileName=self.input[-1]
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
                     # generate command line in subprocess syntax
                     subcommand = ['/usr/bin/ffmpeg','-y','-i']
-                    subcommand.extend([self.input])
+                    subcommand.extend([InputFileName])
                     subcommand.extend(['-t','5'])
                     temp1=self.presetlist[i][2].split(' ')
                     # remove empty entries ('') from the array
@@ -415,9 +458,9 @@ class sinthgunt:
                             temp1.remove('')
                         except:
                             pass
-                    temp1.extend([str(self.input+"_preview."+self.presetlist[i][3])])
+                    temp1.extend([str(InputFileName+"_preview."+self.presetlist[i][3])])
                     # path to output file
-                    self.output=str(self.input+"_preview."+self.presetlist[i][3])
+                    self.output=str(InputFileName+"_preview."+self.presetlist[i][3])
                     subcommand.extend(temp1)
                     # Start converting
                     self.process = subprocess.Popen(args=subcommand,
@@ -458,12 +501,12 @@ class sinthgunt:
         
             #start watching output
             self.source_id = gobject.timeout_add(500, self.checkfile)
-        
+            InputFileName=self.input[-1]
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
                     # generate command line in subprocess syntax
                     subcommand = ['/usr/bin/ffmpeg','-y','-i']
-                    subcommand.extend([self.input])
+                    subcommand.extend([InputFileName])
                     temp1=self.presetlist[i][2].split(' ')
                     # remove empty entries ('') from the array
                     for ii in range(20):
@@ -471,9 +514,9 @@ class sinthgunt:
                             temp1.remove('')
                         except:
                             pass
-                    temp1.extend([str(self.input+"."+self.presetlist[i][3])])
+                    temp1.extend([str(InputFileName+"."+self.presetlist[i][3])])
                     # path to output file
-                    self.output=str(self.input+"."+self.presetlist[i][3])
+                    self.output=str(InputFileName+"."+self.presetlist[i][3])
                     subcommand.extend(temp1)
                     # Start converting
                     self.process = subprocess.Popen(args=subcommand,
@@ -547,7 +590,8 @@ class sinthgunt:
         self.audio_codec = ['N/A','N/A','N/A','N/A','N/A']
         self.video_codec = ['N/A','N/A','N/A','N/A','N/A']
         self.file_frames = 0
-        command = ["ffmpeg","-i",self.input]
+        InputFileName=self.input[-1]
+        command = ["ffmpeg","-i",InputFileName]
 
         process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
@@ -948,15 +992,15 @@ after pressing the convert button"
                     break
             print output
             print self.youtubeurl
-            self.input=os.getenv("HOME")+'/'+output
-            self.download(self.youtubeurl)
+            self.input.extend([os.getenv("HOME")+'/'+output])
+            self.download(widget,self.youtubeurl)
             self.setinput(widget)
         else:            
-            self.download_youtube()
+            self.download_youtube(widget)
             self.setinput(widget)
             
 
-    def download(self,url):
+    def download(self,widget,url):
         ####################
         # Description
         # ===========
@@ -970,10 +1014,10 @@ after pressing the convert button"
         #
         ####################   
         
-        webFile=urllib.urlretrieve(url, self.input,lambda nb, bs, fs, url=url: self._reporthook(nb,bs,fs,url))
+        webFile=urllib.urlretrieve(url, self.input[-1],lambda nb, bs, fs, url=url: self._reporthook(widget,nb,bs,fs,url))
 
 
-    def _reporthook(self,numblocks, blocksize, filesize, url=None):
+    def _reporthook(self,widget,numblocks, blocksize, filesize, url=None):
         ####################
         # Description
         # ===========
@@ -997,13 +1041,14 @@ after pressing the convert button"
         self.statusbar.push(context_id,'Downloaded '+str(percent)+'% from '+self.youtubeurl)
         self.progressbar.set_fraction(float(percent)/100)
         if percent==100:
-            self.statusbar.push(context_id,'Downloaded completed. Saved as '+self.dst)
+            self.statusbar.push(context_id,'Downloaded completed. Saved as '+self.input[-1])
+            self.setinput(widget)
         # Wait for gui to update
         while gtk.events_pending():
             gtk.main_iteration(False)
 
 
-    def download_youtube(self):
+    def download_youtube(self,widget):
         ####################
         # Description
         # ===========
@@ -1049,8 +1094,8 @@ after pressing the convert button"
                
         # Start downloading
         try :
-            self.input=os.getenv("HOME")+'/'+self.youtube_title+".flv"
-            self.download(dload)
+            self.input.extend([os.getenv("HOME")+'/'+self.youtube_title+".flv"])
+            self.download(widget,dload)
         except Exception,e:
             print "Error: ",e
 #####################
@@ -1090,7 +1135,7 @@ after pressing the convert button"
         if self.mplayer_check:
             whattoplay=' '
             try:
-                whattoplay=self.input
+                whattoplay=self.input[-1]
             except Exception, e:
                 raise e
             command = ["mplayer","-vo","x11",whattoplay]
@@ -1142,6 +1187,8 @@ after pressing the convert button"
             self.labelGuide = self.wTree.get_widget("labelGuide")
             self.labelInput = self.wTree.get_widget("labelInput")
             self.labelOperation = self.wTree.get_widget("labelOperation")        
+           
+            self.labelGuide.set_text('Input file(s):')
             #Loads the operation combobox
             self.Operation = self.wTree.get_widget("comboboxOperation")
 
@@ -1149,6 +1196,7 @@ after pressing the convert button"
             self.statusbar = self.wTree.get_widget("statusbar")
             context_id = self.statusbar.get_context_id("Activation")
             self.statusbar.push(context_id,"Welcome to the Sinthgunt converter!")
+           
             
             # loads the progress bar
             self.progressbar = self.wTree.get_widget("progressbar")
@@ -1161,8 +1209,8 @@ after pressing the convert button"
             self.thumbnail.set_from_file(self.logo_filename)
             
             # set empty input and output strings
-            #self.input = None
-            #self.output = None
+            self.input = []
+            self.output = []
 
 
             #Create a dictionary of handles and functions
@@ -1173,6 +1221,7 @@ after pressing the convert button"
                         "on_menuConvert_activate"       :    self.activate,
                         "on_button_stop_clicked"        : self.stop,
                         "on_toolbarstop_clicked"        : self.stop,
+                        "on_toolbarremoveitem_clicked"  : self.RemoveInputFile,
                         "MainWindow_destroy"            : self.quit_program,
                         "on_menuquit_activate"          : self.quit_program,
                         "on_menuopen_activate"          : self.menuopenfile,
