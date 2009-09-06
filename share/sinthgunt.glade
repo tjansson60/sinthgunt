@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Sep  1 15:10:58 2009 -->
+<!--Generated with glade3 3.4.5 on Sun Sep  6 22:17:47 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
     <property name="title" translatable="yes">Sinthgunt Converter</property>
-    <property name="window_position">GTK_WIN_POS_CENTER</property>
-    <property name="default_width">700</property>
+    <property name="default_width">450</property>
     <property name="icon">icon.png</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
     <child>
@@ -49,13 +48,13 @@
                             <child>
                               <widget class="GtkImageMenuItem" id="menuopenyoutube">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">_YouTube video</property>
+                                <property name="label" translatable="yes">_Online video</property>
                                 <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_menuopenyoutube_activate"/>
                                 <child internal-child="image">
                                   <widget class="GtkImage" id="menu-item-image2">
                                     <property name="visible">True</property>
-                                    <property name="stock">gtk-go-down</property>
+                                    <property name="stock">gtk-network</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -225,7 +224,7 @@
               <widget class="GtkToolButton" id="toolbaropen">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Open file</property>
-                <property name="icon_name">stock_open</property>
+                <property name="stock_id">gtk-open</property>
                 <signal name="clicked" handler="on_toolbaropen_clicked"/>
               </widget>
               <packing>
@@ -235,9 +234,20 @@
             <child>
               <widget class="GtkToolButton" id="toolbaropenyoutube">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Open YouTube video</property>
-                <property name="icon_name">stock_down</property>
+                <property name="label" translatable="yes">Open online video</property>
+                <property name="stock_id">gtk-network</property>
                 <signal name="clicked" handler="on_toolbaropenyoutube_clicked"/>
+              </widget>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolButton" id="toolbarremoveitem">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Remove item</property>
+                <property name="stock_id">gtk-remove</property>
+                <signal name="clicked" handler="on_toolbarremoveitem_clicked"/>
               </widget>
               <packing>
                 <property name="homogeneous">True</property>
