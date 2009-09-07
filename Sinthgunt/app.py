@@ -97,6 +97,33 @@ class sinthgunt:
         # - 
         # - 
         ####################
+    
+    def ResetSinthgunt(self,widget):
+        ####################
+        # Description
+        # ===========
+        """ This function clears the GUI and all input and output variables"""
+        # Arguments
+        # =========
+        #
+        # Further Details
+        # ===============
+        # The function 
+        #  
+        ####################
+        # Write default stuff to gui
+        self.labelGuide.set_text('Input file(s):')
+        self.labelOperation.set_text('')
+        context_id = self.statusbar.get_context_id("Activation")
+        self.statusbar.push(context_id,"Welcome to sinthgunt!")
+        self.labelInput.set_text('')
+        
+        # Load the logo
+        self.thumbnail.set_from_file(self.logo_filename)
+        
+        # set empty input and output strings
+        self.input = []
+        self.output = []
 
     def load_conf_file(self):
         ####################
@@ -371,9 +398,11 @@ class sinthgunt:
         InputFileToRemove = int(entry.get_text())-1
         dialog.destroy()  
         dialog.destroy()
-        
-        del self.input[InputFileToRemove]
-        self.setinput(widget)
+        if InputFileToRemove != 0:
+            del self.input[InputFileToRemove]
+            self.setinput(widget)
+        else:
+            self.ResetSinthgunt(widget)
 
     def generateThumbnail(self,videoFile):
         ####################
@@ -1183,35 +1212,20 @@ after pressing the convert button"
         self.window = self.wTree.get_widget("MainWindow")
 
         if (self.window):
-            # connect to label
+            # connect to widgets
             self.labelGuide = self.wTree.get_widget("labelGuide")
             self.labelInput = self.wTree.get_widget("labelInput")
             self.labelOperation = self.wTree.get_widget("labelOperation")        
-           
-            self.labelGuide.set_text('Input file(s):')
-            #Loads the operation combobox
+            self.thumbnail = self.wTree.get_widget("thumbnail")
             self.Operation = self.wTree.get_widget("comboboxOperation")
-
-            #Loads the statusbar
             self.statusbar = self.wTree.get_widget("statusbar")
-            context_id = self.statusbar.get_context_id("Activation")
-            self.statusbar.push(context_id,"Welcome to the Sinthgunt converter!")
-           
-            
-            # loads the progress bar
             self.progressbar = self.wTree.get_widget("progressbar")
-            
-            #Loads the configuration file
+
+            #Loads the preset configuration file
             self.load_conf_file()
             
-            #Sets the default logo
-            self.thumbnail = self.wTree.get_widget("thumbnail")
-            self.thumbnail.set_from_file(self.logo_filename)
-            
-            # set empty input and output strings
-            self.input = []
-            self.output = []
-
+            # Load the logo and set empty input and output strings
+            self.ResetSinthgunt(self.window)
 
             #Create a dictionary of handles and functions
             self.dic = {#"on_chooserInput_file_set" : self.setinput,
@@ -1235,4 +1249,3 @@ after pressing the convert button"
                          "on_menuPlayOutput_activate"  : self.mplayer_play_output_file}
             #Do the magic connecting to the widgets
             self.wTree.signal_autoconnect(self.dic)        
-            
