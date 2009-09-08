@@ -124,6 +124,7 @@ class sinthgunt:
         # set empty input and output strings
         self.input = []
         self.output = []
+        self.NextInputFileToConvert = 0
 
     def load_conf_file(self):
         ####################
@@ -263,9 +264,12 @@ class sinthgunt:
         if output =='':     
             self.statusbar.push(context_id,'Conversion completed!')
             self.progressbar.set_fraction(0.99999)
-            #self.progressbar.set_text(str(str(self.file_frames)+\
-            #                              ' of '+str(self.file_frames)+' frames converted.'))
-            # this line would do the sames as return False: gobject.source_remove(self.source_id)          
+            # We are now done with the current file. Move on to next one if there are any left
+            if self.NextInputFileToConvert <= len(self.input) - 2:
+                self.NextInputFileToConvert = self.NextInputFileToConvert + 1
+                self.activate(self.window)
+            else:
+                self.NextInputFileToConvert = 0
             return False    
         else:
             return True
@@ -323,7 +327,10 @@ class sinthgunt:
             test = self.setinput(widget)
         else:
             fc.destroy()
-    
+        # Set the next file to be converted to the first one on the list
+        self.NextInputFileToConvert = 0
+
+
     def setinput(self, widget): 
         ####################
         # Description
@@ -350,7 +357,8 @@ class sinthgunt:
         
         # fill label with file info
         self.labelInput.set_text('')
-        self.labelInput.set_text('Audio codec: '+str(self.audio_codec[0])+'\n'\
+        self.labelInput.set_text('Codec info for '+self.input[-1]+'\n\n'\
+                                'Audio codec: '+str(self.audio_codec[0])+'\n'\
                                 'Audio bitrate: '+str(self.audio_codec[4])+' kb/s\n'\
                                 +'Video codec: '+ str(self.video_codec[0])\
                                 +'\nVideo resolution: '+ str(self.video_codec[2])\
@@ -398,9 +406,11 @@ class sinthgunt:
         InputFileToRemove = int(entry.get_text())-1
         dialog.destroy()  
         dialog.destroy()
+        # Clear everything if we are removing the last tile
         if InputFileToRemove != 0:
             del self.input[InputFileToRemove]
             self.setinput(widget)
+            self.NextInputFileToConvert = 0
         else:
             self.ResetSinthgunt(widget)
 
@@ -450,7 +460,7 @@ class sinthgunt:
         ####################
         # Description
         # ===========
-        """This function creates a 10 sec preview of the output file. This enables the user to evaluate the quality of the converted
+        """This function creates a 5 sec preview of the output file. This enables the user to evaluate the quality of the converted
         file.
          """
         # Arguments
@@ -466,12 +476,9 @@ class sinthgunt:
        
         try:
             operation = self.operation_radiobutton
-            self.progressbar.set_fraction(0.01)
             context_id = self.statusbar.get_context_id("Activation")  
-            self.statusbar.push(context_id,'Creating preview...')
+            self.statusbar.push(context_id,'Creating preview of '+self.input[-1]+'. You can view it using the Play menu.')
         
-            #start watching output
-            self.source_id = gobject.timeout_add(500, self.checkfile)
             #for now, operate on last input file
             InputFileName=self.input[-1]
             for i in range(self.Npreset):
@@ -501,8 +508,20 @@ class sinthgunt:
             self.no_file_selected_dialog(widget)
 
 
- 
-      
+    def BeginConversion(self,widget,InputFileIndex):
+        ####################
+        # Description
+        # ===========
+        """This function starts the conversion process.
+         """
+        # Arguments
+        # =========
+        # InputFileIndex - index in self.input to begin converting
+        #
+        # Further Details
+        # ===============
+        #
+        ####################      
       
        
     def activate(self,widget):
@@ -526,11 +545,11 @@ class sinthgunt:
             operation = self.operation_radiobutton
             self.progressbar.set_fraction(0.01)
             context_id = self.statusbar.get_context_id("Activation")  
-            self.statusbar.push(context_id,'Running...')
+            self.statusbar.push(context_id,'Converting '+self.input[self.NextInputFileToConvert])
         
             #start watching output
             self.source_id = gobject.timeout_add(500, self.checkfile)
-            InputFileName=self.input[-1]
+            InputFileName=self.input[self.NextInputFileToConvert]
             for i in range(self.Npreset):
                 if operation == self.presetlist[i][1]:
                     # generate command line in subprocess syntax
@@ -1003,7 +1022,7 @@ after pressing the convert button"
         hbox.pack_start(gtk.Label("URL:"), False, 5, 5)  
         hbox.pack_end(entry)  
         #some secondary text  
-        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=MRn-Rmp6iwA</i>\n- or-\n<i>http://hartvig.de/files/dod/16cwillcttt_teaser.avi</i>")  
+        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=LkCNJRfSZBU</i>\n- or-\n<i>http://hartvig.de/files/dod/16cwillcttt_teaser.avi</i>")  
         #add it and show it  
         dialog.vbox.pack_end(hbox, True, True, 0)  
         dialog.show_all()  
