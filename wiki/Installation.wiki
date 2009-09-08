@@ -1,10 +1,20 @@
 #labels Featured,Phase-Deploy
 = Installing Sinthgunt =
-This page describes how to install Sinthgunt on 
+This page describes how to install sinthgunt on various Linux distributions. 
+== Generic installation instructions ==
+The fast and easy way of getting sinthgunt is by running
+{{{
+svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
+cd sinthgunt
+sudo python setup.py install  
+sinthgunt
+}}}
+== Distribution-specific installation instructions ==
+Below, please find detailed installation instructions for
   * Ubuntu 8.10/9.04/Debian
   * openSuse 11
   * Fedora 10
-  * (Planned) Mandriva 2009.1
+  * Mandriva 2009.1
 
 Since Sinthgunt relies on ffmpeg, we recommend that you follow the installation guide [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here] before moving on.
 
