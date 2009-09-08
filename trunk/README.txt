@@ -18,15 +18,15 @@ The generic installation procedures is
 
 * Download the latest source snapshot by issuing the command
 
-svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt-read-only
+svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 
-* Install sinthgunt by running the command
+* Install sinthgunt by running the command (as root)
 
 python setup.py install
 
 * Run Sinthgunt by issuing the command
     
-sinthgunt.py
+sinthgunt
 
 ###################
 # 3.0 KNOWN ISSUS / TODO
