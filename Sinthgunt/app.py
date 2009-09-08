@@ -407,7 +407,7 @@ class sinthgunt:
         dialog.destroy()  
         dialog.destroy()
         # Clear everything if we are removing the last tile
-        if InputFileToRemove != 0:
+        if len(self.input) >= 1:
             del self.input[InputFileToRemove]
             self.setinput(widget)
             self.NextInputFileToConvert = 0
