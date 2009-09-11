@@ -320,11 +320,14 @@ class sinthgunt:
         filter.set_name("All files")
         filter.add_pattern("*")
         fc.add_filter(filter)
-        
+        # Allow the user to select multiple files.
+        fc.set_select_multiple(True)
+        # Add files to self.input.
         if fc.run() == gtk.RESPONSE_OK:      
-            self.input.extend([fc.get_filename()])
+            for FileName in fc.get_filenames():
+                self.input.extend([FileName])
             fc.destroy()
-            test = self.setinput(widget)
+            self.setinput(widget)
         else:
             fc.destroy()
         # Set the next file to be converted to the first one on the list
