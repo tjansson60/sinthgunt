@@ -1,22 +1,42 @@
 #labels Featured,Phase-Deploy
 = Installing Sinthgunt =
 This page describes how to install sinthgunt on various Linux distributions. 
+Since Sinthgunt relies on you having ffmpeg installed, we recommend that you either
+install it through your package manager or follow the installation guide
+[http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here].
 == Generic installation instructions ==
-The fast and easy way of getting sinthgunt is by running
+The easiest way of installing sinthgunt is either through svn:
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 cd sinthgunt
 sudo python setup.py install  
-sinthgunt
 }}}
+or by downloading the latest source tarball from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab]. In that case, untar the archive
+{{{
+tar xvzf sinthgunt-*
+}}}
+change to the directory sinthgunt-x.y.z, and run
+{{{
+sudo python setup.py install  
+}}}
+To run sinthgunt, simply click the icon in the multimedia part of your start menu, or issue the command
+{{{
+sinthgunt 
+}}}
+== Troubleshooting ==
+   * If you get an error regarding the file _sinthgunt.glade_, try installing sinthgunt with 
+{{{
+sudo python setup.py install --prefix='/usr'
+}}}
+
+
+
 == Distribution-specific installation instructions ==
 Below, please find detailed installation instructions for
   * Ubuntu 8.10/9.04/Debian
   * openSuse 11
   * Fedora 10
   * Mandriva 2009.1
-
-Since Sinthgunt relies on ffmpeg, we recommend that you follow the installation guide [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here] before moving on.
 
 == Ubuntu 8.10/9.04/Debian ==
 <img src="http://www.geo.uio.no/it/unix/bilder/ubuntu.png">
@@ -26,7 +46,7 @@ Since Sinthgunt relies on ffmpeg, we recommend that you follow the installation 
 sudo apt-get install ffmpeg subversion
 }}}
 ===Installation using a .deb package===
-Download that latest .deb package from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab].
+Download that latest .deb package (only version 1.1.0 and below) from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab].
 Then, install Sinthgunt by issuing the command
 {{{
 sudo dpkg -i sinthgunt-*.deb
@@ -44,7 +64,7 @@ sudo python setup.py install
 ===Running Sinthgunt===
 To run Sinthgunt, type
 {{{
-sinthgunt.py
+sinthgunt
 }}}
 in a console. Then, open a video file, select a preset and press convert.
 == openSuse 11 ==
@@ -65,7 +85,7 @@ python setyp.py install
 ===Running Sinthgunt===
 To run Sinthgunt, type
 {{{
-sinthgunt.py
+sinthgunt
 }}}
 in a console. Then, open a video file, select a preset and press convert.
 ==Fedora 10==
@@ -89,7 +109,7 @@ python setyp.py install
 ===Running Sinthgunt===
 To run Sinthgunt, type
 {{{
-sinthgunt.py
+sinthgunt
 }}}
 in a console. Then, open a video file, select a preset and press convert.
 == Mandriva 2009.1==
@@ -109,6 +129,6 @@ python setyp.py install
 ===Running Sinthgunt===
 To run Sinthgunt, type
 {{{
-sinthgunt.py
+sinthgunt
 }}}
 in a console. Then, open a video file, select a preset and press convert.
