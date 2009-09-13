@@ -1014,7 +1014,7 @@ after pressing the convert button"
         #
         ####################      
         #base this on a message dialog  
-        dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK,None)  
+        dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK_CANCEL,None)  
         dialog.set_markup('Please enter YouTube URL or a direct link to a video file, eg.')  
         #create the text input field  
         entry = gtk.Entry()  
@@ -1034,21 +1034,25 @@ after pressing the convert button"
         self.youtubeurl = entry.get_text()  
         dialog.destroy()  
         dialog.destroy()
-        # Look for direct link to media file
-        if self.youtubeurl[-4]=='.':
-            # find last '/'
-            for i in range(len(self.youtubeurl)):
-                if self.youtubeurl[-i]=='/':
-                    output=self.youtubeurl[-i+1:]
-                    break
-            print output
-            print self.youtubeurl
-            self.input.extend([os.getenv("HOME")+'/'+output])
-            self.download(widget,self.youtubeurl)
-            self.setinput(widget)
-        else:            
-            self.download_youtube(widget)
-            self.setinput(widget)
+        # Did we press Cancel? If not, proceed
+        try:
+            # Look for direct link to media file
+            if self.youtubeurl[-4]=='.':
+                # find last '/'
+                for i in range(len(self.youtubeurl)):
+                    if self.youtubeurl[-i]=='/':
+                        output=self.youtubeurl[-i+1:]
+                        break
+                print output
+                print self.youtubeurl
+                self.input.extend([os.getenv("HOME")+'/'+output])
+                self.download(widget,self.youtubeurl)
+                self.setinput(widget)
+            else:            
+                self.download_youtube(widget)
+                self.setinput(widget)
+        except:
+            pass
             
 
     def download(self,widget,url):
