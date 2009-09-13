@@ -5,13 +5,7 @@ Since Sinthgunt relies on you having ffmpeg installed, we recommend that you eit
 install it through your package manager or follow the installation guide
 [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here].
 == Generic installation instructions ==
-The easiest way of installing sinthgunt is either through svn:
-{{{
-svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
-cd sinthgunt
-sudo python setup.py install  
-}}}
-or by downloading the latest source tarball from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab]. In that case, untar the archive
+The easiest way of installing sinthgunt is by downloading the latest source tarball from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab]. In that case, untar the archive
 {{{
 tar xvzf sinthgunt-*
 }}}
@@ -19,6 +13,13 @@ change to the directory sinthgunt-x.y.z, and run
 {{{
 sudo python setup.py install  
 }}}
+You can also get the latest bleeding edge version through svn:
+{{{
+svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
+cd sinthgunt
+sudo python setup.py install  
+}}}
+=== Running Sinthgunt ===
 To run sinthgunt, simply click the icon in the multimedia part of your start menu, or issue the command
 {{{
 sinthgunt 
@@ -29,11 +30,10 @@ sinthgunt
 sudo python setup.py install --prefix='/usr'
 }}}
 
-
-
-== Distribution-specific installation instructions ==
+= Distribution-specific installation instructions =
 Below, please find detailed installation instructions for
   * Ubuntu 8.10/9.04/Debian
+  * Frugalware
   * openSuse 11
   * Fedora 10
   * Mandriva 2009.1
@@ -67,6 +67,13 @@ To run Sinthgunt, type
 sinthgunt
 }}}
 in a console. Then, open a video file, select a preset and press convert.
+== Frugalware ==
+<img src="http://frugalware.org/images/logo-new.png">
+
+To install Sinthgunt, execute as root
+{{{
+pacman -S sinthgunt
+}}} 
 == openSuse 11 ==
 <img src="http://tuxtraining.com/wp-content/plugins/wp-post-icon/img/suse.png">
    * Add the Packman repository (eg. at [http://packman.jacobs-university.de/suse/11.0/ http://packman.jacobs-university.de/suse/11.0/]) to YaST.
