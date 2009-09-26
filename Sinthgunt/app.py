@@ -1029,30 +1029,29 @@ after pressing the convert button"
         #add it and show it  
         dialog.vbox.pack_end(hbox, True, True, 0)  
         dialog.show_all()  
-        #go go go  
-        dialog.run()  
+        # Start dialog. 
+        Response = dialog.run()  
         self.youtubeurl = entry.get_text()  
         dialog.destroy()  
         dialog.destroy()
-        # Did we press Cancel? If not, proceed
-        try:
-            # Look for direct link to media file
-            if self.youtubeurl[-4]=='.':
-                # find last '/'
-                for i in range(len(self.youtubeurl)):
-                    if self.youtubeurl[-i]=='/':
-                        output=self.youtubeurl[-i+1:]
-                        break
-                print output
-                print self.youtubeurl
-                self.input.extend([os.getenv("HOME")+'/'+output])
-                self.download(widget,self.youtubeurl)
-                self.setinput(widget)
-            else:            
-                self.download_youtube(widget)
-                self.setinput(widget)
-        except:
-            pass
+        # Did we press Ok? If yes, proceed
+        if Response == gtk.RESPONSE_OK:
+            try:
+                # Look for direct link to media file
+                if self.youtubeurl[-4]=='.':
+                    # find last '/'
+                    for i in range(len(self.youtubeurl)):
+                        if self.youtubeurl[-i]=='/':
+                            output=self.youtubeurl[-i+1:]
+                            break
+                    self.input.extend([os.getenv("HOME")+'/'+output])
+                    self.download(widget,self.youtubeurl)
+                    self.setinput(widget)
+                else:            
+                    self.download_youtube(widget)
+                    self.setinput(widget)
+            except:
+                pass
             
 
     def download(self,widget,url):
