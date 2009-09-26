@@ -352,9 +352,10 @@ class sinthgunt:
         self.thumbnail_filename=self.generateThumbnail(self.input[-1])
         
         # update thumbnail
-        if str(os.path.getsize(self.thumbnail_filename))!='0':
-	        self.thumbnail.set_from_file(self.thumbnail_filename)
-        
+        try:
+            self.thumbnail.set_from_file(self.thumbnail_filename)
+        except:
+            pass
         # get media file info
         mediaFileInformation = self.file_getinfo()
         
@@ -649,61 +650,60 @@ class sinthgunt:
 
         flag = 1
         counter=0
-        while flag == 1:   
-            try:       
-                output = str(process.stdout.read(10000))        
-            except:
-                break
+        try:
+            while flag == 1:   
+                try:       
+                    output = str(process.stdout.read(10000))        
+                except:
+                    break
 
-            if output != '\n' and output != '':
-                self.logfile.writelines('Get file info status: '+output+'\n')
-                output_split = output.split(' ')
-                N=len(output_split)
-                for i in range(N):
-
-                    # Find length of audio/video file in seconds            
-                    if output_split[i]=='Duration:':
-                        file_length_min=output_split[i+1]
-                        file_length_min_split=file_length_min.split(':')
-                        temp = file_length_min_split[2].split('.')
-                        file_length_min_split[2]=temp[0]
-                        # Calculate length of file in seconds               
-                        file_length_sec=3600*float(file_length_min_split[0])+\
-                                60*float(file_length_min_split[1])+\
-                                float(file_length_min_split[2])
-            
-                    # Find video codec            
-                    if output_split[i]=='Video:':
-                       # self.video_codec = [output_split[i+1].strip(','),
-                        #        output_split[i+2].strip(','),
-                         #       output_split[i+3].strip(',')]
-                        self.video_codec[0] = output_split[i+1].strip(',')
-                        self.video_codec[1] = output_split[i+2].strip(',')
-                        self.video_codec[2] = output_split[i+3].strip(',')
-
-                    # Find video bitrate            
-                    if output_split[i]=='bitrate:':
-                        self.video_codec[3] = output_split[i+1].strip(',')+' kb/s'
-
-                        #self.video_codec = self.video_codec.strip(',')
-                    # Find frames pr. second in the file 
-                    if i>=2 and output_split[i]=='tb(r)\n':
-                        file_fps=output_split[i-1]
-                        # Calculate total number of frames
-                        self.file_frames = int(file_length_sec*float(file_fps))
+                if output != '\n' and output != '':
+                    self.logfile.writelines('Get file info status: '+output+'\n')
+                    output_split = output.split(' ')
+                    N=len(output_split)
+                    for i in range(N):
+    
+                        # Find length of audio/video file in seconds            
+                        if output_split[i]=='Duration:':
+                            file_length_min=output_split[i+1]
+                            file_length_min_split=file_length_min.split(':')
+                            temp = file_length_min_split[2].split('.')
+                            file_length_min_split[2]=temp[0]
+                            # Calculate length of file in seconds               
+                            file_length_sec=3600*float(file_length_min_split[0])+\
+                                    60*float(file_length_min_split[1])+\
+                                    float(file_length_min_split[2])
                 
-                    # Find audio codec
-                    if output_split[i]=='Audio:':
-                        self.audio_codec = [output_split[i+1].strip(','),
+                        # Find video codec            
+                        if output_split[i]=='Video:':
+                            self.video_codec[0] = output_split[i+1].strip(',')
+                            self.video_codec[1] = output_split[i+2].strip(',')
+                            self.video_codec[2] = output_split[i+3].strip(',')
+
+                        # Find video bitrate            
+                        if output_split[i]=='bitrate:':
+                            self.video_codec[3] = output_split[i+1].strip(',')+' kb/s'
+
+                        # Find frames pr. second in the file 
+                        if i>=2 and output_split[i]=='tb(r)\n':
+                            file_fps=output_split[i-1]
+                            # Calculate total number of frames
+                            self.file_frames = int(file_length_sec*float(file_fps))
+                
+                        # Find audio codec
+                        if output_split[i]=='Audio:':
+                            self.audio_codec = [output_split[i+1].strip(','),
                                 output_split[i+2].strip(','),
                                 output_split[i+3].strip(','),
                                 output_split[i+4].strip(','),
                                 output_split[i+5]]
-                        flag = 0  
+                            flag = 0  
 
-            if counter >= 1000:
-                flag = 0
-            counter = counter+1
+                if counter >= 1000:
+                    flag = 0
+                counter = counter+1
+        except:
+            pass
         self.logfile.writelines('Audio codec: '+str(self.audio_codec)+'\n')
         self.logfile.writelines('Video codec: '+str(self.video_codec)+'\n')
         self.logfile.writelines('Number of frames: '+str(self.file_frames)+'\n')
