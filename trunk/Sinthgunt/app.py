@@ -390,7 +390,7 @@ class sinthgunt:
         #
         ####################      
         #base this on a message dialog  
-        dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK,None)  
+        dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK_CANCEL,None)  
         dialog.set_markup('Enter the number of the input file you wish to remove')  
         #create the text input field  
         entry = gtk.Entry()  
@@ -406,17 +406,23 @@ class sinthgunt:
         dialog.vbox.pack_end(hbox, True, True, 0)  
         dialog.show_all()  
         #go go go  
-        dialog.run()  
-        InputFileToRemove = int(entry.get_text())-1
+        Response=dialog.run()  
         dialog.destroy()  
         dialog.destroy()
-        # Clear everything if we are removing the last tile
-        if len(self.input) >= 1:
-            del self.input[InputFileToRemove]
-            self.setinput(widget)
-            self.NextInputFileToConvert = 0
-        else:
-            self.ResetSinthgunt(widget)
+        if Response == gtk.RESPONSE_OK:        
+            try:        
+                InputFileToRemove = int(entry.get_text())-1
+                 # Clear everything if we are removing the last tile
+                if len(self.input) >= 2:
+                    del self.input[InputFileToRemove]
+                    self.setinput(widget)
+                    self.NextInputFileToConvert = 0
+                else:
+                    self.ResetSinthgunt(widget)
+                    self.ResetSinthgunt(widget)
+            except:
+                pass
+    
 
     def generateThumbnail(self,videoFile):
         ####################
