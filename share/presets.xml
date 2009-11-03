@@ -656,6 +656,16 @@
     <category>Mobile Phones</category>
     <codecs>mpeg4,libfaac</codecs>
   </android2>
+ <iphone1>
+    <label>Iphone</label>
+    <params>-f mp4 -s 432x320 -aspect 432:320 -acodec aac -async
+    4800 -dts_delta_threshold 1 -vcodec xvid -qscale 7 </params>
+    <extension>mp4</extension>
+    <category>Mobile Phones</category>
+    <codecs>xvid,aac,mp4</codecs>
+  </iphone1>
+
+
   <debugenabledpreset>
     <label>This preset should be enabled</label>
     <params></params>
