@@ -1,6 +1,6 @@
 PYTHON=`which python`
 DESTDIR=/
-BUILDIR=$(CURDIR)/debian/myprojectname
+BUILDIR=$(CURDIR)/debian/sinthgunt
 PROJECT=sinthgunt
 VERSION=2.0.2
 
