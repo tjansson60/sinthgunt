@@ -1,7 +1,7 @@
 Source: sinthgunt
 Section: shells
 Priority: optional
-Maintainer: Kare Hartvig Jensen
+Maintainer: Kåre Hartvig Jensen (hartvig.de)
 Build-Depends: python, ffmpeg, python-gtk2, python-glade2
 Standards-Version: 3.8.1
 
@@ -10,7 +10,8 @@ Architecture: all
 Homepage: http://www.sinthhgunt.org/
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends}, ${python:Depends}
-Description: Sinthgunt is an open source graphical user interface for ffmpeg, 
+Description: Sinthgunt is an oss gui for ffmpeg. 
+ Singhtung is an open source graphical user interface for ffmpeg, 
  a computer program that can convert digital audio and video into numerous 
  formats. Using pre-configured conversion settings, it makes the task of 
  converting between different media formates very easy.
