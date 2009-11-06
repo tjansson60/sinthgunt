@@ -13,19 +13,17 @@ For more info, please visit http://www.sinthgunt.org
 ###################
 
 For detailed installation instructions, see http://code.google.com/p/sinthgunt/wiki/Installation
+Dependencies: python-gtk2 python-glade2
 
 The generic installation procedures is
 
 * Download the latest source snapshot by issuing the command
-
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 
 * Install sinthgunt by running the command (as root)
-
 python setup.py install
 
 * Run Sinthgunt by issuing the command
-    
 sinthgunt
 
 ###################
