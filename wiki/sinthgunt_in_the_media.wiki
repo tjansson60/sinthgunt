@@ -1,5 +1,8 @@
 #links to articles about sinthgunt on the web
 
+= Radio shows =
+   * [http://titradio.info/013.html TiT Radio Show]
+
 = Blog posts =
    * [http://blog.22design.ru/2009/07/sinthgunt.html 22design.ru] (July 2009, in russian)
    * [http://zockertown.de/s9y/index.php?/permalink/sinthgunt-Project-Hosting-on-Google-Code.html zockertown.de/s9y/] (July 2009)
