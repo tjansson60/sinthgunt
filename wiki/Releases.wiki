@@ -1,9 +1,0 @@
-#This page keeps track of the releases linking tarballs/deb packages to svn revisions
-
-= Releases =
-All releases can be found at the downloads [http://code.google.com/p/sinthgunt/downloads/list page]
-
-|| Release || svn revision ||
-|| 1.1.0   || r94          ||
-|| 1.0.4   || r86          ||
-|| 1.0.3   || r83          ||
