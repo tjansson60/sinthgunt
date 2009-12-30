@@ -270,6 +270,8 @@ class sinthgunt:
                 self.activate(self.window)
             else:
                 self.NextInputFileToConvert = 0
+                self.ResetSinthgunt(self.window)
+                self.statusbar.push(context_id,'Conversion completed!')
             return False    
         else:
             return True
