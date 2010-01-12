@@ -664,6 +664,13 @@
     <category>Mobile Phones</category>
     <codecs>xvid,aac,mp4</codecs>
   </iphone1>
+  <CowoniAudio7AVI>
+    <label>Cowon iAudio 7 AVI</label>
+    <params>-f avi -g 1 -b 256k -r 12 -async 2 -s 160x120 -vtag XVID -vcodec libxvid -ab 128k -ar 44100 -ac 2 -acodec libmp3lame </params>
+    <extension>avi</extension>
+    <category>Portable Media Players</category>
+    <codecs>libxvid,libmp3lame</codecs>
+  </CowoniAudio7AVI>
 
 
   <debugenabledpreset>
