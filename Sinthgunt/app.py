@@ -1023,7 +1023,7 @@ after pressing the convert button"
         ####################      
         #base this on a message dialog  
         dialog = gtk.MessageDialog(None,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_QUESTION,gtk.BUTTONS_OK_CANCEL,None)  
-        dialog.set_markup('Please enter YouTube URL or a direct link to a video file, eg.')  
+        dialog.set_markup('Please enter a link to a video file, eg.')  
         #create the text input field  
         entry = gtk.Entry()  
         #allow the user to press enter to do ok  
@@ -1033,7 +1033,8 @@ after pressing the convert button"
         hbox.pack_start(gtk.Label("URL:"), False, 5, 5)  
         hbox.pack_end(entry)  
         #some secondary text  
-        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=LkCNJRfSZBU</i>\n- or-\n<i>http://hartvig.de/files/dod/16cwillcttt_teaser.avi</i>")  
+        dialog.format_secondary_markup("<i>http://www.youtube.com/watch?v=LkCNJRfSZBU</i>\n\n\
+Sinthgunt supports YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video.")  
         #add it and show it  
         dialog.vbox.pack_end(hbox, True, True, 0)  
         dialog.show_all()  
@@ -1056,7 +1057,7 @@ after pressing the convert button"
                     self.download(widget,self.youtubeurl)
                     self.setinput(widget)
                 else:            
-                    self.download_youtube(widget)
+                    self.download_youtube_dl(widget,self.youtubeurl)
                     self.setinput(widget)
             except:
                 pass
@@ -1075,8 +1076,52 @@ after pressing the convert button"
         # ===============
         #
         ####################   
-        
         webFile=urllib.urlretrieve(url, self.input[-1],lambda nb, bs, fs, url=url: self._reporthook(widget,nb,bs,fs,url))
+
+    def download_youtube_dl(self,widget,url):
+        ####################
+        # Description
+        # ===========
+        """Downloads video files from sites like youtube.com, metacafe.com and video.google.com.""" 
+        # Arguments
+        # =========
+        # url   http url of the remote file to download eg. http://www.example.org/movie.mpg
+        #
+        # Further Details
+        # ===============
+        # This function uses youtube-dl to get the url of the video and the title.
+        ####################   
+        
+        # Get video url from youtube-dl
+        command = ["youtube-dl","-g","-b",url]
+        output = ''
+        try:
+            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
+            output = str(process.stdout.read(500))        
+        except:
+            None
+        video_url = output
+        
+        # Get video title from youtube-dl
+        command = ["youtube-dl","-e",url]
+        output = ''
+        try:
+            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
+            output = str(process.stdout.read(500))        
+        except:
+            None
+
+        # Remove trailing newline
+        video_title = output.strip()
+        
+        # Add file to input que
+        self.input.extend([os.getenv("HOME")+'/'+video_title+".flv"])
+
+        # Download the file
+        webFile=urllib.urlretrieve(video_url, self.input[-1],lambda nb, bs, fs, url=url: self._reporthook(widget,nb,bs,fs,url))
+
 
 
     def _reporthook(self,widget,numblocks, blocksize, filesize, url=None):
@@ -1110,56 +1155,6 @@ after pressing the convert button"
             gtk.main_iteration(False)
 
 
-    def download_youtube(self,widget):
-        ####################
-        # Description
-        # ===========
-        """This function finds the flash video source and title from the youtube page entered by the user."""
-        # Arguments
-        # =========
-        #
-        # Further Details
-        # ===============
-        #
-        #################### 
-            
-        url=self.youtubeurl
-        page=urllib.urlopen(url)
-        result = page.read()
-        youtubepage=result
-
-        #find flash video url
-        startindex = result.index("var swfArgs")
-        result = result[startindex:]
-        endindex=result.index("};")
-        result=result[:endindex]
-        result =  result.split(",")
-        get={}
-        for line in result:
-            if "video_id" in line or "\"t\"" in line :
-                v,vnum = line.replace("\"","").split(":")
-                get[v.strip()]=vnum.strip()
-    
-        dload = "http://www.youtube.com/get_video?video_id=%s&t=%s" % ( get['video_id'],get['t'])
-        
-        # Find flash video title
-        youtubepage_header=youtubepage[100:100+300]
-        # Look for <title>        
-        for i in range(len(youtubepage_header)-10):
-            if youtubepage_header[i]=='<' and youtubepage_header[i+1]=='t' and youtubepage_header[i+2]=='i':
-                title1=youtubepage_header[i+7:]
-        # Look for </title>
-        for i in range(len(title1)):
-            if title1[i]=='<' and title1[i+1]=='/' and title1[i+2]=='t':
-                title=title1[:i]
-        self.youtube_title=title
-               
-        # Start downloading
-        try :
-            self.input.extend([os.getenv("HOME")+'/'+self.youtube_title+".flv"])
-            self.download(widget,dload)
-        except Exception,e:
-            print "Error: ",e
 #####################
 ## mplayer functions
 #####################
