@@ -1098,10 +1098,12 @@ Sinthgunt supports YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video
         try:
             process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
-            output = str(process.stdout.read(500))        
+            output = str(process.stdout.read())        
         except:
             None
-        video_url = output
+
+        # Remove trailing newline
+        video_url = output.strip()
         
         # Get video title from youtube-dl
         command = ["youtube-dl","-e",url]
@@ -1109,7 +1111,7 @@ Sinthgunt supports YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video
         try:
             process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
-            output = str(process.stdout.read(500))        
+            output = str(process.stdout.read())        
         except:
             None
 
@@ -1121,7 +1123,6 @@ Sinthgunt supports YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video
 
         # Download the file
         webFile=urllib.urlretrieve(video_url, self.input[-1],lambda nb, bs, fs, url=url: self._reporthook(widget,nb,bs,fs,url))
-
 
 
     def _reporthook(self,widget,numblocks, blocksize, filesize, url=None):
