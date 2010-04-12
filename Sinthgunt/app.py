@@ -661,7 +661,7 @@ class sinthgunt:
         try:
             while flag == 1:   
                 try:       
-                    output = str(process.stdout.read(10000))        
+                    output = str(process.stdout.read())        
                 except:
                     break
 
@@ -693,7 +693,7 @@ class sinthgunt:
                             self.video_codec[3] = output_split[i+1].strip(',')+' kb/s'
 
                         # Find frames pr. second in the file 
-                        if i>=2 and output_split[i]=='tb(r)\n':
+                        if i>=2 and (output_split[i]=='tb(r)\n' or output_split[i]=='tb(r)\nMust'):
                             file_fps=output_split[i-1]
                             # Calculate total number of frames
                             self.file_frames = int(file_length_sec*float(file_fps))
@@ -705,9 +705,10 @@ class sinthgunt:
                                 output_split[i+3].strip(','),
                                 output_split[i+4].strip(','),
                                 output_split[i+5]]
-                            flag = 0  
-
-                if counter >= 1000:
+                            #flag = 0  
+                
+                # Stop if we reach the end of ffmpeg's output
+                if counter >= 1000 or output_spilt[i]=='file\n':
                     flag = 0
                 counter = counter+1
         except:
