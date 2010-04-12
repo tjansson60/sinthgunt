@@ -693,7 +693,7 @@ class sinthgunt:
                             self.video_codec[3] = output_split[i+1].strip(',')+' kb/s'
 
                         # Find frames pr. second in the file 
-                        if i>=2 and (output_split[i]=='tb(r)\n' or output_split[i]=='tb(r)\nMust'):
+                        if i>=2 and (output_split[i]=='tb(r)\n' or output_split[i]=='tb(r)\nMust' or output_split[i]=='tbr,'):
                             file_fps=output_split[i-1]
                             # Calculate total number of frames
                             self.file_frames = int(file_length_sec*float(file_fps))
