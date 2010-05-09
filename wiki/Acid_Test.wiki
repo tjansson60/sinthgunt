@@ -1,0 +1,30 @@
+#labels Phase-QA
+#A series of tests that are run before every release of Sinthgunt.
+
+= Introduction =
+
+This page describes a series of test that are run before every release of Sinthgunt.
+A release candidate must pass all tests on at least two platforms before a release is made.
+
+
+= Acid Tests =
+==  Downloads ==
+  * Download from Youtube.com
+  # Start Sinthgunt.
+  # Go to File-> ...
+  # Enter the URL http:// ...
+  # Click Download. Wait for the file to download. When the download is complete, the file should be located in the ~/ folder.
+  # Check that the bitrate information is correct: ...
+  * Download from Google video
+  # Start Sinthgunt.
+  # Go to File-> ...
+  # Enter the URL http:// ...
+  # Click Download. Wait for the file to download. When the download is complete, the file should be located in the ~/ folder.
+  # Check that the bitrate information is correct: ...
+  * Download from Yahoo! video
+  # Start Sinthgunt.
+  # Go to File-> ...
+  # Enter the URL http:// ...
+  # Click Download. Wait for the file to download. When the download is complete, the file should be located in the ~/ folder.
+  # Check that the bitrate information is correct: ...
+
