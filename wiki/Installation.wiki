@@ -5,15 +5,7 @@ Since Sinthgunt relies on you having ffmpeg installed, we recommend that you eit
 install it through your package manager or follow the installation guide
 [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here].
 == Generic installation instructions ==
-The easiest way of installing sinthgunt is by downloading the latest source tarball from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab]. In that case, untar the archive
-{{{
-tar xvzf sinthgunt-*
-}}}
-change to the directory sinthgunt-x.y.z, and run
-{{{
-sudo python setup.py install  
-}}}
-You can also get the latest bleeding edge version through svn:
+The recommended way of installing sinthgunt is to check out the latest version through svn:
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
 cd sinthgunt
