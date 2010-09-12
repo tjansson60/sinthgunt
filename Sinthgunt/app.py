@@ -945,7 +945,7 @@ after pressing the convert button"
         ####################
         # Description
         # ===========
-        """ This function determines which codecs the user has installed by looking at the output from "ffmpeg -formats"
+        """ This function determines which codecs the user has installed by looking at the output from both "ffmpeg -formats" and "ffmpeg -codecs"
         """
         # Arguments
         # =========
@@ -953,7 +953,7 @@ after pressing the convert button"
         # Further Details
         # ===============
         #
-        ####################
+        #################### 
         command = ["ffmpeg","-formats"]
         output = ''
 
@@ -963,7 +963,18 @@ after pressing the convert button"
             output = str(process.stdout.read(20000))        
         except:
             None
+        #self.logfile.writelines('ffmpeg_getformats output: '+str(output))
+
+        command = ["ffmpeg","-codecs"]
+
+        try:
+            process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
+            output += str(process.stdout.read(20000))        
+        except:
+            None
         self.logfile.writelines('ffmpeg_getcodecs output: '+str(output))
+
         output_lines=output.split('\n')
         codecs_raw=[]
         Ncodecs=0
