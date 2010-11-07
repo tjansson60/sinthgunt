@@ -316,6 +316,10 @@ class sinthgunt:
         filter.add_pattern("*.FLV")
         filter.add_pattern("*.wmv")
         filter.add_pattern("*.WMV")
+        filter.add_pattern("*.3gp")
+        filter.add_pattern("*.3GP")
+        filter.add_pattern("*.3g2")
+        filter.add_pattern("*.3G2")
         fc.add_filter(filter)
         # all files       
         filter = gtk.FileFilter()
