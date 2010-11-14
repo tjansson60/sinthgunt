@@ -8,7 +8,7 @@ for f in os.path.abspath(''):
     files.append(f)
 
 setup(name = 'sinthgunt',
-    version = '2.0.2',
+    version = '2.0.3',
     description = 'Sinthgunt Converter',
     long_description = 'Sinthgunt Converter',
     author = 'Kaare Hartvig Jensen and Thomas R. N. Janson',
