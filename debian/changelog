@@ -1,5 +1,21 @@
-sinthgunt (2.0.2) stable; urgency=low
+sinthgunt (2.0.3) stable; urgency=low
 
+  * (2.0.3):
+  * Updating presets.xml. Fixed errors when using kb switch and 4mv codec with ffmpeg 0.6. Added WebM HTML5 presets. Credits for both fixes to timkb4cq. See http://code.google.com/p/sinthgunt/issues/detail?id=11  
+  * Added .3gp and .3g2 files to list of input files, so GUI will find these as Video files and not all files
+  * Fixing youtube download function by adding new version of youtube-dl and by tweaking code (the -b option for best quality download is no longer avaliable).
+  * Commiting patch by timkb4cq addressing issue 3: Sinthgunt now look at the results of both "ffmpeg -formats" and "ffmpeg -codecs" to get a full list of the installed ffmpeg capabilities.
+  * Begun work on a series of tests that are run before every release of Sinthgunt.
+  * Fixed Sinthgunt not being able to determine the number of frames in Fedora 12 due to different output formatting in ffmpeg from RPM Fusion.
+  * Fixed Sinthgunt not being able to determine the number of frames in some files due to different formatting in ffmpeg's output.
+  * Fixed youtube-dl problem that caused Sinthgunt to hang when using process.stdout.read().
+  * Implemented a new youtube download function using youtube-dl to get video url and titles. As a bonus, Sinthgunt now supports downloads of videos from YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video.
+  * Adding youtube-dl to repo. This program (see http://bitbucket.org/rg3/youtube-dl/wiki/Home) will replace the youtube download function used so far.
+  * Added beta 2 of Cowon iAudio 7 AVI preset
+  * added Cowon iAudio 7 preset
+  * Completed tasks now dissappear from the queue once the conversion is done
+  * (2.0.2):
+  * Minor bugfixes
   * Added an iPhone preset.
 
- -- Kåre Hartvig Jensen (hartvig.de) <kare1234@gmail.com>  Tue, 03 Nov 2009 16:16:13 -0500
+ -- Kåre Hartvig Jensen (hartvig.de) <kare1234@gmail.com>  Sun, 14 Nov 2010 16:16:13 -0500
