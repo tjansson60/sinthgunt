@@ -320,6 +320,8 @@ class sinthgunt:
         filter.add_pattern("*.3GP")
         filter.add_pattern("*.3g2")
         filter.add_pattern("*.3G2")
+        filter.add_pattern("*.mts")
+        filter.add_pattern("*.MTS")
         fc.add_filter(filter)
         # all files       
         filter = gtk.FileFilter()
