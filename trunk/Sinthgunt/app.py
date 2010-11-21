@@ -415,9 +415,7 @@ class sinthgunt:
         dialog.show_all()  
         #go go go  
         Response=dialog.run()  
-        dialog.destroy()  
-        dialog.destroy()
-        if Response == gtk.RESPONSE_OK:        
+        if Response == gtk.RESPONSE_OK: 
             try:        
                 InputFileToRemove = int(entry.get_text())-1
                  # Clear everything if we are removing the last tile
@@ -430,7 +428,9 @@ class sinthgunt:
                     self.ResetSinthgunt(widget)
             except:
                 pass
-    
+
+        # Close dialog
+        dialog.destroy()  
 
     def generateThumbnail(self,videoFile):
         ####################
