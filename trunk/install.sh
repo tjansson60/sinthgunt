@@ -18,5 +18,4 @@
 #    along with yatii.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-#sudo python setup.py install --prefix='/usr'
 sudo python setup.py install
