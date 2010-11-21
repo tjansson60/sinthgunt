@@ -18,7 +18,6 @@
 #    along with yatii.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-#sudo python setup.py install --prefix='/usr' --record files.txt
-sudo python setup.py install --record files.txt
+sudo find /usr -path "*sinthgunt*" > files.txt
 sudo cat files.txt | sudo xargs rm -rf
 rm files.txt
