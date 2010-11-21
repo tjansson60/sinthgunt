@@ -58,7 +58,7 @@ def main():
         print('It seems, that ffmpeg is not installed on this computer. \nSee http://www.sinthgunt.org for installation instructions.') # Display error message, then carry on
 
     # Define data and temp directories
-    DATA_DIR=sys.prefix+"/share/sinthgunt/"
+    DATA_DIR="/usr/share/sinthgunt/"
     TEMP_DIR="/tmp/"
     # Opens the log file and write the name and curent data and time
     logfile_filename = os.path.expanduser("~/.sinthgunt.log")

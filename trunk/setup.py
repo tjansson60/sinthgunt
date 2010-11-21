@@ -19,9 +19,9 @@ setup(name = 'sinthgunt',
     package_data = {'sinthgunt': files},
     scripts = ['sinthgunt','youtube-dl'],
     data_files=[
-        ('share/sinthgunt',['share/sinthgunt.glade','share/presets.xml','share/logo.png','share/icon.png','README.txt','LICENSE.txt','sinthgunt.html']),
-        ('share/applications',['share/sinthgunt.desktop']),
-        ('share/pixmaps',['share/sinthgunt.png']),
+        ('/usr/share/sinthgunt',['share/sinthgunt.glade','share/presets.xml','share/logo.png','share/icon.png','README.txt','LICENSE.txt','sinthgunt.html']),
+        ('/usr/share/applications',['share/sinthgunt.desktop']),
+        ('/usr/share/pixmaps',['share/sinthgunt.png']),
         ]
 )
 
