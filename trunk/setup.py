@@ -17,7 +17,7 @@ setup(name = 'sinthgunt',
     license = 'GPLv3',
     packages = ['Sinthgunt'],
     package_data = {'sinthgunt': files},
-    scripts = ['sinthgunt','youtube-dl'],
+    scripts = ['sinthgunt','youtube-dl-sinthgunt'],
     data_files=[
         ('/usr/share/sinthgunt',['share/sinthgunt.glade','share/presets.xml','share/logo.png','share/icon.png','README.txt','LICENSE.txt','sinthgunt.html']),
         ('/usr/share/applications',['share/sinthgunt.desktop']),

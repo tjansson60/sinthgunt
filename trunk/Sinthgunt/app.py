@@ -1111,7 +1111,7 @@ Sinthgunt supports YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video
         ####################   
         
         # Get video url from youtube-dl
-        command = ["youtube-dl","-g",url]
+        command = ["youtube-dl-sinthgunt","-g",url]
         output = ''
         try:
             process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
@@ -1124,7 +1124,7 @@ Sinthgunt supports YouTube, Metacafe, Google Video, Photobucket and Yahoo! Video
         video_url = output.strip()
         
         # Get video title from youtube-dl
-        command = ["youtube-dl","-e",url]
+        command = ["youtube-dl-sinthgunt","-e",url]
         output = ''
         try:
             process = subprocess.Popen(args=command,stdout=subprocess.PIPE,
