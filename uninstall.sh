@@ -19,5 +19,6 @@
 #
 ##############################################################################
 sudo find /usr -path "*sinthgunt*" > files.txt
+sudo find /usr -path "*Sinthgunt*" >> files.txt
 sudo cat files.txt | sudo xargs rm -rf
 rm files.txt
