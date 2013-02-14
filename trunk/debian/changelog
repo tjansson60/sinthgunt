@@ -1,5 +1,6 @@
-sinthgunt (2.0.3) stable; urgency=low
-
+sinthgunt (2.1.0) stable; urgency=low
+  * (2.1.0):
+  * Updating youtube-dl
   * (2.0.3):
   * Updating presets.xml. Fixed errors when using kb switch and 4mv codec with ffmpeg 0.6. Added WebM HTML5 presets. Credits for both fixes to timkb4cq. See http://code.google.com/p/sinthgunt/issues/detail?id=11  
   * Added .3gp and .3g2 files to list of input files, so GUI will find these as Video files and not all files
@@ -18,4 +19,4 @@ sinthgunt (2.0.3) stable; urgency=low
   * Minor bugfixes
   * Added an iPhone preset.
 
- -- Kåre Hartvig Jensen (hartvig.de) <kare1234@gmail.com>  Sun, 14 Nov 2010 16:16:13 -0500
+ -- Kåre Hartvig Jensen (hartvig.de) <kare1234@gmail.com> Thu, 14 Feb 2013 16:16:13 -0500
