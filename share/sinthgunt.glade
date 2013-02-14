@@ -4,7 +4,7 @@
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
-    <property name="title" translatable="yes">Sinthgunt 2.0.3 svn</property>
+    <property name="title" translatable="yes">Sinthgunt 2.1.0</property>
     <property name="default_width">450</property>
     <property name="icon">icon.png</property>
     <signal name="destroy" handler="MainWindow_destroy"/>
