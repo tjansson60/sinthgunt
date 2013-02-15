@@ -1,5 +1,19 @@
 #Instructions for building the Sinthgunt debian package
-= This page is obsolete =
+
+Create packages
+{{{
+sudo make builddeb
+}}}
+{{{
+sudo make buildrpm
+}}}
+{{{
+sudo make source
+}}}
+{{{
+sudo make clean
+}}}
+= Instructions below are obsolete =
 Sinthgunt no longer uses debianpackagemaker. I will leave this up for anyone how is looking for at guide on how to use the program.
 
 = Introduction =
