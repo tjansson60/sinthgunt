@@ -2,7 +2,7 @@ PYTHON=`which python`
 DESTDIR=/
 BUILDIR=$(CURDIR)/debian/sinthgunt
 PROJECT=sinthgunt
-VERSION=2.0.3
+VERSION=2.1.0
 
 all:
 	@echo "make source - Create source package"
