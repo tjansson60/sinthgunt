@@ -1,9 +1,9 @@
 #labels Featured,Phase-Deploy
 = Installing Sinthgunt =
 This page describes how to install sinthgunt on various Linux distributions. 
-Since Sinthgunt relies on you having ffmpeg installed, we recommend that you either
-install it through your package manager or follow the installation guide
-[http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here].
+Note that Sinthgunt relies on you having ffmpeg installed, including many of the non-free plugins. The Sinthgunt dev team therefore recommends that you either
+install it through your package manager or follow an installation guide, such as
+[http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg this one] (probably obsolete).
 == Recommended installation instructions ==
 The recommended way of installing sinthgunt is to check out the latest version through svn:
 {{{
@@ -39,6 +39,10 @@ Then, install Sinthgunt by issuing the commands
 sudo dpkg -i sinthgunt-*.deb
 sudo apt-get -f --force-yes --yes install
 sudo dpkg -i sinthgunt-*.deb
+}}}
+Finally, install non-free plugins from the multivers repo
+{{{
+sudo apt-get install libavcodec-extra-53 libavdevice-extra-53 libavfilter-extra-2 libavformat-extra-53 libavutil-extra-51 libpostproc-extra-52 libswscale-extra-2 
 }}}
 ===Installation from source===
 To install Sinthgunt,
