@@ -44,14 +44,16 @@ Once you have entered the nessecary information, press the *Create package* butt
 = Automatic uploads to the Downloads page =
 Get the google upload script
 {{{
-wget http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
+wget http://googlecode-upload.googlecode.com/svn/trunk/googlecode_upload.pl
 }}}
 
-The upload the latest deb package and tarball by issuing the commands:
+Upload the latest deb package and tarball by issuing the commands:
 {{{
-# Deb package
-python googlecode_upload.py -s 'Sinthgunt 1.0.4 Debian package' -p 'sinthgunt' -l 'Featured,Type-Package,OpSys-Linux' deb/sinthgunt-1.0.4.deb 
-
-# Tarball
-python googlecode_upload.py -s 'Sinthgunt 1.0.4 tarball' -p 'sinthgunt' -l 'Type-Archive,OpSys-Linux' tarballs/sinthgunt-1.0.4.tar.gz
+googlecode_upload.pl -s 'Sinthgunt 2.1.0 Debian package' -proj 'sinthgunt' -l 'Featured,Type-Package,OpSys-Linux' -u 'kare1234' -f sinthgunt_2.1.0_all.deb
+}}}
+{{{
+googlecode_upload.pl -s 'Sinthgunt 2.1.0 RPM package' -proj 'sinthgunt' -l 'Featured,Type-Package,OpSys-Linux' -u 'kare1234' -f sinthgunt-2.1.0/dist/sinthgunt-2.1.0-1.noarch.rpm 
+}}}
+{{{
+googlecode_upload.pl -s 'Sinthgunt 2.1.0 source tarball' -proj 'sinthgunt' -l 'Featured,Type-Archive,OpSys-Linux' -u 'kare1234' -f sinthgunt-2.1.0/dist/sinthgunt-2.1.0.tar.gz 
 }}} 
