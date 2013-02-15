@@ -4,7 +4,7 @@ This page describes how to install sinthgunt on various Linux distributions.
 Since Sinthgunt relies on you having ffmpeg installed, we recommend that you either
 install it through your package manager or follow the installation guide
 [http://code.google.com/p/sinthgunt/wiki/Installation_ffmpeg here].
-== Generic installation instructions ==
+== Recommended installation instructions ==
 The recommended way of installing sinthgunt is to check out the latest version through svn:
 {{{
 svn checkout http://sinthgunt.googlecode.com/svn/trunk/ sinthgunt
@@ -30,17 +30,14 @@ Below, please find detailed installation instructions for
   * Fedora 10
   * Mandriva 2009.1
 
-== Ubuntu 8.10/9.04/Debian ==
-<img src="http://www.geo.uio.no/it/unix/bilder/ubuntu.png">
-<img src="http://www.stat.berkeley.edu/~matsen/debian.png">
-   * Install some nessecary packages
-{{{
-sudo apt-get install ffmpeg subversion
-}}}
+== Ubuntu/Debian ==
+  * Last tested: Feb 12, 2013
 ===Installation using a .deb package===
-Download that latest .deb package (only version 1.1.0 and below) from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab].
-Then, install Sinthgunt by issuing the command
+Download that latest .deb package from the [http://code.google.com/p/sinthgunt/downloads/list downloads tab].
+Then, install Sinthgunt by issuing the commands
 {{{
+sudo dpkg -i sinthgunt-*.deb
+sudo apt-get -f --force-yes --yes install
 sudo dpkg -i sinthgunt-*.deb
 }}}
 ===Installation from source===
