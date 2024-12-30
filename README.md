@@ -3,6 +3,9 @@ The Sinthgunt Converter is an easy to use gui for the ffmpeg package. Using pre-
 
 For more info, please visit http://www.sinthgunt.org
 
+> [!CAUTION]
+> Sinthgunt has not been actively maintained since 2013 and was developed in Python 2.7, making it unlikely to function on modern systems without significant updates. Additionally, the SVN installation guide is severely outdated, predating platforms like GitHub, and the website is no longer available.
+
 # 2.0 INSTALLATION
 For detailed installation instructions, see [code.google.com/p/sinthgunt/wiki/Installation](http://code.google.com/p/sinthgunt/wiki/Installation)
 Dependencies: python-gtk2 python-glade2
@@ -45,13 +48,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with the Sinthgunt Converter. If not, see [www.gnu.org/licenses](http://www.gnu.org/licenses)
 
-# 4.1
-Parts of the file presets.xml are Copyright 2006-2009 Matthew Weatherford and are (re)used here under the GPL v3 license.
+Parts of the file `presets.xml` are Copyright 2006-2009 Matthew Weatherford and are (re)used here under the GPL v3 license.
 
 # 5.0 Related projects
-http://code.google.com/p/winff/
-http://code.google.com/p/pyffmpeg/
-http://code.google.com/p/wffmpeg/
-http://code.google.com/p/jffmpeggui/
+* http://code.google.com/p/winff/
+* http://code.google.com/p/pyffmpeg/
+* http://code.google.com/p/wffmpeg/
+* http://code.google.com/p/jffmpeggui/
 http://code.google.com/p/medpiper/
 http://pspvc.sourceforge.net/
